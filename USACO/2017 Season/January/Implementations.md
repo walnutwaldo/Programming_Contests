@@ -1,7 +1,7 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Don't Be Last! | Solved          | Missing            |
+| Don't Be Last! | Solved          | C++            |
 | Hoof, Paper, Scissors     | Solved          | C++            |
 | Cow Tipping | Solved          | C++            |
 # Silver
