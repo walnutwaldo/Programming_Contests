@@ -8,7 +8,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Cow Dance Show | Solved          | C++            |
-| Hoof, Paper, Scissors     | Solved          | Missing            |
+| Hoof, Paper, Scissors     | Solved          | C++            |
 | Secret Cow Code | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
