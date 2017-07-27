@@ -9,13 +9,13 @@
 | ------------- |:---------------:| :--------------:|
 | Counting Haybales | Solved          | Java            |
 | Cities and States     | Solved          | Java            |
-| Moocast | Solved          | Java            |
+| Moocast | Solved          | missing            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Moocast | Solved          | Java            |
 | Cow Checklist     | Solved          | Java            |
-| Lasers and Mirrors | Solved          | missing            |
+| Lasers and Mirrors | Solved          | Java            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
