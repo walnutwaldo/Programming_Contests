@@ -14,7 +14,9 @@
 #define MT make_tuple
 #define UB upper_bound
 #define LB lower_bound
-#define MAXN 100
+#define MAXN 500
+#define MAXM 50
+#define MAXV 64
 
 using namespace std;
 
@@ -25,7 +27,7 @@ typedef vector<int> vi;
 
 int n, m;
 string genes[2 * MAXN];
-bool has[MAXN][MAXN][MAXN][64], notPossible[MAXN][MAXN][MAXN];
+bool has[MAXM][MAXM][MAXM][MAXV], notPossible[MAXM][MAXM][MAXM];
 
 int valOf(char c) {
     int v = 0;
