@@ -3,7 +3,7 @@
 | ------------- |:---------------:| :--------------:|
 | The Lost Cow | Solved          | C++            |
 | Bovine Genomics | Solved          | C++            |
-| Modern Art | Solved          | Missing            |
+| Modern Art | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
