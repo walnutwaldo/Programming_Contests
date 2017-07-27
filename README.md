@@ -1,2 +1,2 @@
 # Programming-Contests
-All of my stuff for Programming Contests
+All of my stuff for programming contests
