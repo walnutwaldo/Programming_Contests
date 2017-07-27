@@ -9,7 +9,7 @@
 | ------------- |:---------------:| :--------------:|
 | Counting Haybales | Solved          | Java            |
 | Cities and States     | Solved          | Java            |
-| Moocast | Solved          | Missing            |
+| Moocast | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
