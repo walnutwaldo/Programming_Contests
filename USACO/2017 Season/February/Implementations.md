@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Why Did the Cow Cross the Road | Solved          | Java            |
 | Why Did the Cow Cross the Road II | Solved          | Java            |
-| Why Did the Cow Cross the Road III | Solved          | C++ and Java            |
+| Why Did the Cow Cross the Road III | Solved          | C++            |
