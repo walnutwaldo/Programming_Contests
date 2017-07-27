@@ -2,7 +2,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Why Did the Cow Cross the Road | Solved          | C++            |
-| Why Did the Cow Cross the Road II | Solved          | missing            |
+| Why Did the Cow Cross the Road II | Solved          | Missing            |
 | Why Did the Cow Cross the Road III | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
