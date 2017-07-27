@@ -2,13 +2,13 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | The Lost Cow | Solved          | C++            |
-| Bovine Genomics | Solved          | Missing            |
+| Bovine Genomics | Solved          | C++            |
 | Modern Art | Solved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Paired Up | Solved          | C++            |
-| Bovine Genomics | Solved          | Missing            |
+| Bovine Genomics | Solved          | C++            |
 | Where's Bessie? | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
