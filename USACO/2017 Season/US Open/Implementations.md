@@ -20,4 +20,4 @@
 | ------------- |:---------------:| :--------------:|
 | Modern Art | Solved          | C++            |
 | Switch Grass | Not Solved          | Missing            |
-| COWBASIC | Solved          | Missing            |
+| COWBASIC | Solved          | Java            |
