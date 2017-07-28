@@ -8,17 +8,17 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Switching on the Lights | Solved          | C++            |
-| High Card Wins | Unsolved          | C++            |
-| Breed Counting | Unsolved          | C++            |
+| High Card Wins | Solved          | C++            |
+| Breed Counting | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| High Card Low Card | Unsolved          | C++            |
-| Fruit Feast | Unsolved          | C++            |
-| Bessie's Dream | Unsolved          | C++            |
+| High Card Low Card | Solved          | C++            |
+| Fruit Feast | Solved          | C++            |
+| Bessie's Dream | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Max Flow | Unsolved          | Missing            |
+| Max Flow | Solved          | C++            |
 | High Card Low Card | Unsolved          | Missing            |
 | Counting Haybales | Unsolved          | Missing            |
