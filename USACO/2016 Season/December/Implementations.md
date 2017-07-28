@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| High Card Low Card | Unsolved          | Missing            |
+| High Card Low Card | Unsolved          | C++            |
 | Fruit Feast | Unsolved          | Missing            |
 | Bessie's Dream | Unsolved          | Missing            |
 # Platinum
