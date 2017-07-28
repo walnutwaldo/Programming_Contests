@@ -19,9 +19,8 @@ typedef long double ld;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-int changeX[4] {1,0,-1,0}, changeY[4] {0,1,0,-1};
-
 int N;
+int changeX[4] {1,0,-1,0}, changeY[4] {0,1,0,-1};
 bool added[20][20][20][20][4], open[20][20];
 queue<tuple<int,int,int,int,int,int>> q;
 
