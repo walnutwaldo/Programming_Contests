@@ -14,8 +14,8 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | High Card Low Card | Unsolved          | C++            |
-| Fruit Feast | Unsolved          | Missing            |
-| Bessie's Dream | Unsolved          | Missing            |
+| Fruit Feast | Unsolved          | C++            |
+| Bessie's Dream | Unsolved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
