@@ -23,7 +23,7 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 
 int n, m, k, q, parent[MAXN], disToParent[MAXN], grassType[MAXK + 1];
-priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> pq;
+vector<tuple<int, int, int>> edges;
 vector<pii> mst[MAXN];
 unordered_map<int, set<pii>> treeMap[MAXN];
 set<pii> allEdges;
@@ -63,20 +63,22 @@ int main() {
     F0R(i, m) {
         int a, b, l;
         fin >> a >> b >> l;
-        pq.push(MT(l, a - 1, b - 1));
+        edges.PB(MT(l, a - 1, b - 1));
     }
     F0R(i, n) fin >> grassType[i];
+
+    sort(edges.begin(), edges.end());
     F0R(i, n) parent[i] = i;
     F0R(i, m) {
-        tuple<int, int, int> e = pq.top();
-        pq.pop();
-        int a = get<1>(e), b = get<2>(e), l = get<0>(e);
+        int a = get<1>(edges[i]), b = get<2>(edges[i]), l = get<0>(edges[i]);
         if(join(a, b)) {
             mst[a].PB(MP(l, b));
             mst[b].PB(MP(l, a));
         }
     }
+
     dfs(0, -1);
+
     F0R(query, q) {
         int node, g;
         fin >> node >> g;
