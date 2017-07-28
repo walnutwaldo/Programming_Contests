@@ -8,7 +8,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Switching on the Lights | Solved          | C++            |
-| High Card Wins | Unsolved          | Missing            |
+| High Card Wins | Unsolved          | C++            |
 | Breed Counting | Unsolved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
