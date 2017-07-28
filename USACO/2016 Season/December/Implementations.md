@@ -9,7 +9,7 @@
 | ------------- |:---------------:| :--------------:|
 | Switching on the Lights | Solved          | C++            |
 | High Card Wins | Unsolved          | C++            |
-| Breed Counting | Unsolved          | Missing            |
+| Breed Counting | Unsolved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
