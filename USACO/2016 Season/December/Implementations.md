@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Max Flow | Solved          | C++            |
 | High Card Low Card | Unsolved          | Missing            |
-| Counting Haybales | Unsolved          | Missing            |
+| Counting Haybales | Unsolved          | C++            |
