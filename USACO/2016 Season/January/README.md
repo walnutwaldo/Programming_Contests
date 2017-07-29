@@ -2,7 +2,7 @@
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
 | Promotion Counting | Solved          | C++            |
-| Angry Cows         | Unsolved          | Missing            |
+| Angry Cows         | Solved          | C++            |
 | Mowing The Field   | Unsolved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
