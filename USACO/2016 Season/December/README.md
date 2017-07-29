@@ -20,5 +20,5 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Max Flow | Solved          | C++            |
-| High Card Low Card | Unsolved          | C++            |
-| Counting Haybales | Unsolved          | C++            |
+| High Card Low Card | Solved          | C++            |
+| Counting Haybales | Solved          | C++            |
