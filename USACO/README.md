@@ -1,4 +1,4 @@
-# My Performance on Past Competitions
+# Performance on Past Competitions
 ## December 2016
 **Bronze** 1000
 
