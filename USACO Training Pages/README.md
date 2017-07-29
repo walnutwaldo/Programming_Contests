@@ -1,4 +1,4 @@
-# All Training Page Problem I Got On My First Try
+# First Try Succesess
 ## Chapter 2
 **Section 2.3** Zero Sum
 
