@@ -1,7 +1,7 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
-| Promotion Counting | Unsolved          | Missing            |
+| Promotion Counting | Solved          | C++            |
 | Angry Cows         | Unsolved          | Missing            |
 | Mowing The Field   | Unsolved          | Missing            |
 # Silver
