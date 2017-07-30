@@ -7,7 +7,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Angry Cows | Unsolved          | Missing            |
+| Angry Cows | Solved          | C++            |
 | Subsequences Summing to Sevens | Unsolved          | Missing            |
 | Building Gates | Unsolved          | Missing            |
 # Gold
