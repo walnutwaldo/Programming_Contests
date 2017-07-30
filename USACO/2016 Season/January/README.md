@@ -8,7 +8,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Angry Cows | Solved          | C++            |
-| Subsequences Summing to Sevens | Unsolved          | Missing            |
+| Subsequences Summing to Sevens | Solved          | C++            |
 | Building Gates | Unsolved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
