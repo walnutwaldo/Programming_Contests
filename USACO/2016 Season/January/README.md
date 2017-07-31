@@ -14,7 +14,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Angry Cows | Unsolved          | Missing            |
-| Radio Contact | Unsolved          | Missing            |
+| Radio Contact | Solved          | C++            |
 | Lights Out | Unsolved          | Missing            |
 # Platinum
 | Problem        | State           | Implementation  |
