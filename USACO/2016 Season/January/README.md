@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Fort Moo | Unsolved          | Missing            |
 | Mowing The Field | Unsolved          | Missing            |
-| Lights Out | Unsolved          | Missing            |
+| Lights Out | Unsolved          | Broken            |
