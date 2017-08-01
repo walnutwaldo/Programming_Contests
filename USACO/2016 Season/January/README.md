@@ -13,9 +13,9 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Angry Cows | Unsolved          | Missing            |
+| Angry Cows | Solved          | C++            |
 | Radio Contact | Solved          | C++            |
-| Lights Out | Unsolved          | Missing            |
+| Lights Out | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
