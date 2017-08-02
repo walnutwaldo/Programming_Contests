@@ -42,9 +42,10 @@ ll solve(int cs, int cl, int sPos, int pos) {
     if(cs == 0 || (cs + cl) % n < cs) return -disFromEnd((cs + sPos) % n);
     if(solved[cs][cl][sPos][pos]) return dp[cs][cl][sPos][pos];
     ll h = hashAt[cs][cl];
+    ll h2 = h * PRIME + pos;
     ll lMax = -1000000, rMax = -1000000;
-    if(direction.count(h)) {
-        if(direction[h] == 0) rMax = 0;
+    if(direction.count(h2)) {
+        if(direction[h2] == 0) rMax = 0;
         else lMax = 0;
     } else {
         vector<pii> possbilePositions = placesWithHash[h];
@@ -69,14 +70,14 @@ ll solve(int cs, int cl, int sPos, int pos) {
         } else {
             dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + n - 1) % n][cl + 1] + solve((cs + n - 1) % n, cl + 1, sPos + 1, 0);
         }
-        direction[h] = 0;
+        direction[h2] = 0;
     } else {
         if(pos == 0) {
             dp[cs][cl][sPos][pos] = lengthOfSegment[cs][cl + 1] + solve(cs, cl + 1, sPos, 1);
         } else {
             dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + cl) % n][1] + solve(cs, cl + 1, sPos, 1);
         }
-        direction[h] = 1;
+        direction[h2] = 1;
     }
     solved[cs][cl][sPos][pos] = true;
     return dp[cs][cl][sPos][pos];
