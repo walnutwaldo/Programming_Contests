@@ -32,7 +32,6 @@ ll dir[MAXN];
 ll lengthOfWall[MAXN], hashAt[MAXN][MAXN], lengthOfSegment[MAXN][MAXN], dp[MAXN][MAXN][MAXN][2];
 bool solved[MAXN][MAXN][MAXN][2];
 unordered_map<ll, vector<pii>> placesWithHash;
-unordered_map<ll, int> direction;
 
 ll disFromEnd(int i) {
     return min(lengthOfSegment[0][i], lengthOfSegment[i][n - i]);
@@ -42,26 +41,20 @@ ll solve(int cs, int cl, int sPos, int pos) {
     if(cs == 0 || (cs + cl) % n < cs) return -disFromEnd((cs + sPos) % n);
     if(solved[cs][cl][sPos][pos]) return dp[cs][cl][sPos][pos];
     ll h = hashAt[cs][cl];
-    ll h2 = h * PRIME + pos;
     ll lMax = -1000000, rMax = -1000000;
-    if(direction.count(h2)) {
-        if(direction[h2] == 0) rMax = 0;
-        else lMax = 0;
-    } else {
-        vector<pii> possbilePositions = placesWithHash[h];
-        for(const pii p : possbilePositions) {
-            int s = p.F;
-            int l = p.S;
-            if(s == 0 || (s + l) % n < s) {
-                continue;
-            }
-            if(pos == 0) {
-                lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
-                rMax = max(rMax, lengthOfSegment[s][l + 1] + solve(s, l + 1, sPos, 1));
-            } else {
-                lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][l + 1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
-                rMax = max(rMax, lengthOfSegment[(s + l) % n][1] + solve(s, l + 1, sPos, 1));
-            }
+    vector<pii> possbilePositions = placesWithHash[h];
+    for(const pii p : possbilePositions) {
+        int s = p.F;
+        int l = p.S;
+        if(s == 0 || (s + l) % n < s) {
+            continue;
+        }
+        if(pos == 0) {
+            lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
+            rMax = max(rMax, lengthOfSegment[s][l + 1] + solve(s, l + 1, sPos, 1));
+        } else {
+            lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][l + 1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
+            rMax = max(rMax, lengthOfSegment[(s + l) % n][1] + solve(s, l + 1, sPos, 1));
         }
     }
     if(lMax < rMax) {
@@ -70,14 +63,12 @@ ll solve(int cs, int cl, int sPos, int pos) {
         } else {
             dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + n - 1) % n][cl + 1] + solve((cs + n - 1) % n, cl + 1, sPos + 1, 0);
         }
-        direction[h2] = 0;
     } else {
         if(pos == 0) {
             dp[cs][cl][sPos][pos] = lengthOfSegment[cs][cl + 1] + solve(cs, cl + 1, sPos, 1);
         } else {
             dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + cl) % n][1] + solve(cs, cl + 1, sPos, 1);
         }
-        direction[h2] = 1;
     }
     solved[cs][cl][sPos][pos] = true;
     return dp[cs][cl][sPos][pos];
