@@ -16,8 +16,6 @@
 #define LB lower_bound
 #define MAXN 200
 #define PRIME 79
-#define FRONT 3
-#define BACK 5
 #define DEG90 31
 #define DEG270 53
 
@@ -31,56 +29,57 @@ typedef vector<int> vi;
 int n;
 pii corners[MAXN];
 ll dir[MAXN];
-ll lengthOfWall[MAXN], hashAt[MAXN][MAXN], lengthOfSegment[MAXN][MAXN];
+ll lengthOfWall[MAXN], hashAt[MAXN][MAXN], lengthOfSegment[MAXN][MAXN], dp[MAXN][MAXN][MAXN][2];
+bool solved[MAXN][MAXN][MAXN][2];
 unordered_map<ll, vector<pii>> placesWithHash;
-unordered_map<ll, ll> dp;
 unordered_map<ll, int> direction;
 
 ll disFromEnd(int i) {
     return min(lengthOfSegment[0][i], lengthOfSegment[i][n - i]);
 }
 
-ll act(int s, int l, int pos) {
-    ll total = 0;
-    while(s != 0 && (s + l) % n != 0) {
-        int m = direction[hashAt[s][l] * PRIME + pos];
-        if(pos == FRONT) {
-            if(m == FRONT) total += lengthOfSegment[(s + n - 1) % n][1];
-            else total += lengthOfSegment[s][l + 1];
-        } else {
-            if(m == FRONT) total += lengthOfSegment[(s + n - 1) % n][l + 1];
-            else total += lengthOfSegment[s + l][1];
-        }
-        if(m == FRONT) s = (s + n - 1) % n;
-        l++;
-        pos = m;
-    }
-    return total;
-}
-
-ll solve(ll h, ll pos) {
-    ll solutionHash = h * PRIME + pos;
-    if(dp.count(solutionHash)) return dp[solutionHash];
-    vector<pii> possible = placesWithHash[h];
-    ll maxL = 0, maxR = 0;
-    for(const pii loc : possible) {
-        int s = loc.F;
-        int l = loc.S;
-        int e = (s + l) % n;
-        if(s == 0 || e < s) continue;
-        int nextS = (s + n - 1) % n;
-        if(pos == FRONT) {
-            maxL = max(maxL, lengthOfSegment[nextS][1] + solve(hashAt[nextS][l + 1], FRONT));
-            maxR = max(maxR, lengthOfSegment[s][l + 1] + solve(hashAt[s][l + 1], BACK));
-        } else {
-            maxL = max(maxL, lengthOfSegment[nextS][l + 1] +solve(hashAt[nextS][l + 1], FRONT));
-            maxR = max(maxR, lengthOfSegment[e][1] + solve(hashAt[s][l + 1], BACK));
+ll solve(int cs, int cl, int sPos, int pos) {
+    if(cs == 0 || (cs + cl) % n < cs) return -disFromEnd((cs + sPos) % n);
+    if(solved[cs][cl][sPos][pos]) return dp[cs][cl][sPos][pos];
+    ll h = hashAt[cs][cl];
+    ll lMax = -1000000, rMax = -1000000;
+    if(direction.count(h)) {
+        if(direction[h] == 0) rMax = 0;
+        else lMax = 0;
+    } else {
+        vector<pii> possbilePositions = placesWithHash[h];
+        for(const pii p : possbilePositions) {
+            int s = p.F;
+            int l = p.S;
+            if(s == 0 || (s + l) % n < s) {
+                continue;
+            }
+            if(pos == 0) {
+                lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
+                rMax = max(rMax, lengthOfSegment[s][l + 1] + solve(s, l + 1, sPos, 1));
+            } else {
+                lMax = max(lMax, lengthOfSegment[(s + n - 1) % n][l + 1] + solve((s + n - 1) % n, l + 1, sPos + 1, 0));
+                rMax = max(rMax, lengthOfSegment[(s + l) % n][1] + solve(s, l + 1, sPos, 1));
+            }
         }
     }
-    dp.insert(MP(solutionHash, min(maxL, maxR)));
-    if(dp[solutionHash] == maxL) direction.insert(MP(solutionHash, FRONT));
-    else direction.insert(MP(solutionHash, BACK));
-    return dp[solutionHash];
+    if(lMax < rMax) {
+        if(pos == 0) {
+            dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + n - 1) % n][1] + solve((cs + n - 1) % n, cl + 1, sPos + 1, 0);
+        } else {
+            dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + n - 1) % n][cl + 1] + solve((cs + n - 1) % n, cl + 1, sPos + 1, 0);
+        }
+        direction[h] = 0;
+    } else {
+        if(pos == 0) {
+            dp[cs][cl][sPos][pos] = lengthOfSegment[cs][cl + 1] + solve(cs, cl + 1, sPos, 1);
+        } else {
+            dp[cs][cl][sPos][pos] = lengthOfSegment[(cs + cl) % n][1] + solve(cs, cl + 1, sPos, 1);
+        }
+        direction[h] = 1;
+    }
+    solved[cs][cl][sPos][pos] = true;
+    return dp[cs][cl][sPos][pos];
 }
 
 int main() {
@@ -124,23 +123,10 @@ int main() {
             d += lengthOfWall[(s + l) % n];
         }
     }
+    ll maxTravel = 0;
     F0R(i, n) {
-        solve(hashAt[i][0], FRONT);
-        solve(hashAt[i][0], BACK);
+        maxTravel = max(maxTravel, solve(i, 0, 0, 0));
     }
-    ll l90 = 0, r90 = 0, l270 = 0, r270 = 0;
-    FOR(i, 1, n) {
-        ll l = act((i + n - 1) % n, 1, FRONT) + lengthOfSegment[(i + n - 1) % n][1] - disFromEnd(i);
-        ll r = act(i, 1, BACK) + lengthOfSegment[i][1] - disFromEnd(i);
-        if(dir[i] == DEG90) {
-            l90 = max(l90, l);
-            r90 = max(r90, r);
-        } else {
-            l270 = max(l270, l);
-            r270 = max(r270, r);
-        }
-        cout << i << " " << l << " " << r << endl;
-    }
-    fout << max(min(l90, r90), min(l270, r270)) << "\n";
+    fout << maxTravel << "\n";
     return 0;
 }
