@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Fort Moo | Unsolved          | Missing            |
+| Fort Moo | Solved          | C++            |
 | Mowing The Field | Unsolved          | Missing            |
 | Lights Out | Solved          | C++            |
