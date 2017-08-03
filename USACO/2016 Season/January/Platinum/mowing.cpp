@@ -31,39 +31,48 @@ vector<tuple<int, int, int>> rangesAtX[MAXN];
 unordered_map<ll, int> compactX, compactY;
 ll answer;
 
-class BIT2 {
+class ST {
 
 public:
 
-    ll *tree;
-    ll inBit = 0;
-    int l;
+    ll val = 0;
+    ST *lchild, *rchild;
+    bool madeLeft = 0, madeRight = 0;
+    int s, e;
 
-    BIT2(ll l) {
-        this -> l = l;
-        tree = new ll[l + 1];
-        memset(tree, 0, (l + 1) * sizeof(ll));
+    ST(int s, int e) {
+        this-> s = s;
+        this-> e = e;
     }
 
     void update(int ti, int v) {
-        for(ti++; ti <= l; ti += (ti & -ti)) tree[ti] += v;
-        inBit += v;
+        val += v;
+        if(s == e - 1) return;
+        int mid = (s + e) >> 1;
+        if(ti < mid) {
+            if(!madeLeft) {
+                lchild = new ST(s, mid);
+                madeLeft = true;
+            }
+            lchild->update(ti, v);
+        } else {
+            if(!madeRight) {
+                rchild = new ST(mid, e);
+                madeRight = true;
+            }
+            rchild->update(ti, v);
+        }
     }
 
-    ll querySingle(int idx) {
-        if(idx >= l) return inBit;
-        idx++;
+    ll query(int lo, int hi) {
+        lo = max(s, lo);
+        hi = min(e, hi);
+        if(s == lo && e == hi) return val;
+        int mid = (s + e) >> 1;
         ll total = 0;
-        for(; idx > 0; idx -= (idx & -idx)) total += tree[idx];
+        if(lo < mid && madeLeft) total += lchild->query(lo, min(mid, hi));
+        if(hi > mid && madeRight) total += rchild->query(max(lo, mid), hi);
         return total;
-    }
-
-    ll queryRange(int lo, int hi) {
-        return querySingle(hi) - querySingle(lo - 1);
-    }
-
-    ll query(int ti) {
-        return inBit - queryRange(ti - t + 1, ti + t - 1);
     }
 
 };
@@ -73,12 +82,12 @@ class BIT {
 public:
 
     int l;
-    BIT2** tree;
+    ST** tree;
 
     BIT(int l) {
         this-> l = l;
-        tree = new BIT2*[l + 1];
-        F0R(i, l + 1) tree[i] = new BIT2(n);
+        tree = new ST*[l + 1];
+        F0R(i, l + 1) tree[i] = new ST(0, n);
     }
 
     void update(int idx, int ti, int v) {
@@ -93,7 +102,7 @@ public:
     ll query(int idx, int ti) {
         idx++;
         ll total = 0;
-        for(; idx > 0; idx -= (idx & -idx)) total += tree[idx]->query(ti);
+        for(; idx > 0; idx -= (idx & -idx)) total += (tree[idx]->val - tree[idx]->query(ti - t + 1, ti + t));
         return total;
     }
 };
