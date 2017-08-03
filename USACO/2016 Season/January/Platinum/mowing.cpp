@@ -37,12 +37,13 @@ public:
 
     ll val = 0;
     ST *lchild, *rchild;
-    bool madeLeft = 0, madeRight = 0;
     int s, e;
 
     ST(int s, int e) {
         this-> s = s;
         this-> e = e;
+        lchild = 0;
+        rchild = 0;
     }
 
     void update(int ti, int v) {
@@ -50,15 +51,13 @@ public:
         if(s == e - 1) return;
         int mid = (s + e) >> 1;
         if(ti < mid) {
-            if(!madeLeft) {
+            if(!lchild) {
                 lchild = new ST(s, mid);
-                madeLeft = true;
             }
             lchild->update(ti, v);
         } else {
-            if(!madeRight) {
+            if(!rchild) {
                 rchild = new ST(mid, e);
-                madeRight = true;
             }
             rchild->update(ti, v);
         }
@@ -70,8 +69,8 @@ public:
         if(s == lo && e == hi) return val;
         int mid = (s + e) >> 1;
         ll total = 0;
-        if(lo < mid && madeLeft) total += lchild->query(lo, min(mid, hi));
-        if(hi > mid && madeRight) total += rchild->query(max(lo, mid), hi);
+        if(lo < mid && lchild) total += lchild->query(lo, min(mid, hi));
+        if(hi > mid && rchild) total += rchild->query(max(lo, mid), hi);
         return total;
     }
 
