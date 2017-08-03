@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
-| Milk Pails | Unsolved          | Missing            |
-| Circular Barn         | Unsolved          | Missing            |
-| Load Balancing   | Unsolved          | Missing            |
+| Milk Pails | Solved          | C++            |
+| Circular Barn         | Solved          | C++            |
+| Load Balancing   | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
