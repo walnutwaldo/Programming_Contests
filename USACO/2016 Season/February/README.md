@@ -7,7 +7,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Circular Barn | Unsolved          | Missing            |
+| Circular Barn | Solved          | C++            |
 | Load Balancing | Unsolved          | Missing            |
 | Milk Pails | Unsolved          | Missing            |
 # Gold
