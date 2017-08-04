@@ -14,7 +14,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Circular Barn | Solved          | C++            |
-| Circular Barn Revisited | Unsolved          | Missing            |
+| Circular Barn Revisited | Solved          | C++            |
 | Fenced In | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
