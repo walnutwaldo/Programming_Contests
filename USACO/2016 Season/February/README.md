@@ -8,8 +8,8 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Circular Barn | Solved          | C++            |
-| Load Balancing | Unsolved          | Missing            |
-| Milk Pails | Unsolved          | Missing            |
+| Load Balancing | Solved          | C++            |
+| Milk Pails | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
