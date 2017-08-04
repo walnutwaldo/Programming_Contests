@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Circular Barn | Unsolved          | Missing            |
+| Circular Barn | Solved          | C++            |
 | Circular Barn Revisited | Unsolved          | Missing            |
 | Fenced In | Solved          | C++            |
 # Platinum
