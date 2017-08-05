@@ -130,9 +130,11 @@ int main() {
             int dl = sumToX[x] - ul;
             int ur = sumToY[y] - ul;
             int dr = n - ul - dl - ur;
-            M = min(M, max(max(ul, ur), max(dl, dr)));
-            if(ul + ur > dl + dr) {
+            int greatestQuad = max(max(ul, ur), max(dl, dr));
+            M = min(M, greatestQuad);
+            if(greatestQuad == ul || greatestQuad == ur) {
                 hi = y;
+
             } else {
                 lo = y + 1;
             }
