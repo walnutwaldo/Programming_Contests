@@ -24,64 +24,42 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 
 int n;
-int sumToX[MAXN], sumToY[MAXN], numX, numY;
+int numX, numY;
 vector<pii> points;
-map<int, vector<pii>> pointsAt;
-map<int, int> compX, compY;
+unordered_map<int, int> compX, compY;
 
 struct ST {
 
-    int val = 0, lo, hi;
-    ST *lchild, *rchild;
+    int ups;
+    int *tree;
 
-    ST(int lo, int hi) {
-        this-> lo = lo;
-        this-> hi = hi;
-        lchild = NULL;
-        rchild = NULL;
+    ST(int s) {
+        ups = exp2(ceil(log2(s)));
+        tree = new int[2 * this->ups];
+        memset(tree, 0, (2 * this->ups) * sizeof(int));
     }
 
-    void update(int idx) {
-        val += 1;
-        if(lo == hi - 1) return;
-        int mid = (hi + lo) >> 1;
-        if(idx < mid) {
-            if(lchild == NULL) lchild = new ST(lo, mid);
-            lchild->update(idx);
-        } else {
-            if(rchild == NULL) rchild = new ST(mid, hi);
-            rchild->update(idx);
+    void update(int idx, int v) {
+        idx += ups;
+        while(idx > 0) {
+            tree[idx]+= v;
+            idx/= 2;
         }
     }
 
-    int query(int s, int e) {
-        if(s == lo && e == hi) return val;
-        int mid = (hi + lo) >> 1;
+    int query(int lo, int hi) {
+        lo += ups;
+        hi += ups;
         int total = 0;
-        if(lchild != NULL && s < mid) total += lchild->query(s, min(mid, e));
-        if(rchild != NULL && e > mid) total += rchild->query(max(s, mid), e);
+        while(lo <= hi) {
+            if(lo % 2 == 1) total += tree[lo++];
+            if(hi % 2 == 0) total += tree[hi--];
+            lo/=2;
+            hi/=2;
+        }
         return total;
     }
-};
 
-struct BIT {
-
-    ST **tree;
-
-    BIT() {
-        tree = new ST*[numX + 1];
-        F0R(i, numX + 1) tree[i] = new ST(0, numY);
-    }
-
-    void update(int x, int y) {
-        for(x++; x <= numX; x += (x & -x)) tree[x]->update(y);
-    }
-
-    int query(int x, int y) {
-        int total = 0;
-        for(x++; x > 0; x -= (x & -x)) total += tree[x]->query(0, y + 1);
-        return total;
-    }
 };
 
 int main() {
@@ -106,35 +84,39 @@ int main() {
         compY[*(ys.begin())] = i;
         ys.erase(*ys.begin());
     }
-    sort(points.begin(), points.end());
     F0R(i, n) {
         points[i].F = compX[points[i].F];
         points[i].S = compY[points[i].S];
     }
-    BIT bit;
+    vi atX[numX];
+    vi atY[numY];
+    F0R(i, numX) atX[i] = vi();
+    F0R(i, numY) atY[i] = vi();
+    ST l(numY), r(numY);
     F0R(i, n) {
         int x = points[i].F;
         int y = points[i].S;
-        bit.update(x, y);
-        sumToX[x]++;
-        sumToY[y]++;
+        atX[x].PB(y);
+        atY[y].PB(x);
+        r.update(y, 1);
     }
-    FOR(x, 1, numX) sumToX[x] += sumToX[x - 1];
-    FOR(y, 1, numY) sumToY[y] += sumToY[y - 1];
-    int M = INT_MAX;
+    int M = -1;
     F0R(x, numX) {
+        for(const int y : atX[x]) {
+            r.update(y, -1);
+            l.update(y, 1);
+        }
         int lo = 0, hi = numY;
         while(lo < hi) {
             int y = (lo + hi) >> 1;
-            int ul = bit.query(x, y);
-            int dl = sumToX[x] - ul;
-            int ur = sumToY[y] - ul;
-            int dr = n - ul - dl - ur;
+            int ul = l.query(0, y);
+            int dl = l.query(y + 1, numY - 1);
+            int ur = r.query(0, y);
+            int dr = r.query(y + 1, numY - 1);
             int greatestQuad = max(max(ul, ur), max(dl, dr));
-            M = min(M, greatestQuad);
+            if(M == -1 || greatestQuad < M) M = greatestQuad;
             if(greatestQuad == ul || greatestQuad == ur) {
                 hi = y;
-
             } else {
                 lo = y + 1;
             }
