@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Load Balancing | Unsolved          | Missing            |
+| Load Balancing | Solved          | C++            |
 | Fenced In | Solved          | C++            |
 | Circular Barn | Unsolved          | Missing            |
