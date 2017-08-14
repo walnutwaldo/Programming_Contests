@@ -1,7 +1,8 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| **2A** Arya and Bran | Solved          | C++            |
-| **2B** Game of Rows | Solved          | C++            |
-| **2C** Journey | Solved          | C++            |
-| **2D** Winter is Here | Solved          | C++            |
-| **2E** Mother of Dragons | Unsolved          | Missing            |
+| **2A** Key Races | Solved          | C++            |
+| **2B** The Number on the Board | Solved          | C++            |
+| **2C** Star Sky | Solved          | C++            |
+| **2D** Palindromic Characteristics | Solved          | C++            |
+| **2E** The Penguin's Game | Unsolved          | Missing            |
+| **2F** Roads in the Kingdom | Unsolved          | Missing            |
