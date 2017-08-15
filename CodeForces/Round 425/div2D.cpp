@@ -81,7 +81,6 @@ int main() {
         int lbc = depth[b] + depth[c] - 2 * depth[bc];
         int total = (lab + lac + lbc)/2;
         int answer = max(lab + lac, max(lbc + lab, lac + lbc)) - total + 1;
-        assert(answer > 0);
         cout << answer << "\n";
     }
     return 0;
