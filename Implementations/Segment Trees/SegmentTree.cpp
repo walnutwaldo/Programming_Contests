@@ -1,9 +1,9 @@
-struct SumSegmentTree {
+struct SegmentTree {
 
     int sz;
     ll *tree;
 
-    SumSegmentTree(int pre_sz) {
+    SegmentTree(int pre_sz) {
         sz = 1 << (int)ceil(log2(pre_sz));
         tree = new ll[2 * sz];
         memset(tree, 0, sizeof tree);
