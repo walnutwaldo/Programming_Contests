@@ -9,7 +9,7 @@ struct SumSegmentTree {
         memset(tree, 0, sizeof tree);
     }
 
-    void update(ll v, int idx) {
+    void update(int idx, ll v) {
         idx += sz;
         tree[idx] += v;
         for(idx /= 2; idx > 0; idx /= 2) tree[idx] = tree[2 * idx] + tree[2 * idx + 1];
