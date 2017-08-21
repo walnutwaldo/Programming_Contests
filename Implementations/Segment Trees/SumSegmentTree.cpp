@@ -27,5 +27,4 @@ struct SumSegmentTree {
         }
         return total;
     }
-
 };
