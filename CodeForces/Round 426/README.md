@@ -4,6 +4,6 @@
 | **2B** The Festive Evening | Solved          | C++            |
 | **1A** The Meaningless Game | Solved          | C++            |
 | **1B** The Bakery | Solved          | C++            |
-| **1C** Ever-Hungry Krakozyabra | Unsolved          | Missing            |
+| **1C** Ever-Hungry Krakozyabra | Solved          | Missing            |
 | **1D** Red-black Cobweb | Unsolved          | Missing            |
-| **1E** Caramel Clouds | Unsolved          | Missing            |
+| **1E** Caramel Clouds | Solved          | Missing            |
