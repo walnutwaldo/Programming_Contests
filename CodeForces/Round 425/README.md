@@ -4,4 +4,4 @@
 | **2B** Petya and Exam | Solved          | C++            |
 | **2C** Strange Radiation | Solved          |C++            |
 | **2D** Misha, Grisha and Underground | Solved          | C++            |
-| **2E** Vasya and Shifts | Unsolved          | Missing            
+| **2E** Vasya and Shifts | Solved          | Missing            
