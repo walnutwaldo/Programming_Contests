@@ -5,4 +5,4 @@
 | **2C** Star Sky | Solved          | C++            |
 | **2D** Palindromic Characteristics | Solved          | C++            |
 | **2E** The Penguin's Game | Solved          | C++            |
-| **2F** Roads in the Kingdom | Solved          | Missing            |
+| **2F** Roads in the Kingdom | Solved          | C++            |
