@@ -1,3 +1,5 @@
+// Too Slow :'(
+
 struct TreapNode {
 
     ll val, priority;
@@ -18,25 +20,33 @@ struct Treap {
     TreapNode *root = NULL;
 
     void lFlip(TreapNode* parent, TreapNode* child) {
+        child->parent = parent->parent;
         if(parent->parent != NULL) {
             if(parent == parent->parent->lChild) parent->parent->lChild = child;
             else parent->parent->rChild = child;
         } else root = child;
         parent->lChild = child->rChild;
+        if(parent->lChild != NULL)
+            parent->lChild->parent = parent;
         child->rChild = parent;
+        parent->parent = child;
     }
 
     void rFlip(TreapNode* parent, TreapNode* child) {
+        child->parent = parent->parent;
         if(parent->parent != NULL) {
             if(parent == parent->parent->lChild) parent->parent->lChild = child;
             else parent->parent->rChild = child;
         } else root = child;
         parent->rChild = child->lChild;
+        if(parent->rChild != NULL)
+            parent->rChild->parent = parent;
         child->lChild = parent;
+        parent->parent = child;
     }
 
     void swapWithChild(TreapNode* parent) {
-        if(parent->lChild == NULL || parent->rChild->priority > parent->lChild->priority) {
+        if(parent->rChild != NULL && (parent->lChild == NULL || parent->rChild->priority > parent->lChild->priority)) {
             TreapNode* child = parent->rChild;
             child->parent = parent->parent;
             if(child->parent == NULL) root = child;
@@ -94,7 +104,7 @@ struct Treap {
                 }
             }
         }
-        while(toAdd->parent != NULL && toAdd->parent->priority < toAdd->priority) {
+        while(toAdd != root && toAdd->parent->priority < toAdd->priority) {
             if(toAdd == toAdd->parent->lChild) lFlip(toAdd->parent, toAdd);
             else rFlip(toAdd->parent, toAdd);
         }
@@ -105,13 +115,12 @@ struct Treap {
         TreapNode *toRemove = idMap[id];
         idMap.erase(id);
         while(toRemove->lChild != NULL || toRemove->rChild != NULL) swapWithChild(toRemove);
-        if(toRemove == root) {
+        if(root == toRemove) {
             root = NULL;
         } else {
-            if(toRemove = toRemove->parent->lChild) toRemove->parent->lChild = NULL;
+            if(toRemove == toRemove->parent->lChild) toRemove->parent->lChild = NULL;
             else toRemove->parent->rChild = NULL;
         }
-        toRemove = NULL;
     }
 
     int queryPrefix(ll val) {
