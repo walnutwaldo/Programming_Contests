@@ -114,7 +114,7 @@ struct Treap {
         toRemove = NULL;
     }
 
-    int querySuffix(ll val) {
+    int queryPrefix(ll val) {
         TreapNode* curr = root;
         ll best = 0;
         int idOfBest = -1;
