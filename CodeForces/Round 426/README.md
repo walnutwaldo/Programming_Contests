@@ -6,4 +6,4 @@
 | **1B** The Bakery | Solved          | C++            |
 | **1C** Ever-Hungry Krakozyabra | Solved          | C++            |
 | **1D** Red-black Cobweb | Unsolved          | Missing            |
-| **1E** Caramel Clouds | Solved          | Missing            |
+| **1E** Caramel Clouds | Solved          | C++            |
