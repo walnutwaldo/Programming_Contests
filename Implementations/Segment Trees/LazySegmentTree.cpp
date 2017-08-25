@@ -2,7 +2,7 @@ struct LazySegmentTree {
 
     int s, e;
     ll val = 0, lazy = 0;
-    SegmentTree *lChild, *rChild;
+    LazySegmentTree *lChild, *rChild;
 
     LazySegmentTree(int sz) {
         this->s = 0;
