@@ -6,7 +6,7 @@ struct SegmentTree {
     SegmentTree(int pre_sz) {
         sz = 1 << (int)ceil(log2(pre_sz));
         tree = new ll[2 * sz];
-        memset(tree, 0, sizeof tree);
+        memset(tree, 0, 2 * sz * sizeof(ll));
     }
 
     void update(int idx, ll v) {
