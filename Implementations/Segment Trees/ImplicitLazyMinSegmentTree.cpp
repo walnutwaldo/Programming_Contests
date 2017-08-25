@@ -2,7 +2,7 @@ struct LazySegmentTree {
 
     int s, e;
     ll val = 0, lazy = 0;
-    LazySegmentTree *lChild = NULL *rChild = NULL;
+    LazySegmentTree *lChild = NULL, *rChild = NULL;
 
     LazySegmentTree(int sz) {
         this->s = 0;
@@ -38,8 +38,8 @@ struct LazySegmentTree {
             if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
             rChild->update(max(l, mid), r, v);
         }
-        if(lChild == NULL) val = min(0, rChild->val);
-        else if(rChild == NULL) val = min(0, lChild->val);
+        if(lChild == NULL) val = min(0LL, rChild->val);
+        else if(rChild == NULL) val = min(0LL, lChild->val);
         else val = min(lChild->val, rChild->val);
     }
 
