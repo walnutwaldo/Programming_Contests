@@ -35,18 +35,28 @@ struct LazySegmentTree {
         if(l < mid) {
             if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
             lChild->update(l, min(r, mid), v);
-            val = min(val, lChild->val);
         }
         if(r > mid) {
             if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
             rChild->update(max(l, mid), r, v);
-            val = min(val, rChild->val);
         }
+        if(lChild == NULL) val = rChild->val;
+        else if(rChild == NULL) val = lChild->val;
+        else val = min(lChild->val, rChild->val);
     }
 
     ll query(int l, int r) {
         if(l == s && r == e) return val;
         int mid = (s + e) >> 1;
+        if(lazy != 0) {
+            if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
+            if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
+            lChild->val += lazy;
+            rChild->val += lazy;
+            lChild->lazy += lazy;
+            rChild->lazy += lazy;
+            lazy = 0;
+        }
         ll leftVal = -1, rightVal = -1;
         if(l < mid) {
             if(lChild != NULL) leftVal = lChild->query(l, min(mid, r));
