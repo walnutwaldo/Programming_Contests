@@ -17,8 +17,8 @@ struct LazySegmentTree {
     }
 
     void update(int l, int r, ll v) {
-        val += v;
         if(l == s && r == e) {
+            val += v;
             lazy += v;
             return;
         }
