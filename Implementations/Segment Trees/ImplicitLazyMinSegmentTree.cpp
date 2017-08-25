@@ -2,18 +2,16 @@ struct LazySegmentTree {
 
     int s, e;
     ll val = 0, lazy = 0;
-    LazySegmentTree *lChild, *rChild;
+    LazySegmentTree *lChild = NULL *rChild = NULL;
 
     LazySegmentTree(int sz) {
         this->s = 0;
         this->e = sz;
-        lChild = NULL, rChild = NULL;
     }
 
     LazySegmentTree(int s, int e) {
         this->s = s;
         this->e = e;
-        lChild = NULL, rChild = NULL;
     }
 
     void update(int l, int r, ll v) {
@@ -40,8 +38,9 @@ struct LazySegmentTree {
             if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
             rChild->update(max(l, mid), r, v);
         }
-        if(lChild != NULL && rChild != NULL) val = min(lChild->val, rChild->val);
-        else val = 0;
+        if(lChild == NULL) val = min(0, rChild->val);
+        else if(rChild == NULL) val = min(0, lChild->val);
+        else val = min(lChild->val, rChild->val);
     }
 
     ll query(int l, int r) {
@@ -56,17 +55,11 @@ struct LazySegmentTree {
             rChild->lazy += lazy;
             lazy = 0;
         }
-        ll leftVal = -1, rightVal = -1;
-        if(l < mid) {
-            if(lChild != NULL) leftVal = lChild->query(l, min(mid, r));
-            else leftVal = 0;
-        }
-        if(r > mid) {
-            if(rChild != NULL) rightVal = rChild->query(max(mid, l), r);
-            else rightVal = 0;
-        }
-        if(r <= mid) return leftVal;
-        if(l >= mid) return rightVal;
-        return min(leftVal, rightVal);
+        ll lVal = 0, rVal = 0;
+        if(l < mid && lChild != NULL) lVal = lChild->query(l, min(mid, r));
+        if(r > mid && rChild != NULL) rVal = rChild->query(max(mid, l), r);
+        if(r <= mid) return lVal;
+        else if(l >= mid) return rVal;
+        else return min(lVal, rVal);
     }
 };
