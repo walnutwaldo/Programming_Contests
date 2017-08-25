@@ -24,8 +24,8 @@ struct LazySegmentTree {
         }
         int mid = (s + e) >> 1;
         if(lazy != 0) {
-            if(lChild == NULL) lChild = new SegmentTree(s, mid);
-            if(rChild == NULL) rChild = new SegmentTree(mid, e);
+            if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
+            if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
             lChild->val += (mid - s) * lazy;
             rChild->val += (e - mid) * lazy;
             lChild->lazy += lazy;
@@ -33,11 +33,11 @@ struct LazySegmentTree {
             lazy = 0;
         }
         if(l < mid) {
-            if(lChild == NULL) lChild = new SegmentTree(s, mid);
+            if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
             lChild->update(l, min(r, mid), v);
         }
         if(r > mid) {
-            if(rChild == NULL) rChild = new SegmentTree(mid, e);
+            if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
             rChild->update(max(l, mid), r, v);
         }
     }
