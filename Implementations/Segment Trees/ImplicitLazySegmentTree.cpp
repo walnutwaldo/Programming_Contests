@@ -2,18 +2,16 @@ struct LazySegmentTree {
 
     int s, e;
     ll val = 0, lazy = 0;
-    LazySegmentTree *lChild, *rChild;
+    LazySegmentTree *lChild = NULL, *rChild = NULL;
 
     LazySegmentTree(int sz) {
         this->s = 0;
         this->e = sz;
-        lChild = NULL, rChild = NULL;
     }
 
     LazySegmentTree(int s, int e) {
         this->s = s;
         this->e = e;
-        lChild = NULL, rChild = NULL;
     }
 
     void update(int l, int r, ll v) {
@@ -54,9 +52,9 @@ struct LazySegmentTree {
             rChild->lazy += lazy;
             lazy = 0;
         }
-        ll res = 0;
-        if(l < mid && lChild != NULL) res += lChild->query(l, min(mid, r));
-        if(r > mid && rChild != NULL) res += rChild->query(max(mid, l), r);
-        return res;
+        ll total = 0;
+        if(l < mid && lChild != NULL) total += lChild->query(l, min(mid, r));
+        if(r > mid && rChild != NULL) total += rChild->query(max(mid, l), r);
+        return total;
     }
 };
