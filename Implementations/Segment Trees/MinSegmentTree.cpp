@@ -21,7 +21,7 @@ struct SegmentTree {
         ll res = tree[lo];
         while(lo <= hi) {
             if(lo % 2 == 1) res = min(res, tree[lo++]);
-            if(hi % 2 == 0) res = max(res, tree[hi--]);
+            if(hi % 2 == 0) res = min(res, tree[hi--]);
             lo /= 2;
             hi /= 2;
         }
