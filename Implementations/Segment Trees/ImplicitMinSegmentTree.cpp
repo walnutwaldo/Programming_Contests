@@ -27,8 +27,8 @@ struct SegmentTree {
             if(rChild == NULL) rChild = new SegmentTree(mid, e);
             rChild->update(idx, v);
         }
-        if(lChild == NULL) val = min(0, rChild->val);
-        else if(rChild == NULL) val = min(0, lChild->val);
+        if(lChild == NULL) val = min(0LL, rChild->val);
+        else if(rChild == NULL) val = min(0LL, lChild->val);
         else val = min(lChild->val, rChild->val);
     }
 
