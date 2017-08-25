@@ -2,18 +2,16 @@ struct SegmentTree {
 
     int s, e;
     ll val = 0;
-    SegmentTree *lChild, *rChild;
+    SegmentTree *lChild = NULL, *rChild = NULL;
 
     SegmentTree(int sz) {
         this->s = 0;
         this->e = sz;
-        lChild = NULL, rChild = NULL;
     }
 
     SegmentTree(int s, int e) {
         this->s = s;
         this->e = e;
-        lChild = NULL, rChild = NULL;
     }
 
     void update(int idx, ll v) {
@@ -32,9 +30,9 @@ struct SegmentTree {
     ll query(int l, int r) {
         if(l == s && r == e) return val;
         int mid = (s + e) >> 1;
-        ll res = 0;
-        if(l < mid && lChild != NULL) res += lChild->query(l, min(mid, r));
-        if(r > mid && rChild != NULL) res += rChild->query(max(mid, l), r);
-        return res;
+        ll total = 0;
+        if(l < mid && lChild != NULL) total += lChild->query(l, min(mid, r));
+        if(r > mid && rChild != NULL) total += rChild->query(max(mid, l), r);
+        return total;
     }
 };
