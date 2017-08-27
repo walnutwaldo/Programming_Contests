@@ -6,4 +6,4 @@
  | **D** Driving Test | Solved          | C++            
  | **E** Fire in the City | Solved          | C++ |            
  | **F** Guards in the Storehouse | Solved          | C++            |
- | **G** Shrotest Path Problem? | Solved          | C++            |
+ | **G** Shortest Path Problem? | Solved          | C++            |
