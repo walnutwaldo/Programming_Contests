@@ -19,7 +19,7 @@ struct BIT {
         return total;
     }
 
-    ll queryRangle(int lo, int hi) {
+    ll queryRange(int lo, int hi) {
         return query(hi) - query(lo - 1);
     }
 
