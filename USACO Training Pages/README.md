@@ -29,3 +29,5 @@
 **Section 6.4** The Primes
 
 **Section 6.4** Electric Fences
+
+**Section 6.4** Wisconsin Squares
