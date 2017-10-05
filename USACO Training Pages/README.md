@@ -33,3 +33,5 @@
 **Section 6.4** Wisconsin Squares
 
 **Section 6.5** The Clocks
+
+**Section 6.5** Checker Challenge
