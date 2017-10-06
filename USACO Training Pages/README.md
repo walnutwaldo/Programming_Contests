@@ -1,3 +1,5 @@
+Finished on October 6, 2017
+
 # First Try Succesess
 ## Chapter 2
 **Section 2.3** Zero Sum
@@ -35,3 +37,5 @@
 **Section 6.5** The Clocks
 
 **Section 6.5** Checker Challenge
+
+**Section 6.5** Betsy's Tour
