@@ -13,8 +13,8 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Splitting the Field | Unsolved          | Missing            |
-| Closing the Farm | Unsolved          | Missing            |
+| Splitting the Field | Solved          | C++            |
+| Closing the Farm | Solved          | C++            |
 | 284 | Unsolved          | Missing            |
 # Platinum
 | Problem        | State           | Implementation  |
