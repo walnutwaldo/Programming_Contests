@@ -7,9 +7,9 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Field Reduction | Unsolved          | Missing            |
-| Diamond Collector | Unsolved          | Missing            |
-| Closing the Farm | Unsolved          | Missing            |
+| Field Reduction | Solved          | C++            |
+| Diamond Collector | Solved          | C++            |
+| Closing the Farm | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
