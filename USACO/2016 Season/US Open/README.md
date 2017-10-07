@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
-| Diamond Collector | Unsolved          | Missing            |
-| Bull in a China Shop   | Unsolved          | Missing            |
-| Field Reduction   | Unsolved          | Missing            |
+| Diamond Collector | Solved          | C++            |
+| Bull in a China Shop   | Solved          | C++            |
+| Field Reduction   | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
