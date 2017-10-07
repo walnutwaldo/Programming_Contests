@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Load Balancing | Solved          | C++            |
 | Fenced In | Solved          | C++            |
-| Circular Barn | Unsolved          | Missing            |
+| Circular Barn | On Hold          | Missing            |
