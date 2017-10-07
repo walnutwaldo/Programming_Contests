@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| 262144 | Unsolved          | Missing            |
+| 262144 | Solved          | C++            |
 | Bull in a China Shop | Unsolved          | Missing            |
 | Landscaping | Unsolved          | Missing            |
