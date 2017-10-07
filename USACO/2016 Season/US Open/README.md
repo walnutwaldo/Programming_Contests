@@ -15,7 +15,7 @@
 | ------------- |:---------------:| :--------------:|
 | Splitting the Field | Solved          | C++            |
 | Closing the Farm | Solved          | C++            |
-| 284 | Unsolved          | Missing            |
+| 284 | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
