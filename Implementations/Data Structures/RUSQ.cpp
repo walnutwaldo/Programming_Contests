@@ -13,9 +13,9 @@ struct RUSQ {
         for(idx++; idx <= sz; idx += (idx & -idx)) tree[idx] += v;
     }
 
-    void updateRange(int lo, int hi) {
-        update(lo, 1);
-        update(hi + 1, -1);
+    void updateRange(int lo, int hi, int v) {
+        update(lo, v);
+        update(hi + 1, -v);
     }
 
     ll query(int idx) {
