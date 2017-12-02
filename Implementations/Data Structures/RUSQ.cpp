@@ -23,4 +23,8 @@ struct RUSQ {
         for(idx++; idx > 0; idx -= (idx & -idx)) total += tree[idx];
         return total;
     }
+
+    void reset() {
+        memset(tree, 0, (sz + 1) * sizeof(ll));
+    }
 };
