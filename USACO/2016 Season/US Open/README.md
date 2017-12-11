@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | 262144 | Solved          | C++            |
 | Bull in a China Shop | Unsolved          | Missing            |
-| Landscaping | Unsolved          | Missing            |
+| Landscaping | Solved          | C++            |
