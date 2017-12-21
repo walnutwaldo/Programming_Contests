@@ -1,8 +1,8 @@
 struct BCC {
 
     bool *visited, *isAP;
-    int *depth, *lowpoint, *connections, numNodes;
-    vi *components, APs;
+    int *depth, *lowpoint, numNodes;
+    vi *components, *connections, APs;
 
     BCC(int sz) {
         numNodes = sz;
@@ -10,7 +10,8 @@ struct BCC {
         lowpoint = new int[numNodes];
         visited = new bool[numNodes];
         isAP = new bool[numNodes];
-        connections = new vector<pii>[numNodes];
+        connections = new vi[numNodes];
+        components = new vi[numNodes];
         memset(isAP, 0, numNodes);
     }
 
@@ -21,7 +22,7 @@ struct BCC {
 
     void calculateBCCs() {
         memset(visited, 0, numNodes);
-        calcAPs(0, 0, -1);
+        F0R(i, numNodes) if(depth[i] == 0) calcAPs(i, 0, -1);
         int curr = 0;
         for(const int i : APs)
             for(const int j : connections[i])
@@ -30,7 +31,7 @@ struct BCC {
                     components[j].PB(curr++);
                 }
         F0R(i, numNodes) if(components[i].size() == 0) {
-            dfs(i, -1, curr);
+            dfs(i, curr);
             curr++;
         }
     }
@@ -49,20 +50,17 @@ struct BCC {
         depth[node] = d;
         lowpoint[node] = d;
         int numChildren = 0;
-        bool isAP = false;
         for(const int next : connections[node]) {
             if(visited[next]) {
-                if(next != parent) low[node] = min(lowpoint[node], depth[next]);
+                if(next != parent) lowpoint[node] = min(lowpoint[node], depth[next]);
                 continue;
             }
             calcAPs(next, d + 1, node);
             numChildren++;
-            if(lowpoint[next] >= d) isAp = true;
+            if(lowpoint[next] >= d) isAP[node] = true;
             lowpoint[node] = min(lowpoint[node], lowpoint[next]);
         }
-        if(node > 0 && isAP || node == 0 && numChildren > 1) {
-            APs.PB(node);
-            isAP[node] = true;
-        }
+        if(node == 0 && numChildren > 1) isAP[node] = true;
+        if(isAP[node]) APs.PB(node);
     }
 };
