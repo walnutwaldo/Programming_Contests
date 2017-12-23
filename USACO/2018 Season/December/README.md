@@ -15,7 +15,7 @@
 | ------------- |:---------------:| :--------------:|
 | A Pie for a Pie | Solved          | C++            |
 | Barn Painting     | Solved          | C++            |
-| Haybale Feast | Unsolved          | Missing            |
+| Haybale Feast | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
