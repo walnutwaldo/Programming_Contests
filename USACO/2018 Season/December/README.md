@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Standing Out from the Herd | Unsolved          | Missing            |
 | Push a Box     | Solved          | C++            |
-| Greedy Gift Takers | Solved          | Missing            |
+| Greedy Gift Takers | Solved          | C++            |
