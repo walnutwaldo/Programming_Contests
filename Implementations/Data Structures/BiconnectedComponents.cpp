@@ -1,18 +1,17 @@
 struct BCC {
 
-    bool *visited, *isAP;
+    bool *visited;
     int *depth, *lowpoint, numNodes;
-    vi *components, *connections, APs;
+    vi *connections;
+    vector<vector<pii>> components;
 
     BCC(int sz) {
         numNodes = sz;
         depth = new int[numNodes];
         lowpoint = new int[numNodes];
         visited = new bool[numNodes];
-        isAP = new bool[numNodes];
         connections = new vi[numNodes];
-        components = new vi[numNodes];
-        memset(isAP, 0, numNodes);
+        memset(depth, 0, numNodes);
     }
 
     void addEdge(int a, int b) {
@@ -22,45 +21,35 @@ struct BCC {
 
     void calculateBCCs() {
         memset(visited, 0, numNodes);
-        F0R(i, numNodes) if(depth[i] == 0) calcAPs(i, 0, -1);
-        int curr = 0;
-        for(const int i : APs)
-            for(const int j : connections[i])
-                if(isAP[j]) {
-                    components[i].PB(curr);
-                    components[j].PB(curr++);
-                }
-        F0R(i, numNodes) if(components[i].size() == 0) {
-            dfs(i, curr);
-            curr++;
-        }
+        vector<pii> *s = new vector<pii>();
+        F0R(i, numNodes) if(!visited[i]) dfs(i, 0, -1, s);
     }
 
-    void dfs(int node, int component) {
-        components[node].PB(component);
-        if(!isAP[node])
-            for(const int next : connections[node]) {
-                if(components[next].size() > 0) continue;
-                dfs(next, component);
-            }
-    }
-
-    void calcAPs(int node, int d, int parent) {
+    void dfs(int node, int d, int parent, vector<pii>* s) {
         visited[node] = true;
-        depth[node] = d;
-        lowpoint[node] = d;
-        int numChildren = 0;
+        depth[node] = lowpoint[node] = d;
         for(const int next : connections[node]) {
+            pii edge = MP(min(node, next), max(node, next));
             if(visited[next]) {
-                if(next != parent) lowpoint[node] = min(lowpoint[node], depth[next]);
-                continue;
+                if(next != parent) {
+                    lowpoint[node] = min(lowpoint[node], depth[next]);
+                    if(depth[next] < d) s->PB(edge);
+                }
+            } else {
+                s->PB(edge);
+                dfs(next, d + 1, node, s);
+                lowpoint[node] = min(lowpoint[node], lowpoint[next]);
+                if(lowpoint[next] >= d) {
+                    vector<pii> v;
+                    while(true) {
+                        pii p = s->back();
+                        s->pop_back();
+                        v.PB(p);
+                        if(p == edge) break;
+                    }
+                    components.PB(v);
+                }
             }
-            calcAPs(next, d + 1, node);
-            numChildren++;
-            if(lowpoint[next] >= d) isAP[node] = true;
-            lowpoint[node] = min(lowpoint[node], lowpoint[next]);
         }
-        if(node == 0 && numChildren > 1) isAP[node] = true;
-        if(isAP[node]) APs.PB(node);
     }
 };
