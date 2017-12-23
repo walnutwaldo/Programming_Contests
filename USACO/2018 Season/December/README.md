@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| A Pie for a Pie | Unsolved          | Missing            |
+| A Pie for a Pie | Solved          | C++            |
 | Barn Painting     | Unsolved          | Missing            |
 | Haybale Feast | Unsolved          | Missing            |
 # Platinum
