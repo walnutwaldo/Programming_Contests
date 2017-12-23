@@ -30,12 +30,10 @@ struct BCC {
         depth[node] = lowpoint[node] = d;
         for(const int next : connections[node]) {
             pii edge = MP(min(node, next), max(node, next));
-            if(visited[next]) {
-                if(next != parent) {
-                    lowpoint[node] = min(lowpoint[node], depth[next]);
-                    if(depth[next] < d) s->PB(edge);
-                }
-            } else {
+            if(visited[next] && next != parent) {
+                lowpoint[node] = min(lowpoint[node], depth[next]);
+                if(depth[next] < d) s->PB(edge);
+            } else if (!visited[next]) {
                 s->PB(edge);
                 dfs(next, d + 1, node, s);
                 lowpoint[node] = min(lowpoint[node], lowpoint[next]);
