@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Standing Out from the Herd | Unsolved          | Missing            |
+| Standing Out from the Herd | Solved          | C++            |
 | Push a Box     | Solved          | C++            |
 | Greedy Gift Takers | Solved          | C++            |
