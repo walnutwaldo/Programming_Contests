@@ -7,9 +7,9 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| My Cow Ate My Homework | Unsolved          | Missing            |
-| Milk Measurement     | Unsolved          | Missing            |
-| The Bovine Shuffle | Unsolved          | Missing            |
+| My Cow Ate My Homework | Solved          | C++            |
+| Milk Measurement     | Solved          | C++            |
+| The Bovine Shuffle | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
