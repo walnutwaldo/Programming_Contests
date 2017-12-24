@@ -1,19 +1,19 @@
 # Performance on Past Competitions
 ## 2017 - 2018
 ### December 2017
-**Platinum** 611
+![Platinum](http://www.usaco.org/current/images/medal_platinum.png)**Platinum** 611
 
 ## 2016 - 2017
 ### US Open 2017
-**Platinum** 700
+![Platinum](http://www.usaco.org/current/images/medal_platinum.png)**Platinum** 700
 ### February 2017
-**Gold** 733
+![Gold](http://www.usaco.org/current/images/medal_gold.png)**Gold** 733
 ### January 2017
-**Gold** 567
+![Gold](http://www.usaco.org/current/images/medal_gold.png)**Gold** 567
 
 ### December 2016
-**Bronze** 1000
+![Gold](http://www.usaco.org/current/images/medal_gold.png)**Gold** 585
 
-**Silver** 1000
+![Silver](http://www.usaco.org/current/images/medal_silver.png)**Silver** 1000
 
-**Gold** 585
+![Bronze](http://www.usaco.org/current/images/medal_bronze.png)**Bronze** 1000
