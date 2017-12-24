@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Blocked Billboard | Unsolved          | Missing            |
-| The Bovine Shuffle     | Unsolved          | Missing            |
-| Milk Measurement | Unsolved          | Missing            |
+| Blocked Billboard | Solved          | C++            |
+| The Bovine Shuffle     | Solved          | C++            |
+| Milk Measurement | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
