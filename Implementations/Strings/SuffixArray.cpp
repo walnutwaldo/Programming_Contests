@@ -13,7 +13,7 @@ struct SuffixArray {
     }
 
     int lcp(int i, int j) {
-        if(i < 0 || i >= suffixArray.size() || j < 0 || suffixArray.size()) return 0;
+        if(i < 0 || i >= suffixArray.size() || j < 0 || j >= suffixArray.size()) return 0;
         string a = suffixArray[i].F;
         string b = suffixArray[j].F;
         int res = 0;
