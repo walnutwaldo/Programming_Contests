@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Load Balancing | Solved          | C++            |
 | Fenced In | Solved          | C++            |
-| Circular Barn | Solved          | C++(Divide and Conquer) and C++(Convex Hull)        |
+| Circular Barn | Solved          | C++ (Divide and Conquer) and C++ (Convex Hull)        |
