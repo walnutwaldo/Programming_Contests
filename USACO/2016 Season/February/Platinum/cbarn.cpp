@@ -30,31 +30,31 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 
 int n, k;
-ll r[MAXN], dp[MAXK][MAXN], prefixSum[MAXN + 1];
+ll r[MAXN], ps[MAXN + 1];
+pair<ll, int> dp[MAXK][MAXN];
+bool solved[MAXN];
 
 void solveDP(int d, int lo, int hi, int s, int e) {
     if(hi <= lo) return;
     int mid = (lo + hi) >> 1;
-    dp[d][mid] = -1;
-    int door = 0;
-    FOR(i, s, min(mid + 1, e)) {
-        ll curr = dp[d - 1][i - 1] + dp[0][mid] - dp[0][i - 1] - i * (prefixSum[mid] - prefixSum[i - 1]);
-        if(dp[d][mid] == -1 || curr < dp[d][mid]) {
-            dp[d][mid] = curr;
-            door = i;
-        }
-    }
-    solveDP(d, lo, mid, s, door + 1);
-    solveDP(d, mid + 1, hi, door, e);
+    dp[d][mid] = MP(1e15, -1);
+    FOR(i, s, min(mid + 1, e)) dp[d][mid] = min(dp[d][mid], MP(dp[d - 1][i - 1].F + dp[0][mid].F - dp[0][i - 1].F - i * (ps[mid] - ps[i - 1]), i));
+    solveDP(d, lo, mid, s, dp[d][mid].S + 1);
+    solveDP(d, mid + 1, hi, dp[d][mid].S, e);
 }
 
 ll solveLinear() {
-    dp[0][0] = 0;
-    FOR(i, 1, n) dp[0][i] = dp[0][i - 1] + r[i] * i;
-    prefixSum[0] = r[0];
-    FOR(i, 1, n) prefixSum[i] = r[i] + prefixSum[i - 1];
+    dp[0][0] = MP(0, 0);
+    FOR(i, 1, n) dp[0][i] = MP(dp[0][i - 1].F + r[i] * i, 0);
+    ps[0] = r[0];
+    FOR(i, 1, n) ps[i] = r[i] + ps[i - 1];
     FOR(d, 1, k) solveDP(d, d, n, d, n);
-    return dp[k - 1][n - 1];
+    int curr = n - 1;
+    R0F(i, k) {
+        solved[dp[i][curr].S] = 1;
+        curr = dp[i][curr].S;
+    }
+    return dp[k - 1][n - 1].F;
 }
 
 void rot() {
@@ -70,8 +70,7 @@ int main() {
     F0R(i, n) fin >> r[i];
     ll res = 1e15;
     F0R(i, n) {
-        res = min(res, solveLinear());
-        cout << solveLinear() << endl;
+        if(!solved[i]) res = min(res, solveLinear());
         rot();
     }
     fout << res << "\n";
