@@ -1,3 +1,5 @@
+// Uses Convex Hull Trick with DP
+// Slower than the other solution but is O(N^2*K)
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
