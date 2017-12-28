@@ -1,3 +1,5 @@
+// Uses Divide and Conquer
+// Faster than the other solution
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
