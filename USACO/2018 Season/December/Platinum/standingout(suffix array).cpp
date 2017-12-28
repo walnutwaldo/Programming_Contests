@@ -28,7 +28,6 @@ typedef vector<int> vi;
 
 struct SuffixArray {
 
-    string s;
     vi sa;
     vector<vi> *ss;
 
@@ -52,8 +51,7 @@ struct SuffixArray {
         radixSort(lps, bit - 1, second, split, hi);
     }
 
-    SuffixArray(string fullString) {
-        s = fullString;
+    SuffixArray(string s) {
         F0R(i, s.size()) sa.PB(i);
         ss = new vector<vi>[2];
         ss[0] = vector<vi>(), ss[1] = vector<vi>();
@@ -66,8 +64,7 @@ struct SuffixArray {
         int lps = 1;
         while((1 << lps) < s.size()) {
             int lf = -1, ls = -1, curr = -1;
-            ss[0].PB(vi(s.size()));
-            ss[1].PB(vi(s.size()));
+            ss[0].PB(vi(s.size())), ss[1].PB(vi(s.size()));
             F0R(i, s.size()) {
                 if(ss[0][lps - 1][sa[i]] == lf && ss[1][lps - 1][sa[i]] == ls) ss[0][lps][sa[i]] = curr;
                 else {
@@ -87,7 +84,7 @@ struct SuffixArray {
     int lcp(int i, int j) {
         if(i < 0 || i >= sa.size() || j < 0 || j >= sa.size()) return 0;
         i = sa[i], j = sa[j];
-        int cap = s.size() - max(i, j), res = 0;
+        int cap = sa.size() - max(i, j), res = 0;
         while(cap > 0) {
             int mid = FL2(cap - 1);
             if(ss[0][mid][i + res] == ss[0][mid][j + res] && ss[1][mid][i + res] == ss[1][mid][j + res]) {
