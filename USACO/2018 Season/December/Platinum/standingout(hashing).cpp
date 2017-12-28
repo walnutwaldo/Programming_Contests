@@ -1,3 +1,5 @@
+// Uses hashing instead of a regular suffix array
+// For some reason, this is 200 ms faster, on average, than the other solution
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
