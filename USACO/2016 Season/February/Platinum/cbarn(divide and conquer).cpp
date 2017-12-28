@@ -1,5 +1,6 @@
 // Uses Divide and Conquer
 // Faster than the other solution
+// Is O(N^2*KlogN)
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
