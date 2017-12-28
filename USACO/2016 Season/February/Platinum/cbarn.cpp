@@ -49,11 +49,6 @@ ll solveLinear() {
     ps[0] = r[0];
     FOR(i, 1, n) ps[i] = r[i] + ps[i - 1];
     FOR(d, 1, k) solveDP(d, d, n, d, n);
-    int curr = n - 1;
-    R0F(i, k) {
-        solved[dp[i][curr].S] = 1;
-        curr = dp[i][curr].S;
-    }
     return dp[k - 1][n - 1].F;
 }
 
@@ -70,7 +65,7 @@ int main() {
     F0R(i, n) fin >> r[i];
     ll res = 1e15;
     F0R(i, n) {
-        if(!solved[i]) res = min(res, solveLinear());
+        res = min(res, solveLinear());
         rot();
     }
     fout << res << "\n";
