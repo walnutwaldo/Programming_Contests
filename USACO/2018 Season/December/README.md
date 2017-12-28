@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Standing Out from the Herd | Solved          | C++            |
+| Standing Out from the Herd | Solved          | C++ (Hashing) and C++ (Suffix Array)            |
 | Push a Box     | Solved          | C++            |
 | Greedy Gift Takers | Solved          | C++            |
