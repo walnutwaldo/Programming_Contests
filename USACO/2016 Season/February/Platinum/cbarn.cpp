@@ -7,6 +7,11 @@
 #define R0F(i, a) for(int i = (a) - 1; i >= 0; i--)
 #define ROF(i, a, b) for(int i = (b) - 1; i >= (a); i--)
 
+#define rand31() ((rand() << 16) | (rand() << 1) | (rand() & 1))
+#define rand32() ((rand() << 17) | (rand() << 2) | (rand() & 3))
+#define rand63() (((ll)rand() << 48) | ((ll)rand() << 33) | ((ll)rand() << 18) | ((ll)rand() << 3) | ((ll)rand() & 7))
+#define rand64() (((ll)rand() << 49) | ((ll)rand() << 34) | ((ll)rand() << 19) | ((ll)rand() << 4) | ((ll)rand() & 15))
+
 #define F first
 #define S second
 #define PB push_back
@@ -15,6 +20,7 @@
 #define UB upper_bound
 #define LB lower_bound
 #define MAXN 1000
+#define MAXK 7
 
 using namespace std;
 
@@ -24,60 +30,50 @@ typedef pair<int, int> pii;
 typedef vector<int> vi;
 
 int n, k;
-ll tree[MAXN + 1], r[MAXN], total;
+ll r[MAXN], dp[MAXK][MAXN], prefixSum[MAXN + 1];
 
-ll update(int idx, ll v) {
-    idx++;
-    for(; idx <= n; idx += (idx & -idx)) tree[idx] += v;
-    total += v;
-}
-
-ll query(int idx) {
-    ll v = 0;
-    for(; idx > 0; idx -= (idx & -idx)) v += tree[idx];
-    return v;
-}
-
-ll sum(int lo, int hi) {
-    if(hi < lo) {
-        if(hi == lo - 1) return total;
-        return total - sum(hi + 1, lo - 1);
+void solveDP(int d, int lo, int hi, int s, int e) {
+    if(hi <= lo) return;
+    int mid = (lo + hi) >> 1;
+    dp[d][mid] = -1;
+    int door = 0;
+    FOR(i, s, min(mid + 1, e)) {
+        ll curr = dp[d - 1][i - 1] + dp[0][mid] - dp[0][i - 1] - i * (prefixSum[mid] - prefixSum[i - 1]);
+        if(dp[d][mid] == -1 || curr < dp[d][mid]) {
+            dp[d][mid] = curr;
+            door = i;
+        }
     }
-    return query(hi + 1) - query(lo);
+    solveDP(d, lo, mid, s, door + 1);
+    solveDP(d, mid + 1, hi, door, e);
+}
+
+ll solveLinear() {
+    dp[0][0] = 0;
+    FOR(i, 1, n) dp[0][i] = dp[0][i - 1] + r[i] * i;
+    prefixSum[0] = r[0];
+    FOR(i, 1, n) prefixSum[i] = r[i] + prefixSum[i - 1];
+    FOR(d, 1, k) solveDP(d, d, n, d, n);
+    return dp[k - 1][n - 1];
+}
+
+void rot() {
+    ll temp = r[0];
+    F0R(i, n) r[i] = r[i + 1];
+    r[n - 1] = temp;
 }
 
 int main() {
     ifstream fin("cbarn.in");
     ofstream fout("cbarn.out");
     fin >> n >> k;
+    F0R(i, n) fin >> r[i];
+    ll res = 1e15;
     F0R(i, n) {
-        ll v;
-        fin >> v;
-        update(i, v);
-        r[i] = v;
+        res = min(res, solveLinear());
+        cout << solveLinear() << endl;
+        rot();
     }
-    ll minCost = -1;
-    F0R(s, n) {
-        ll dp[n][k + 1];
-        F0R(i, n) F0R(j, k) dp[i][j] = -1;
-        dp[0][0] = 0;
-        F0R(l, n) {
-            dp[0][0] += (ll)l * r[(s + l) % n];
-        }
-        if(dp[0][0] < minCost || minCost == -1) minCost = dp[0][0];
-        F0R(l, n) FOR(j, 1, k) {
-            ll m  = -1;
-            F0R(last, l) {
-                if(dp[last][j - 1] != -1) {
-                    ll cost = dp[last][j - 1];
-                    cost -= (l - last) * sum((s + l) % n, (s + n - 1) % n);
-                    if(m == -1 || cost < m) m = cost;
-                }
-            }
-            dp[l][j] = m;
-            if(dp[l][j] != -1 && (dp[l][j] < minCost || minCost == -1)) minCost = dp[l][j];
-        }
-    }
-    fout << minCost << "\n";
+    fout << res << "\n";
     return 0;
 }
