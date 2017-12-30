@@ -1,4 +1,4 @@
-// Too slow and wrong
+// Too slow
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
@@ -20,7 +20,6 @@
 #define fig pair<vector<vector<char>>, pair<int, pii>>
 #define MAXN 500
 #define MAXK 100
-#define MAXR 500
 
 using namespace std;
 
@@ -77,22 +76,21 @@ void figuresWork(fig a, fig b, int aID, int bID) {
         }
     }
     ll h = 0;
-    FOR(row, minR, maxR + 1) FOR(col, minC, maxC + 1) {
+    FOR(row, minR, maxR + 1) {
+        FOR(col, minC, maxC + 1) {
+            h *= 379;
+            if(!got[row][col]) h += cow.F[row][col] - 'a' + 1;
+        }
         h *= 379;
-        if(!got[row][col]) h += cow.F[row][col] - 'a' + 1;
+        h += 100;
     }
     if(!withHash.count(h)) return;
     for(const int i : withHash[h]) if(i != aID && i != bID) tryAdding(aID, bID, i);
 }
 
-void orderedNumWorks(int a, int b) {
-    F0R(rotA, 8) F0R(rotB, 8) figuresWork(figure[a][rotA], figure[b][rotB], a, b);
-}
-
 void tryDoing(int a, int b) {
     if(figure[a][0].A + figure[b][0].A >= cow.A || !withArea[cow.A - figure[a][0].A - figure[b][0].A]) return;
-    orderedNumWorks(a, b);
-    orderedNumWorks(b, a);
+    F0R(rotA, 8) F0R(rotB, 8) figuresWork(figure[a][rotA], figure[b][rotB], a, b);
 }
 
 fig readFigure() {
@@ -150,9 +148,13 @@ fig flipHoriz(fig a) {
 
 ll getHash(fig a) {
     ll h = 0;
-    F0R(row, a.F.size()) F0R(col, a.F[0].size()) {
+    F0R(row, a.F.size()) {
+        F0R(col, a.F[0].size()) {
+            h *= 379;
+            if(a.F[row][col] != '.') h += a.F[row][col] - 'a' + 1;
+        }
         h *= 379;
-        if(a.F[row][col] != '.') h += a.F[row][col] - 'a' + 1;
+        h += 100;
     }
     return h;
 }
