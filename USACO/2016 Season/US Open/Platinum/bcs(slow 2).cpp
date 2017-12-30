@@ -17,7 +17,7 @@
 #define MT make_tuple
 #define UB upper_bound
 #define LB lower_bound
-#define fig pair<vector<vector<char>>, pair<int, pii>>
+#define fig pair<pair<string*, int>, pair<int, pii>>
 #define MAXN 500
 #define MAXK 100
 
@@ -33,6 +33,7 @@ ofstream fout("bcs.out");
 int k;
 fig cow;
 fig figure[MAXK][8];
+pii q[MAXN * MAXN];
 unordered_map<ll, vi> withHash;
 bool res[MAXK][MAXK][MAXK], withArea[MAXN * MAXN + 1];
 
@@ -44,32 +45,32 @@ void tryAdding(int a, int b, int i) {
 }
 
 void figuresWork(fig a, fig b, int aID, int bID) {
-    vector<pii> q;
-    bool got[cow.F.size()][cow.F[0].size()];
-    F0R(row, cow.F.size()) F0R(col, cow.F[0].size()) {
-        if(cow.F[row][col] != '.') q.PB(MP(row, col)), got[row][col] = 0;
+    int ptr = 0;
+    bool got[cow.F.S][cow.F.F[0].size()];
+    F0R(row, cow.F.S) F0R(col, cow.F.F[0].size()) {
+        if(cow.F.F[row][col] != '.') q[ptr++] = MP(row, col), got[row][col] = 0;
         else got[row][col] = 1;
     }
-    pii topLeft = q[0];
-    F0R(row, a.F.size()) F0R(col, a.F[0].size()) {
+    ptr = 0;
+    pii topLeft = q[ptr];
+    F0R(row, a.F.S) F0R(col, a.F.F[0].size()) {
         int cowR = topLeft.F + row - a.firstSpot.F;
         int cowC = topLeft.S + col - a.firstSpot.S;
-        if(a.F[row][col] == '.') continue;
-        if(cowR < 0 || cowR >= cow.F.size() || cowC < 0 || cowC >= cow.F[0].size() || got[cowR][cowC] || cow.F[cowR][cowC] != a.F[row][col]) return;
+        if(a.F.F[row][col] == '.') continue;
+        if(cowR < 0 || cowR >= cow.F.S || cowC < 0 || cowC >= cow.F.F[0].size() || got[cowR][cowC] || cow.F.F[cowR][cowC] != a.F.F[row][col]) return;
         got[cowR][cowC] = true;
+        if(got[q[ptr].F][q[ptr].S]) ptr++;
     }
-    int ptr = 0;
-    while(got[q[ptr].F][q[ptr].S]) ptr++;
     topLeft = q[ptr];
-    F0R(row, b.F.size()) F0R(col, b.F[0].size()) {
+    F0R(row, b.F.S) F0R(col, b.F.F[0].size()) {
         int cowR = topLeft.F + row - b.firstSpot.F;
         int cowC = topLeft.S + col - b.firstSpot.S;
-        if(b.F[row][col] == '.') continue;
-        if(cowR < 0 || cowR >= cow.F.size() || cowC < 0 || cowC >= cow.F[0].size() || got[cowR][cowC] || cow.F[cowR][cowC] != b.F[row][col]) return;
+        if(b.F.F[row][col] == '.') continue;
+        if(cowR < 0 || cowR >= cow.F.S || cowC < 0 || cowC >= cow.F.F[0].size() || got[cowR][cowC] || cow.F.F[cowR][cowC] != b.F.F[row][col]) return;
         got[cowR][cowC] = true;
     }
     int minR = 10000, maxR = 0, minC = 10000, maxC = 0;
-    F0R(row, cow.F.size()) F0R(col, cow.F[0].size()) {
+    F0R(row, cow.F.S) F0R(col, cow.F.F[0].size()) {
         if(!got[row][col]) {
             minR = min(minR, row), maxR = max(maxR, row);
             minC = min(minC, col), maxC = max(maxC, col);
@@ -79,7 +80,7 @@ void figuresWork(fig a, fig b, int aID, int bID) {
     FOR(row, minR, maxR + 1) {
         FOR(col, minC, maxC + 1) {
             h *= 379;
-            if(!got[row][col]) h += cow.F[row][col] - 'a' + 1;
+            if(!got[row][col]) h += cow.F.F[row][col] - 'a' + 1;
         }
         h *= 379;
         h += 100;
@@ -96,62 +97,61 @@ void tryDoing(int a, int b) {
 fig readFigure() {
     int r, c;
     fin >> r >> c;
-    vector<vector<char>> res(r);
+    string *res = new string[r];
     int area = 0;
     pii fs;
     F0R(row, r) {
-        res[row] = vector<char>(c);
+        fin >> res[row];
         F0R(col, c) {
-            fin >> res[row][col];
             if(res[row][col] != '.') {
                 area++;
                 if(area == 1) fs = MP(row, col);
             }
         }
     }
-    return MP(res, MP(area, fs));
+    return MP(MP(res, r), MP(area, fs));
 }
 
 fig rotate90(fig a) {
-    vector<vector<char>> res(a.F[0].size());
+    string *res = new string[a.F.F[0].size()];
     int area = 0;
     pii fs;
-    F0R(row, a.F[0].size()) {
-        res[row] = vector<char>(a.F.size());
-        F0R(col, a.F.size()) {
-            res[row][col] = a.F[a.F.size() - 1 - col][row];
+    F0R(row, a.F.F[0].size()) {
+        res[row] = "";
+        F0R(col, a.F.S) {
+            res[row] += a.F.F[a.F.S - 1 - col][row];
             if(res[row][col] != '.') {
                 area++;
                 if(area == 1) fs = MP(row, col);
             }
         }
     }
-    return MP(res, MP(area, fs));
+    return MP(MP(res, a.F.F[0].size()), MP(area, fs));
 }
 
 fig flipHoriz(fig a) {
-    vector<vector<char>> res(a.F.size());
+    string *res = new string[a.F.S];
     int area = 0;
     pii fs;
-    F0R(row, a.F.size()) {
-        res[row] = vector<char>(a.F[0].size());
-        F0R(col, a.F[0].size()) {
-            res[row][col] = a.F[row][a.F[0].size() - 1 - col];
+    F0R(row, a.F.S) {
+        res[row] = "";
+        F0R(col, a.F.F[0].size()) {
+            res[row] += a.F.F[row][a.F.F[0].size() - 1 - col];
             if(res[row][col] != '.') {
                 area++;
                 if(area == 1) fs = MP(row, col);
             }
         }
     }
-    return MP(res, MP(area, fs));
+    return MP(MP(res, a.F.S), MP(area, fs));
 }
 
 ll getHash(fig a) {
     ll h = 0;
-    F0R(row, a.F.size()) {
-        F0R(col, a.F[0].size()) {
+    F0R(row, a.F.S) {
+        F0R(col, a.F.F[0].size()) {
             h *= 379;
-            if(a.F[row][col] != '.') h += a.F[row][col] - 'a' + 1;
+            if(a.F.F[row][col] != '.') h += a.F.F[row][col] - 'a' + 1;
         }
         h *= 379;
         h += 100;
@@ -177,9 +177,9 @@ int main() {
             withHash[h].PB(i);
         }
     }
-    F0R(a, k) F0R(b, k) if(a != b) tryDoing(a, b);
+    F0R(a, k) FOR(b, a + 1, k) tryDoing(a, b), tryDoing(b, a);
     int total = 0;
-    F0R(a, k) F0R(b, k) F0R(c, k) if(res[a][b][c]) total++;
+    F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(res[a][b][c]) total++;
     fout << total << "\n";
     return 0;
 }
