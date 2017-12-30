@@ -35,9 +35,10 @@ int k;
 fig cow;
 fig figure[MAXK][8];
 unordered_map<ll, vi> withHash;
-bool res[MAXK][MAXK][MAXK];
+bool res[MAXK][MAXK][MAXK], withArea[MAXN * MAXN + 1];
 
 void tryAdding(int a, int b, int i) {
+    if(figure[a][0].A + figure[b][0].A + figure[i][0].A != cow.A) return;
     if(i < min(a, b)) res[i][min(a, b)][max(a, b)] = 1;
     else if(i > max(a, b)) res[min(a, b)][max(a, b)][i] = 1;
     else res[min(a, b)][i][max(a, b)] = 1;
@@ -89,7 +90,7 @@ void orderedNumWorks(int a, int b) {
 }
 
 void tryDoing(int a, int b) {
-    if(figure[a][0].A + figure[b][0].A >= cow.A) return;
+    if(figure[a][0].A + figure[b][0].A >= cow.A || !withArea[cow.A - figure[a][0].A - figure[b][0].A]) return;
     orderedNumWorks(a, b);
     orderedNumWorks(b, a);
 }
@@ -161,6 +162,7 @@ int main() {
     cow = readFigure();
     F0R(i, k) {
         figure[i][0] = readFigure();
+        withArea[figure[i][0].A] = 1;
         FOR(j, 1, 4) figure[i][j] = rotate90(figure[i][j - 1]);
         figure[i][4] = flipHoriz(figure[i][0]);
         FOR(j, 5, 8) figure[i][j] = rotate90(figure[i][j - 1]);
@@ -175,7 +177,7 @@ int main() {
     }
     F0R(a, k) F0R(b, k) if(a != b) tryDoing(a, b);
     int total = 0;
-    F0R(a, k) F0R(b, k) F0R(c, k) total += res[a][b][c];
+    F0R(a, k) F0R(b, k) F0R(c, k) if(res[a][b][c]) total++;
     fout << total << "\n";
     return 0;
 }
