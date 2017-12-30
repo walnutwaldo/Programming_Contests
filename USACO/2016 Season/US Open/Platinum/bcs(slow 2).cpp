@@ -168,7 +168,7 @@ int main() {
         FOR(j, 1, 4) figure[i][j] = rotate90(figure[i][j - 1]);
         figure[i][4] = flipHoriz(figure[i][0]);
         FOR(j, 5, 8) figure[i][j] = rotate90(figure[i][j - 1]);
-        unordered_set<int> s;
+        unordered_set<ll> s;
         F0R(j, 8) {
             ll h = getHash(figure[i][j]);
             if(s.count(h)) continue;
