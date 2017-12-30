@@ -1,3 +1,4 @@
+// Too slow
 #include <bits/stdc++.h>
 
 #define SQ(a) (a)*(a)
