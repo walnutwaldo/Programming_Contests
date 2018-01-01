@@ -3,7 +3,7 @@
 // The constant is why this is not used in Matrix.cpp
 Matrix operator *(Matrix b) {
         if(columns != b.rows) return Matrix();
-        if(min(rows, min(columns, b.columns)) <= 100) {
+        if(max(rows, max(columns, b.columns)) <= 100) {
             Matrix m(rows, b.columns);
             F0R(r, rows) F0R(c, b.columns) {
                 m.mat[r][c] = 0;
