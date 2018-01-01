@@ -3,6 +3,10 @@ struct Matrix {
     int rows, columns;
     ll **mat;
 
+    Matrix() {
+        rows = 0, columns = 0;
+    }
+
     Matrix(int n) {
         *this = identity(n);
     }
@@ -23,9 +27,16 @@ struct Matrix {
     }
 
     Matrix operator +(Matrix b) {
-        if(b.rows != rows || b.columns != columns) return Matrix(0, 0);
+        if(b.rows != rows || b.columns != columns) return Matrix();
         Matrix m(rows, columns);
-        F0R(r, rows) F0R(c, columns) m.mat[r][c] = mat[r][c] + b.mat[r][c] % MOD;
+        F0R(r, rows) F0R(c, columns) m.mat[r][c] = (mat[r][c] + b.mat[r][c]) % MOD;
+        return m;
+    }
+
+    Matrix operator -(Matrix b) {
+        if(b.rows != rows || b.columns != columns) return Matrix();
+        Matrix m(rows, columns);
+        F0R(r, rows) F0R(c, columns) m.mat[r][c] = (mat[r][c] + MOD - b.mat[r][c]) % MOD;
         return m;
     }
 
@@ -43,7 +54,7 @@ struct Matrix {
     }
 
     Matrix operator ^(ll p) {
-        if(columns != rows) return Matrix(0, 0);
+        if(columns != rows) return Matrix();
         if(p == 0) return identity(rows);
         if(p % 2 == 1) return ((*this ^ (p - 1)) * (*this));
         Matrix sqrt = (*this ^ (p >> 1));
@@ -52,6 +63,10 @@ struct Matrix {
 
     void operator +=(Matrix b) {
         *this = *this + b;
+    }
+
+    void operator -=(Matrix b) {
+        *this = *this - b;
     }
 
     void operator *=(Matrix b) {
