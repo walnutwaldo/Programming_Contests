@@ -1,4 +1,6 @@
-// Not mine but I will use it for now
+// Not mine but is a great implementation
+// Will create my own some other day
+
 const int base = 1000000000;
 const int base_digits = 9;
 
