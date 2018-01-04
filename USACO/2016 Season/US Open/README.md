@@ -20,5 +20,5 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | 262144 | Solved          | C++            |
-| Bull in a China Shop | Unsolved          | Missing            |
+| Bull in a China Shop | * * * * * * t t * t          | C++            |
 | Landscaping | Solved          | C++            |
