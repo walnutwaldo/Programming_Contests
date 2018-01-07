@@ -1,5 +1,3 @@
-// Uses FFT and is correct but is kind of slow.
-
 cld FFTBuild[1 << 19][2], tempPVPoly[1 << 19], rt[1 << 19];
 
 struct Polynomial {
