@@ -1,4 +1,4 @@
-ull NTTMod = (33ULL << 25) + 1, NTTBuild[1 << 19][2], tempPVPoly[1 << 19], rt[1 << 19];
+ull NTTMod = (33ULL << 25) + 1, NTTBuild[1 << 19][2], tempPVPoly[1 << 19], rt[(1 << 19) + 1];
 
 struct Polynomial {
 
@@ -16,7 +16,7 @@ struct Polynomial {
         if(rt[0] == 1) return;
         rt[0] = 1;
         rt[1] = modPow(5, 33ULL << 6);
-        FOR(i, 2, 1 << 19) rt[i] = rt[i - 1] * rt[1] % NTTMod;
+        FOR(i, 2, (1 << 19) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
     }
 
     Polynomial(int d) {
@@ -55,17 +55,15 @@ struct Polynomial {
             R0F(j, lli) {
                 if(i == pdeg) NTTBuild[j][arr] = p[j] * u % NTTMod;
                 else {
-                    int x = j, y = 0, z = j, w = lli + j;
+                    int x = j, y = mp, z = j, w = lli + j;
                     F0R(k, llpdim1) {
                         NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
                         x += lli, y -= rtp, z += llil, w += llil;
-                        if(y < 0) y += mp;
                     }
                     z = j, w = lli + j;
                     F0R(k, llpdim1) {
                         NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
                         x += lli, y -= rtp, z += llil, w += llil;
-                        if(y < 0) y += mp;
                     }
                 }
             }
