@@ -21,7 +21,6 @@ struct Polynomial {
 
     void FFT(int neededDeg) {
         R0F(i, neededDeg + 1) {
-            clock_t start = clock();
             int arr = i & 1;
             int narr = arr ^ 1;
             int lli = 1 << i;
@@ -44,7 +43,6 @@ struct Polynomial {
                     x += lli, y += rtp, z += llil, w += llil;
                 }
             }
-            cout << "\t\t" << i << ": " << (clock() - start) << endl;
         }
     }
 
@@ -58,7 +56,6 @@ struct Polynomial {
             int llil = lli << 1;
             int llpdim1 = 1 << (pdeg - i - 1);
             int rtp = lli << (19 - pdeg);
-            clock_t start = clock();
             R0F(j, lli) {
                 if(i == pdeg) FFTBuild[j][arr] = p[j] / u;
                 else {
@@ -77,7 +74,6 @@ struct Polynomial {
                     }
                 }
             }
-            cout << i << ": " << (clock() - start) << endl;
         }
     }
 
