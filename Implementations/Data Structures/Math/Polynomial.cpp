@@ -19,12 +19,7 @@ struct Polynomial {
 
     void FFT(int neededDeg) {
         R0F(i, neededDeg + 1) {
-            int arr = i & 1;
-            int narr = arr ^ 1;
-            int lli = 1 << i;
-            int llil = lli << 1;
-            int llndim1 = 1 << (neededDeg - i - 1);
-            int rtp = lli << (19 - neededDeg);
+            int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndim1 = 1 << (neededDeg - i - 1), rtp = lli << (19 - neededDeg);
             if(i == neededDeg) {
                 F0R(j, deg + 1) FFTBuild[j][arr] = coefficients[j];
                 FOR(j, deg + 1, lli) FFTBuild[j][arr] = 0;
@@ -34,8 +29,7 @@ struct Polynomial {
                     FFTBuild[x][arr] = FFTBuild[z][narr] + FFTBuild[w][narr] * rt[y];
                     x += lli, y += rtp, z += llil, w += llil;
                 }
-                z = j;
-                w = j + lli;
+                z = j, w = j + lli;
                 F0R(k, llndim1) {
                     FFTBuild[x][arr] = FFTBuild[z][narr] + FFTBuild[w][narr] * rt[y];
                     x += lli, y += rtp, z += llil, w += llil;
@@ -48,12 +42,7 @@ struct Polynomial {
         int mp = 1 << 19;
         cld u = 1 << pdeg;
         R0F(i, pdeg + 1) {
-            int arr = i & 1;
-            int narr = arr ^ 1;
-            int lli = 1 << i;
-            int llil = lli << 1;
-            int llpdim1 = 1 << (pdeg - i - 1);
-            int rtp = lli << (19 - pdeg);
+            int arr = i & 1, narr = arr ^ 1,lli = 1 << i,llil = lli << 1, llpdim1 = 1 << (pdeg - i - 1), rtp = lli << (19 - pdeg);
             R0F(j, lli) {
                 if(i == pdeg) FFTBuild[j][arr] = p[j] / u;
                 else {
@@ -63,8 +52,7 @@ struct Polynomial {
                         x += lli, y -= rtp, z += llil, w += llil;
                         if(y < 0) y += mp;
                     }
-                    z = j;
-                    w = lli + j;
+                    z = j, w = lli + j;
                     F0R(k, llpdim1) {
                         FFTBuild[x][arr] = FFTBuild[z][narr] + FFTBuild[w][narr] * rt[y];
                         x += lli, y -= rtp, z += llil, w += llil;
