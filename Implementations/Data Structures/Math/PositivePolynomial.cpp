@@ -1,5 +1,3 @@
-// Uses NTT
-
 ull NTTMod = (33ULL << 25) + 1, NTTBuild[1 << 19][2], tempPVPoly[1 << 19], rt[1 << 19];
 
 struct Polynomial {
