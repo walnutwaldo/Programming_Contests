@@ -10,7 +10,7 @@ struct Polynomial {
         F0R(i, 1 << 19) rt[i] = cld(cos(2 * i * PI / (1 << 19)), sin(2 * i * PI / (1 << 19)));
     }
 
-    Polynomial(int d) {
+    Polynomial(int d = 0) {
         deg = d;
         coefficients = new ll[deg + 1];
         memset(coefficients, 0, (deg + 1) * sizeof(ll));
