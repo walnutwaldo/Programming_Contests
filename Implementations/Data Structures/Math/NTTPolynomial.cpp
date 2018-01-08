@@ -19,7 +19,7 @@ struct Polynomial {
         FOR(i, 2, (1 << 19) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
     }
 
-    Polynomial(int d) {
+    Polynomial(int d = 0) {
         deg = d;
         coefficients = new ull[deg + 1];
         memset(coefficients, 0, (deg + 1) * sizeof(ull));
