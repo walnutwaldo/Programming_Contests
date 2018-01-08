@@ -1,4 +1,5 @@
-ull NTTMod = (33ULL << 25) + 1, NTTBuild[1 << 19][2], tempPVPoly[1 << 19], rt[(1 << 19) + 1];
+const int MAX_DEG = 20;
+ull NTTMod = (33ULL << 25) + 1, NTTBuild[1 << MAX_DEG][2], tempPVPoly[1 << MAX_DEG], rt[(1 << MAX_DEG) + 1];
 
 struct Polynomial {
 
@@ -15,8 +16,8 @@ struct Polynomial {
     static void buildRT() {
         if(rt[0] == 1) return;
         rt[0] = 1;
-        rt[1] = modPow(5, 33ULL << 6);
-        FOR(i, 2, (1 << 19) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
+        rt[1] = modPow(5, 33ULL << (25- MAX_DEG));
+        FOR(i, 2, (1 << MAX_DEG) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
     }
 
     Polynomial(int d = 0) {
@@ -28,7 +29,7 @@ struct Polynomial {
 
     void NTT(int neededDeg) {
         R0F(i, neededDeg + 1) {
-            int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndim1 = 1 << (neededDeg - i - 1), rtp = lli << (19 - neededDeg);
+            int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndim1 = 1 << (neededDeg - i - 1), rtp = lli << (MAX_DEG - neededDeg);
             if(i == neededDeg) {
                 F0R(j, deg + 1) NTTBuild[j][arr] = coefficients[j];
                 FOR(j, deg + 1, lli) NTTBuild[j][arr] = 0;
@@ -48,10 +49,10 @@ struct Polynomial {
     }
 
     static void invNTT(ull *p, int pdeg) {
-        int mp = 1 << 19;
+        int mp = 1 << MAX_DEG;
         ull u = modPow(1 << pdeg, NTTMod - 2);
         R0F(i, pdeg + 1) {
-            int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llpdim1 = 1 << (pdeg - i - 1), rtp = lli << (19 - pdeg);
+            int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llpdim1 = 1 << (pdeg - i - 1), rtp = lli << (MAX_DEG - pdeg);
             R0F(j, lli) {
                 if(i == pdeg) NTTBuild[j][arr] = p[j] * u % NTTMod;
                 else {
