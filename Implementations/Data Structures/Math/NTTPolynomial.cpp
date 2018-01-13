@@ -1,6 +1,7 @@
 // Uses NTT.cpp
 // https://github.com/walnutwaldo/Programming_Contests/blob/master/Implementations/Algorithms/NTT.cpp
 
+using namespace NTT;
 ull tempPVPoly[1 << MAX_DEG];
 
 struct Polynomial {
