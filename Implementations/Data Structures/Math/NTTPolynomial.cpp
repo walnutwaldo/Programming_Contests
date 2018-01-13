@@ -1,4 +1,4 @@
-const int MAX_DEG = 20, EXP_MULT = 33ULL, EXP = 25;
+const int MAX_DEG = 20, EXP_MULT = 119ULL, EXP = 23;
 ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], tempPVPoly[1 << MAX_DEG], rt[(1 << MAX_DEG) + 1];
 
 ull modPow(ull a, ull p) {
@@ -8,35 +8,35 @@ ull modPow(ull a, ull p) {
     return SQ(sqrt) % NTTMod;
 }
 
+ull findCyclic() {
+    vi multFactors;
+    ull temp = EXP_MULT;
+    for(int i = 2; i * i <= temp; i += 2) {
+        if(temp % i == 0) multFactors.PB(i);
+        while(temp % i == 0) temp /= i;
+        if(i == 2) i--;
+    }
+    if(temp > 1) multFactors.PB(temp);
+    FOR(i, 2, NTTMod) {
+        bool works = 1;
+        if(modPow(i, NTTMod >> 1) == 1) works = 0;
+        for(const int factor : multFactors) if(modPow(i, NTTMod / factor) == 1) works = 0;
+        if(works) return i;
+    }
+    return -1;
+}
+
+void buildRT() {
+    if(rt[0] == 1) return;
+    rt[0] = 1;
+    rt[1] = modPow(findCyclic(), EXP_MULT << (EXP - MAX_DEG));
+    FOR(i, 2, (1 << MAX_DEG) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
+}
+
 struct Polynomial {
 
     int deg;
     ull *coefficients;
-
-    static ull findCyclic() {
-        vi multFactors;
-        ull temp = EXP_MULT;
-        for(int i = 2; i * i <= temp; i += 2) {
-            if(temp % i == 0) multFactors.PB(i);
-            while(temp % i == 0) temp /= i;
-            if(i == 2) i--;
-        }
-        if(temp > 1) multFactors.PB(temp);
-        FOR(i, 2, NTTMod) {
-            bool works = 1;
-            if(modPow(i, NTTMod >> 1) == 1) works = 0;
-            for(const int factor : multFactors) if(modPow(i, NTTMod / factor) == 1) works = 0;
-            if(works) return i;
-        }
-        return -1;
-    }
-
-    static void buildRT() {
-        if(rt[0] == 1) return;
-        rt[0] = 1;
-        rt[1] = modPow(findCyclic(), EXP_MULT << (EXP - MAX_DEG));
-        FOR(i, 2, (1 << MAX_DEG) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
-    }
 
     Polynomial(const Polynomial& p) {
         deg = p.deg;
