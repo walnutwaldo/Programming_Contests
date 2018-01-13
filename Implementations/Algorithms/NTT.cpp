@@ -1,18 +1,12 @@
 namespace NTT {
 
-const int MAX_DEG = 20, EXP_MULT = 119ULL, EXP = 23;
+const int MAX_DEG = 20, EXP = 23;
+const ull EXP_MULT = 119;
 ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], rt[(1 << MAX_DEG) + 1];
 
-ull modPow(ull a, ull p) {
-    if(!p) return 1;
-    if(p & 1) return a * modPow(a, p ^ 1) % NTTMod;
-    ull sqrt = modPow(a, p >> 1);
-    return SQ(sqrt) % NTTMod;
-}
+ull modPow(ull a, ull p) { return p ? modPow(SQ(a) % NTTMod, p >> 1) * (p & 1 ? a : 1) % NTTMod : 1; }
 
-ull invMod(ull a) {
-    return modPow(a, NTTMod - 2);
-}
+ull invMod(ull a) { return modPow(a, NTTMod - 2); }
 
 ull findCyclic() {
     vi multFactors;
