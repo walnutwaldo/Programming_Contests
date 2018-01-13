@@ -1,6 +1,6 @@
 namespace NTT {
 
-const int MAX_DEG = 5, EXP_MULT = 119ULL, EXP = 23;
+const int MAX_DEG = 20, EXP_MULT = 119ULL, EXP = 23;
 ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], rt[(1 << MAX_DEG) + 1];
 
 ull modPow(ull a, ull p) {
