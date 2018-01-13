@@ -1,6 +1,6 @@
 namespace NTT {
 
-const int MAX_DEG = 20, EXP_MULT = 33ULL, EXP = 25;
+const int MAX_DEG = 5, EXP_MULT = 119ULL, EXP = 23;
 ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], rt[(1 << MAX_DEG) + 1];
 
 ull modPow(ull a, ull p) {
@@ -29,7 +29,6 @@ ull findCyclic() {
         for(const int factor : multFactors) if(modPow(i, NTTMod / factor) == 1) works = 0;
         if(works) return i;
     }
-    return -1;
 }
 
 void buildRT() {
@@ -60,27 +59,12 @@ void ntt(int neededDeg, ull* vals, int len) {
     }
 }
 
-void invntt(ull *p, int pdeg) {
-    int mp = 1 << MAX_DEG;
-    ull u = invMod(1 << pdeg);
-    R0F(i, pdeg + 1) {
-        int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llpdim1 = 1 << (pdeg - i - 1), rtp = lli << (MAX_DEG - pdeg);
-        R0F(j, lli) {
-            if(i == pdeg) NTTBuild[j][arr] = p[j] * u % NTTMod;
-            else {
-                int x = j, y = mp, z = j, w = lli + j;
-                F0R(k, llpdim1) {
-                    NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
-                    x += lli, y -= rtp, z += llil, w += llil;
-                }
-                z = j, w = lli + j;
-                F0R(k, llpdim1) {
-                    NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
-                    x += lli, y -= rtp, z += llil, w += llil;
-                }
-            }
-        }
-    }
+void invntt(int neededDeg, ull* vals, int len) {
+    reverse(rt, rt + (1 << MAX_DEG) + 1);
+    ntt(neededDeg, vals, len);
+    reverse(rt, rt + (1 << MAX_DEG) + 1);
+    ull u = invMod(len);
+    F0R(i, len) NTTBuild[i][0] *= u, NTTBuild[i][0] %= NTTMod;
 }
 
 };
