@@ -40,22 +40,9 @@ void buildRT() {
 
 void ntt(int neededDeg, ull* vals, int len) {
     R0F(i, neededDeg + 1) {
-        int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndim1 = 1 << (neededDeg - i - 1), rtp = lli << (MAX_DEG - neededDeg);
-        if(i == neededDeg) {
-            F0R(j, len) NTTBuild[j][arr] = vals[j];
-            FOR(j, len, lli) NTTBuild[j][arr] = 0;
-        } else F0R(j, lli) {
-            int x = j, y = 0, z = j, w = j + lli;
-            F0R(k, llndim1) {
-                NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
-                x += lli, y += rtp, z += llil, w += llil;
-            }
-            z = j, w = j + lli;
-            F0R(k, llndim1) {
-                NTTBuild[x][arr] = (NTTBuild[z][narr] + NTTBuild[w][narr] * rt[y]) % NTTMod;
-                x += lli, y += rtp, z += llil, w += llil;
-            }
-        }
+        int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndi = 1 << (neededDeg - i), llndim1 = llndi >> 1, rtp = lli << (MAX_DEG - neededDeg);
+        if(i == neededDeg)  F0R(j, lli) NTTBuild[j][arr] = (j < len) ? vals[j] : 0;
+        else F0R(j, lli) F0R(k, llndi) NTTBuild[j + lli * k][arr] = (NTTBuild[j + llil * (k % llndim1)][narr] + NTTBuild[j + lli + llil * (k % llndim1)][narr] * rt[rtp * k]) % NTTMod;
     }
 }
 
