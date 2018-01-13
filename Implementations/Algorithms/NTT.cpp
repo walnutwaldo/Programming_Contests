@@ -55,5 +55,3 @@ void invntt(int neededDeg, ull* vals, int len) {
 }
 
 };
-
-using namespace NTT;
