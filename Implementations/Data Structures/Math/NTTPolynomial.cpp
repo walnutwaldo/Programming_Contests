@@ -1,17 +1,17 @@
-const int MAX_DEG = 20, EXP_MULT = 33ULL, EXP = 25;
+const int MAX_DEG = 20, EXP_MULT = 119ULL, EXP = 23;
 ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], tempPVPoly[1 << MAX_DEG], rt[(1 << MAX_DEG) + 1];
+
+ull modPow(ull a, ull p) {
+    if(!p) return 1;
+    if(p & 1) return a * modPow(a, p ^ 1) % NTTMod;
+    ull sqrt = modPow(a, p >> 1);
+    return SQ(sqrt) % NTTMod;
+}
 
 struct Polynomial {
 
     int deg;
     ull *coefficients;
-
-    static ull modPow(ull a, ull p) {
-        if(!p) return 1;
-        if(p & 1) return a * modPow(a, p ^ 1) % NTTMod;
-        ull sqrt = modPow(a, p >> 1);
-        return SQ(sqrt) % NTTMod;
-    }
 
     static ull findCyclic() {
         vi multFactors;
@@ -38,11 +38,28 @@ struct Polynomial {
         FOR(i, 2, (1 << MAX_DEG) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
     }
 
+    Polynomial(const Polynomial& p) {
+        deg = p.deg;
+        coefficients = new ull[deg + 1];
+        F0R(i, p.deg + 1) coefficients[i] = p.coefficients[i];
+    }
+
     Polynomial(int d = 0) {
         deg = d;
         coefficients = new ull[deg + 1];
         memset(coefficients, 0, (deg + 1) * sizeof(ull));
         buildRT();
+    }
+
+    Polynomial apply(Polynomial p) {
+        Polynomial curr;
+        curr.coefficients[0] = 1;
+        Polynomial res;
+        F0R(i, deg + 1) {
+            res += curr * coefficients[i];
+            curr *= p;
+        }
+        return res;
     }
 
     void NTT(int neededDeg) {
@@ -92,7 +109,7 @@ struct Polynomial {
     Polynomial operator +(Polynomial b) {
         Polynomial res(max(deg, b.deg));
         FOR(i, min(deg, b.deg) + 1, max(deg, b.deg) + 1) res.coefficients[i] = ((i <= deg) ? coefficients[i] : b.coefficients[i]);
-        F0R(i, min(deg, b.deg) + 1) res.coefficients[i] = coefficients[i] + b.coefficients[i];
+        F0R(i, min(deg, b.deg) + 1) res.coefficients[i] = (coefficients[i] + b.coefficients[i]) % NTTMod;
         return res;
     }
 
@@ -108,12 +125,43 @@ struct Polynomial {
         return res;
     }
 
+    Polynomial operator +(ull a) {
+        Polynomial p(deg);
+        F0R(i, deg + 1) p.coefficients[i] = coefficients[i];
+        p.coefficients[0] += a;
+        p.coefficients[0] %= NTTMod;
+        return p;
+    }
+
+    Polynomial operator *(ull mult) {
+        Polynomial p(deg);
+        F0R(i, deg + 1) p.coefficients[i] = coefficients[i] * mult % NTTMod;
+        return p;
+    }
+
+    Polynomial operator -(Polynomial p) {
+        return *this + (p * (NTTMod - 1));
+    }
+
     void operator +=(Polynomial b) {
         *this = *this + b;
     }
 
+    void operator +=(ull a) {
+        coefficients[0] += a;
+        coefficients[0] %= NTTMod;
+    }
+
+    void operator -=(Polynomial p) {
+        *this = *this - p;
+    }
+
     void operator *=(Polynomial b) {
         *this = *this * b;
+    }
+
+    void operator *=(ull mult) {
+        F0R(i, deg + 1) coefficients[i] *= mult, coefficients[i] %= NTTMod;
     }
 
 };
