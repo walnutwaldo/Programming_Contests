@@ -26,9 +26,7 @@ struct Polynomial {
         return res;
     }
 
-    ull& operator [](int idx) {
-        return coefficients[idx];
-    }
+    ull& operator [](int idx) { return coefficients[idx]; }
 
     Polynomial operator +(ull a) {
         Polynomial p(deg);
@@ -52,9 +50,7 @@ struct Polynomial {
         return p;
     }
 
-    Polynomial operator /(ull div) {
-        return *this * invMod(div);
-    }
+    Polynomial operator /(ull div) { return *this * invMod(div); }
 
     Polynomial operator +(Polynomial b) {
         Polynomial res(max(deg, b.deg));
@@ -62,9 +58,7 @@ struct Polynomial {
         return res;
     }
 
-    Polynomial operator -(Polynomial p) {
-        return *this + (p * (NTTMod - 1));
-    }
+    Polynomial operator -(Polynomial p) { return *this + (p * (NTTMod - 1)); }
 
     Polynomial operator *(Polynomial b) {
         int neededDeg = 32 - __builtin_clz(deg + b.deg);
@@ -78,33 +72,18 @@ struct Polynomial {
         return res;
     }
 
-    void operator +=(ull a) {
-        coefficients[0] += a;
-        coefficients[0] %= NTTMod;
-    }
+    void operator +=(ull a) { coefficients[0] += a, coefficients[0] %= NTTMod; }
 
-    void operator -=(ull a) {
-        *this += NTTMod - a;
-    }
+    void operator -=(ull a) { *this += NTTMod - a; }
 
-    void operator *=(ull mult) {
-        F0R(i, deg + 1) coefficients[i] *= mult, coefficients[i] %= NTTMod;
-    }
+    void operator *=(ull mult) { F0R(i, deg + 1) coefficients[i] *= mult, coefficients[i] %= NTTMod; }
 
-    void operator /=(ull div) {
-        *this *= invMod(div);
-    }
+    void operator /=(ull div) { *this *= invMod(div); }
 
-    void operator +=(Polynomial b) {
-        *this = *this + b;
-    }
+    void operator +=(Polynomial b) { *this = *this + b; }
 
-    void operator -=(Polynomial p) {
-        *this = *this - p;
-    }
+    void operator -=(Polynomial p) { *this = *this - p; }
 
-    void operator *=(Polynomial b) {
-        *this = *this * b;
-    }
+    void operator *=(Polynomial b) { *this = *this * b; }
 
 };
