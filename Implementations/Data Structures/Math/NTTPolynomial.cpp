@@ -67,7 +67,7 @@ struct Polynomial {
         F0R(i, (1 << neededDeg)) tempPVPoly[i] = NTTBuild[i][0];
         ntt(neededDeg, b.coefficients, b.deg + 1);
         F0R(i, (1 << neededDeg)) tempPVPoly[i] = tempPVPoly[i] * NTTBuild[i][0] % NTTMod;
-        invntt(tempPVPoly, neededDeg);
+        invntt(neededDeg, tempPVPoly, 1 << neededDeg);
         Polynomial res(deg + b.deg);
         F0R(i, res.deg + 1) res[i] = NTTBuild[i][0];
         return res;
