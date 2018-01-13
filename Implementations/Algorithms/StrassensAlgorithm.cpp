@@ -1,6 +1,6 @@
-// Uses https://github.com/walnutwaldo/Programming_Contests/blob/master/Implementations/Data%20Structures/Math/Matrix.cpp
-// Has a huge constant but is asymptotically faster than standard multiplication
-// The constant is why this is not used in Matrix.cpp
+// Uses Matrix.cpp
+// https://github.com/walnutwaldo/Programming_Contests/blob/master/Implementations/Data%20Structures/Math/Matrix.cpp
+
 Matrix operator *(Matrix b) {
         if(columns != b.rows) return Matrix();
         if(max(rows, max(columns, b.columns)) <= 100) {
