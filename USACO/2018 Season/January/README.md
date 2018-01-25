@@ -14,7 +14,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | MooTube | Solved          | C++            |
-| Cow At Large     | Unsolved          | Missing            |
+| Cow At Large     | Solved          | C++            |
 | Stamp Painting | Unsolved          | Missing            |
 # Platinum
 | Problem        | State           | Implementation  |
