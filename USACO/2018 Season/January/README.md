@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| MooTube | Unsolved          | Missing            |
+| MooTube | Solved          | C++            |
 | Cow At Large     | Unsolved          | Missing            |
 | Stamp Painting | Unsolved          | Missing            |
 # Platinum
