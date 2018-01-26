@@ -22,8 +22,10 @@
 #define LB lower_bound
 #define X real()
 #define Y imag()
+#define R real()
+#define I image()
 #define PI acos(-1)
-#define MAX 100000
+#define MAXN 100000
 
 using namespace std;
 
@@ -35,45 +37,33 @@ typedef vector<int> vi;
 typedef complex<ld> point;
 typedef complex<ld> cld;
 
-int N, M, R, c[MAX];
-ll r[MAX];
-pair<ll, int> stores[MAX];
+int n;
+ll decr[MAXN];
+vector<pair<ll, ll>> intervals;
 
 int main() {
-    ifstream fin("rental.in");
-    ofstream fout("rental.out");
-    fin >> N >> M >> R;
-    F0R(i, N) fin >> c[i];
-    F0R(i, M) fin >> stores[i].S >> stores[i].F;
-    F0R(i, R) fin >> r[i];
-    sort(c, c + N, greater<int>());
-    sort(stores, stores + M, greater<pair<ll, int>>());
-    sort(r, r + R, greater<ll>());
-    R = min(R, N);
-    ll curr = 0, res;
-    int currStore = 0, currCow = 0, currFree = 0;
-    F0R(i, N - R) currFree += c[currCow++];
-    F0R(i, R) curr += r[i];
-    while(currStore < M && currFree) {
-        int dec = min(stores[currStore].S, currFree);
-        currFree -= dec;
-        curr += stores[currStore].F * dec;
-        stores[currStore].S -= dec;
-        if(stores[currStore].S == 0) currStore++;
+    ifstream fin("lifeguards.in");
+    ofstream fout("lifeguards.out");
+    fin >> n;
+    F0R(i, n) {
+        ll s, e;
+        fin >> s >> e;
+        intervals.PB(MP(s, e));
     }
-    res = curr;
-    R0F(i, R) {
-        curr -= r[i];
-        currFree += c[currCow++];
-        while(currStore < M && currFree) {
-            int dec = min(stores[currStore].S, currFree);
-            currFree -= dec;
-            curr += stores[currStore].F * dec;
-            stores[currStore].S -= dec;
-            if(stores[currStore].S == 0) currStore++;
-        }
-        res = max(res, curr);
+    sort(intervals.begin(), intervals.end());
+    ll last = 0, res = 0;
+    F0R(i, n) {
+        decr[i] = max(0LL, intervals[i].S - max(last, intervals[i].F));
+        res += decr[i];
+        last = max(last, intervals[i].S);
     }
-    fout << res << endl;
+    last = 1e9;
+    R0F(i, n) {
+        decr[i] = max(0LL, decr[i] - max(0LL, intervals[i].S - last));
+        last = min(last, intervals[i].F);
+    }
+    ll m = 1e9;
+    F0R(i, n) m = min(m, decr[i]);
+    fout << res - m << endl;
     return 0;
 }
