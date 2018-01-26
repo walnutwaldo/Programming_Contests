@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Blocked Billboard II | Unsolved          | Missing            |
-| Lifeguards     | Unsolved          | Missing            |
-| Out of Place | Unsolved          | Missing            |
+| Blocked Billboard II | Solved          | C++            |
+| Lifeguards     | Solved          | C++            |
+| Out of Place | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
