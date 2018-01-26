@@ -7,9 +7,9 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Lifeguards | Unsolved          | Missing            |
-| Rental Service     | Unsolved          | Missing            |
-| MooTube | Unsolved          | Missing            |
+| Lifeguards | Solved          | C++            |
+| Rental Service     | Solved          | C++            |
+| MooTube | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
