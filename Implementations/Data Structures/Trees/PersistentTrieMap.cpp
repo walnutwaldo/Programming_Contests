@@ -1,4 +1,4 @@
-struct PersistantTrieMap {
+struct PersistentTrieMap {
 
     struct TrieMap {
 
@@ -13,7 +13,7 @@ struct PersistantTrieMap {
     int sz = 1, autoTree = 0;
     vector<TrieMap> trees;
 
-    PersistantTrieMap() { trees.PB(TrieMap()); }
+    PersistentTrieMap() { trees.PB(TrieMap()); }
 
     void set(int t, string key, ll val) {
         bool first = (get(t, key) == -1);
