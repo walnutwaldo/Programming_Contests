@@ -22,10 +22,8 @@
 #define LB lower_bound
 #define X real()
 #define Y imag()
-#define R real()
-#define I image()
 #define PI acos(-1)
-#define MAXN 5000
+#define MAX 100000
 
 using namespace std;
 
@@ -37,31 +35,45 @@ typedef vector<int> vi;
 typedef complex<ld> point;
 typedef complex<ld> cld;
 
-int n, q;
-vector<pii> connections[MAXN];
-
-int solve(int node, int k, int par) {
-    int res = 1;
-    for(const pii next : connections[node]) if(next.F != par && next.S >= k) res += solve(next.F, k, node);
-    return res;
-}
+int N, M, R, c[MAX];
+ll r[MAX];
+pair<ll, int> stores[MAX];
 
 int main() {
-    ifstream fin("mootube.in");
-    ofstream fout("mootube.out");
-    fin >> n >> q;
-    F0R(i, n - 1) {
-        int u, v, w;
-        fin >> u >> v >> w;
-        u--, v--;
-        connections[u].PB(MP(v, w));
-        connections[v].PB(MP(u, w));
+    ifstream fin("rental.in");
+    ofstream fout("rental.out");
+    fin >> N >> M >> R;
+    F0R(i, N) fin >> c[i];
+    F0R(i, M) fin >> stores[i].S >> stores[i].F;
+    F0R(i, R) fin >> r[i];
+    sort(c, c + N, greater<int>());
+    sort(stores, stores + M, greater<pair<ll, int>>());
+    sort(r, r + R, greater<ll>());
+    R = min(R, N);
+    ll curr = 0, res;
+    int currStore = 0, currCow = 0, currFree = 0;
+    F0R(i, N - R) currFree += c[currCow++];
+    F0R(i, R) curr += r[i];
+    while(currStore < M && currFree) {
+        int dec = min(stores[currStore].S, currFree);
+        currFree -= dec;
+        curr += stores[currStore].F * dec;
+        stores[currStore].S -= dec;
+        if(stores[currStore].S == 0) currStore++;
     }
-    F0R(i, q) {
-        int k, v;
-        fin >> k >> v;
-        v--;
-        fout << solve(v, k, -1) - 1 << "\n";
+    res = curr;
+    R0F(i, R) {
+        curr -= r[i];
+        currFree += c[currCow++];
+        while(currStore < M && currFree) {
+            int dec = min(stores[currStore].S, currFree);
+            currFree -= dec;
+            curr += stores[currStore].F * dec;
+            stores[currStore].S -= dec;
+            if(stores[currStore].S == 0) currStore++;
+        }
+        res = max(res, curr);
     }
+    fout << res << endl;
     return 0;
 }
