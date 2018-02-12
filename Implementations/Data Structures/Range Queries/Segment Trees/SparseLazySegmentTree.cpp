@@ -14,7 +14,7 @@ struct LazySegmentTree {
         this->e = e;
     }
     
-    void propogateLazy() {
+    void propagateLazy() {
         int mid = (s + e) >> 1;
         if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
         if(rChild == NULL) rChild = new LazySegmentTree(mid, e);
@@ -31,7 +31,7 @@ struct LazySegmentTree {
             lazy += v;
             return;
         }
-        if(lazy != 0) propogateLazy();
+        if(lazy != 0) propagateLazy();
         int mid = (s + e) >> 1;
         if(l < mid) {
             if(lChild == NULL) lChild = new LazySegmentTree(s, mid);
@@ -45,7 +45,7 @@ struct LazySegmentTree {
 
     ll query(int l, int r) {
         if(l == s && r == e) return val;
-        if(lazy != 0) propogateLazy();
+        if(lazy != 0) propagateLazy();
         int mid = (s + e) >> 1;
         ll total = 0;
         if(l < mid && lChild != NULL) total += lChild->query(l, min(mid, r));
