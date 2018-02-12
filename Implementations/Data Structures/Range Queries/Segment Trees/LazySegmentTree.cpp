@@ -11,7 +11,7 @@ struct LazySegmentTree {
         memset(lazy, 0, 2 * sz * sizeof(ll));
     }
 
-    void propogateLazy(int idx, int s, int e, int mid) {
+    void propagateLazy(int idx, int s, int e, int mid) {
         tree[2 * idx] += (mid - s) * lazy[idx];
         tree[2 * idx + 1] += (e - mid) * lazy[idx];
         lazy[2 * idx] += lazy[idx];
@@ -26,7 +26,7 @@ struct LazySegmentTree {
             return;
         }
         int mid = (s + e) >> 1;
-        propogateLazy(idx, s, e, mid);
+        propagateLazy(idx, s, e, mid);
         if(l < mid) update(2 * idx, s, mid, l, min(r, mid), v);
         if(r > mid) update(2 * idx + 1, mid, e, max(l, mid), r, v);
     }
@@ -38,7 +38,7 @@ struct LazySegmentTree {
     ll query(int idx, int s, int e, int l, int r) {
         if(l == s && r == e) return tree[idx];
         int mid = (s + e) >> 1;
-        propogateLazy(idx, s, e, mid);
+        propagateLazy(idx, s, e, mid);
         ll total = 0;
         if(l < mid) total += query(2 * idx, s, mid, l, min(mid, r));
         if(r > mid) total += query(2 * idx + 1, mid, e, max(mid, l), r);
