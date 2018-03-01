@@ -1,5 +1,7 @@
 # Performance on Past Competitions
 ## 2017 - 2018
+### February 2018
+![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 428
 ### Janary 2018
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 697
 ### December 2017
