@@ -62,7 +62,7 @@ int n, m, minArea;
 
 struct Figure {
 
-    char **color;
+    short **color;
     int **pref;
     int rows, cols;
     pll hash = MP(0, 0);
@@ -71,36 +71,25 @@ struct Figure {
     Figure(int rows = 0, int cols = 0) {
         this->rows = rows;
         this->cols = cols;
-        color = new char*[rows];
-        F0R(i, rows) color[i] = new char[cols];
+        color = new short*[rows];
+        F0R(i, rows) color[i] = new short[cols];
         pref = new int*[rows];
         F0R(i, rows) pref[i] = new int[cols];
     }
 
     void doCalculations() {
         F0R(r, rows) F0R(c, cols) {
-            pref[r][c] = color[r][c] != '.';
+            pref[r][c] = color[r][c] > 0;
             if(c > 0)
                 pref[r][c] += pref[r][c - 1];
             else if(r > 0)
                 pref[r][c] += pref[r - 1][cols - 1];
-            if(color[r][c] != '.')
+            if(color[r][c] > 0)
                 bottomRight = MP(r, c);
         }
-        F0R(r, n) F0R(c, m) {
-            if(r < rows && c < cols && color[r][c] != '.')
-                hash = hash + (powPrime[r * m + c] * (color[r][c] - 'a' + 1));
-        }
+        F0R(r, n) F0R(c, m) if(r < rows && c < cols)
+                hash = hash + (powPrime[r * m + c] * color[r][c]);
     }
-
-    void print() {
-        F0R(r, rows) {
-            F0R(c, cols) cout << color[r][c];
-            cout << endl;
-        }
-        cout << endl;
-    }
-
 };
 
 struct FigureGroup {
@@ -236,7 +225,7 @@ Figure readFig() {
         minC = min(j, minC), maxC = max(j, maxC);
     }
     Figure res(maxR - minR + 1, maxC - minC + 1);
-    F0R(i, maxR - minR + 1) F0R(j, maxC - minC + 1) res.color[i][j] = color[minR + i][minC + j];
+    F0R(i, maxR - minR + 1) F0R(j, maxC - minC + 1) res.color[i][j] = color[minR + i][minC + j] == '.'?0:(color[minR + i][minC + j] - 'a' + 1);
     return res;
 }
 
