@@ -88,7 +88,7 @@ struct Figure {
                 bottomRight = MP(r, c);
         }
         F0R(r, n) F0R(c, m) if(r < rows && c < cols)
-                hash = hash + (powPrime[r * m + c] * color[r][c]);
+            hash = hash + (powPrime[r * m + c] * color[r][c]);
     }
 };
 
@@ -121,38 +121,16 @@ ifstream fin("bcs.in");
 ofstream fout("bcs.out");
 
 int k;
-bool tripleWorks[MAXK][MAXK][MAXK];
 
 Figure cow;
 FigureGroup pieces[MAXK];
 
+bool calculated[8 * MAXK][8 * MAXK];
+pll finalHash[8 * MAXK][8 * MAXK];
+pii finalOffset[8 * MAXK][8 * MAXK];
+
 int area(Figure f) {
     return f.pref[f.rows - 1][f.cols - 1];
-}
-
-void addAnswer(int a, int b, int c) {
-    tripleWorks[min(a, min(b, c))][max(a,b) ^ max(a, c) ^ max(b, c)][max(a, max(b, c))] = 1;
-}
-
-bool works(int a, int b, int  c) {
-    return tripleWorks[min(a, min(b, c))][max(a,b) ^ max(a, c) ^ max(b, c)][max(a, max(b, c))];
-}
-
-void addWith(pll h, int a, int b, pii cBottomRight) {
-    F0R(c, k) {
-        if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + area(pieces[c].figs[0]) != area(cow)) continue;
-        if(c == a || c == b || works(a, b, c)) continue;
-        F0R(j, 8) {
-            Figure cFig = pieces[c].figs[j];
-            pii offset = cBottomRight - cFig.bottomRight;
-            if(offset.F < 0 || offset.F + cFig.rows > n || offset.S < 0 || offset.S + cFig.cols > m)
-                continue;
-            if(h == (powPrime[offset.F * m + offset.S] * cFig.hash)) {
-                addAnswer(a, b, c);
-                break;
-            }
-        }
-    }
 }
 
 int getPref(Figure f, pii offset, int r, int c) {
@@ -193,24 +171,29 @@ pii calcBottomRight(Figure f1, pii offset1, Figure f2, pii offset2) {
     return MP(lo / m, lo % m);
 }
 
-void work(Figure aFig, Figure bFig, int a, int b) {
-    pii aOffset = cow.bottomRight - aFig.bottomRight;
-    if(aOffset.F < 0 || aOffset.F + aFig.rows > n || aOffset.S < 0 || aOffset.S + aFig.cols > m)
-        return;
-    pll h = cow.hash - (aFig.hash * powPrime[m * aOffset.F + aOffset.S]);
-    pii bOffset = calcBottomRight(aFig, aOffset) - bFig.bottomRight;
-    if(bOffset.F < 0 || bOffset.F + bFig.rows > n || bOffset.S < 0 || bOffset.S + bFig.cols > m)
-        return;
-    h = h - (bFig.hash * powPrime[m * bOffset.F + bOffset.S]);
-    pii cBottomRight = calcBottomRight(aFig, aOffset, bFig, bOffset);
-    addWith(h, a, b, cBottomRight);
+bool works(Figure aFig, Figure bFig, Figure cFig, int a, int b) {
+    if(!calculated[a][b]) {
+        pii aOffset = cow.bottomRight - aFig.bottomRight;
+        if(aOffset.F < 0 || aOffset.F + aFig.rows > n || aOffset.S < 0 || aOffset.S + aFig.cols > m)
+            return 0;
+        finalHash[a][b] = cow.hash - (aFig.hash * powPrime[m * aOffset.F + aOffset.S]);
+        pii bOffset = calcBottomRight(aFig, aOffset) - bFig.bottomRight;
+        if(bOffset.F < 0 || bOffset.F + bFig.rows > n || bOffset.S < 0 || bOffset.S + bFig.cols > m)
+            return 0;
+        finalHash[a][b] = finalHash[a][b] - (bFig.hash * powPrime[m * bOffset.F + bOffset.S]);
+        finalOffset[a][b] = calcBottomRight(aFig, aOffset, bFig, bOffset);
+        calculated[a][b] = 1;
+    }
+    pii cOffset = finalOffset[a][b] - cFig.bottomRight;
+    if(cOffset.F < 0 || cOffset.F + cFig.rows > n || cOffset.S < 0 || cOffset.S + cFig.cols > m)
+        return 0;
+    return finalHash[a][b] == cFig.hash * powPrime[cOffset.F * m + cOffset.S];
 }
 
-void test(int a, int b) {
-    if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + minArea > area(cow))
-        return;
-    F0R(aRot, 8) F0R(bRot, 8) work(pieces[a].figs[aRot], pieces[b].figs[bRot], a, b);
-    F0R(aRot, 8) F0R(bRot, 8) work(pieces[b].figs[bRot], pieces[a].figs[aRot], b, a);
+bool worksOrdered(int a, int b, int c) {
+    F0R(aRot, 8) F0R(bRot, 8) F0R(cRot, 8) if(works(pieces[a].figs[aRot], pieces[b].figs[bRot], pieces[c].figs[cRot], a * 8 + aRot, b * 8 + bRot))
+        return 1;
+    return 0;
 }
 
 Figure readFig() {
@@ -229,8 +212,22 @@ Figure readFig() {
     return res;
 }
 
-void print(pll p) {
-    cout << "(" << p.F << ", " << p.S << ")" << endl;
+bool worksUnordered(int a, int b, int c) {
+    if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + area(pieces[c].figs[0]) != area(cow))
+        return 0;
+    if(worksOrdered(a, b, c))
+        return 1;
+    if(worksOrdered(a, c, b))
+        return 1;
+    if(worksOrdered(b, a, c))
+        return 1;
+    if(worksOrdered(b, c, a))
+        return 1;
+    if(worksOrdered(c, a, b))
+        return 1;
+    if(worksOrdered(c, b, a))
+        return 1;
+    return 0;
 }
 
 int main() {
@@ -243,9 +240,8 @@ int main() {
     minArea = INT_MAX;
     F0R(i, k) pieces[i] = FigureGroup(readFig());
     F0R(i, k) minArea = min(minArea, area(pieces[i].figs[0]));
-    F0R(a, k) FOR(b, a + 1, k) test(a, b);
     int res = 0;
-    F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(tripleWorks[a][b][c])
+    F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(worksUnordered(a, b, c))
         res++;
     fout << res << endl;
     return 0;
