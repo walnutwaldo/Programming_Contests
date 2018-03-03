@@ -58,7 +58,7 @@ pii operator -(pii p1, pii p2) {
     return MP(p1.F - p2.F, p1.S - p2.S);
 }
 
-int n, m;
+int n, m, minArea;
 
 struct Figure {
 
@@ -134,8 +134,6 @@ ofstream fout("bcs.out");
 int k;
 bool tripleWorks[MAXK][MAXK][MAXK];
 
-map<pll, vi> mp;
-
 Figure cow;
 FigureGroup pieces[MAXK];
 
@@ -147,10 +145,25 @@ void addAnswer(int a, int b, int c) {
     tripleWorks[min(a, min(b, c))][max(a,b) ^ max(a, c) ^ max(b, c)][max(a, max(b, c))] = 1;
 }
 
-void addWith(pll h, int a, int b) {
-    if(mp.count(h))
-        for(const int c : mp[h])
-            addAnswer(a, b, c);
+bool works(int a, int b, int  c) {
+    return tripleWorks[min(a, min(b, c))][max(a,b) ^ max(a, c) ^ max(b, c)][max(a, max(b, c))];
+}
+
+void addWith(pll h, int a, int b, pii cBottomRight) {
+    F0R(c, k) {
+        if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + area(pieces[c].figs[0]) != area(cow)) continue;
+        if(c == a || c == b || works(a, b, c)) continue;
+        F0R(j, 8) {
+            Figure cFig = pieces[c].figs[j];
+            pii offset = cBottomRight - cFig.bottomRight;
+            if(offset.F < 0 || offset.F + cFig.rows > n || offset.S < 0 || offset.S + cFig.cols > m)
+                continue;
+            if(h == (powPrime[offset.F * m + offset.S] * cFig.hash)) {
+                addAnswer(a, b, c);
+                break;
+            }
+        }
+    }
 }
 
 int getPref(Figure f, pii offset, int r, int c) {
@@ -178,6 +191,19 @@ pii calcBottomRight(Figure f, pii offset) {
     return MP(lo / m, lo % m);
 }
 
+pii calcBottomRight(Figure f1, pii offset1, Figure f2, pii offset2) {
+    int cutoff = area(cow) - area(f1) - area(f2);
+    int lo = 0, hi = n * m - 1;
+    while(lo < hi) {
+        int mid = (lo + hi) >> 1;
+        if(cow.pref[mid / m][mid % m] - getPref(f1, offset1, mid / m, mid % m) - getPref(f2, offset2, mid / m, mid % m) == cutoff)
+            hi = mid;
+        else
+            lo = mid + 1;
+    }
+    return MP(lo / m, lo % m);
+}
+
 void work(Figure aFig, Figure bFig, int a, int b) {
     pii aOffset = cow.bottomRight - aFig.bottomRight;
     if(aOffset.F < 0 || aOffset.F + aFig.rows > n || aOffset.S < 0 || aOffset.S + aFig.cols > m)
@@ -187,12 +213,12 @@ void work(Figure aFig, Figure bFig, int a, int b) {
     if(bOffset.F < 0 || bOffset.F + bFig.rows > n || bOffset.S < 0 || bOffset.S + bFig.cols > m)
         return;
     h = h - (bFig.hash * powPrime[m * bOffset.F + bOffset.S]);
-    addWith(h, a, b);
+    pii cBottomRight = calcBottomRight(aFig, aOffset, bFig, bOffset);
+    addWith(h, a, b, cBottomRight);
 }
 
 void test(int a, int b) {
-    cout << a << " " << b << endl;
-    if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) >= area(cow))
+    if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + minArea > area(cow))
         return;
     F0R(aRot, 8) F0R(bRot, 8) work(pieces[a].figs[aRot], pieces[b].figs[bRot], a, b);
     F0R(aRot, 8) F0R(bRot, 8) work(pieces[b].figs[bRot], pieces[a].figs[aRot], b, a);
@@ -225,19 +251,9 @@ int main() {
     powPrime[0] = MP(1, 1);
     FOR(i, 1, n * m + 1) powPrime[i] = prime * powPrime[i - 1];
     cow.doCalculations();
+    minArea = INT_MAX;
     F0R(i, k) pieces[i] = FigureGroup(readFig());
-    F0R(i, k) F0R(j, 8) {
-        cout << i << " " << j << endl;
-        Figure f = pieces[i].figs[j];
-        F0R(rShift, n - f.rows + 1) F0R(cShift, m - f.cols + 1) {
-            int po = rShift * m + cShift;
-            pll h = f.hash * powPrime[po];
-            if(!mp.count(h))
-                mp.insert(MP(h, vi()));
-            if(mp[h].empty() || mp[h].back() != i)
-                mp[h].PB(i);
-        }
-    }
+    F0R(i, k) minArea = min(minArea, area(pieces[i].figs[0]));
     F0R(a, k) FOR(b, a + 1, k) test(a, b);
     int res = 0;
     F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(tripleWorks[a][b][c])
