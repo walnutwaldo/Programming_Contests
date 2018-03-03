@@ -166,27 +166,27 @@ pii calcBottomRight(Figure f1, pii offset1, Figure f2, pii offset2) {
     return MP(lo / m, lo % m);
 }
 
-bool works(Figure aFig, Figure bFig, Figure cFig, int a, int b) {
-    if(!calculated[a][b]) {
-        pii aOffset = cow.bottomRight - aFig.bottomRight;
-        if(aOffset.F < 0 || aOffset.F + aFig.rows > n || aOffset.S < 0 || aOffset.S + aFig.cols > m)
+bool works(int a, int aRot, int b, int bRot, int c, int cRot) {
+    if(!calculated[a * 8 + aRot][b * 8 + bRot]) {
+        pii aOffset = cow.bottomRight - pieces[a][aRot].bottomRight;
+        if(aOffset.F < 0 || aOffset.F + pieces[a][aRot].rows > n || aOffset.S < 0 || aOffset.S + pieces[a][aRot].cols > m)
             return 0;
-        finalHash[a][b] = cow.hash - (aFig.hash * powPrime[m * aOffset.F + aOffset.S]);
-        pii bOffset = calcBottomRight(aFig, aOffset) - bFig.bottomRight;
-        if(bOffset.F < 0 || bOffset.F + bFig.rows > n || bOffset.S < 0 || bOffset.S + bFig.cols > m)
+        finalHash[a * 8 + aRot][b * 8 + bRot] = cow.hash - (pieces[a][aRot].hash * powPrime[m * aOffset.F + aOffset.S]);
+        pii bOffset = calcBottomRight(pieces[a][aRot], aOffset) - pieces[b][bRot].bottomRight;
+        if(bOffset.F < 0 || bOffset.F + pieces[b][bRot].rows > n || bOffset.S < 0 || bOffset.S + pieces[b][bRot].cols > m)
             return 0;
-        finalHash[a][b] = finalHash[a][b] - (bFig.hash * powPrime[m * bOffset.F + bOffset.S]);
-        finalOffset[a][b] = calcBottomRight(aFig, aOffset, bFig, bOffset);
-        calculated[a][b] = 1;
+        finalHash[a * 8 + aRot][b * 8 + bRot] = finalHash[a * 8 + aRot][b * 8 + bRot] - (pieces[b][bRot].hash * powPrime[m * bOffset.F + bOffset.S]);
+        finalOffset[a * 8 + aRot][b * 8 + bRot] = calcBottomRight(pieces[a][aRot], aOffset, pieces[b][bRot], bOffset);
+        calculated[a * 8 + aRot][b * 8 + bRot] = 1;
     }
-    pii cOffset = finalOffset[a][b] - cFig.bottomRight;
-    if(cOffset.F < 0 || cOffset.F + cFig.rows > n || cOffset.S < 0 || cOffset.S + cFig.cols > m)
+    pii cOffset = finalOffset[a * 8 + aRot][b * 8 + bRot] - pieces[c][cRot].bottomRight;
+    if(cOffset.F < 0 || cOffset.F + pieces[c][cRot].rows > n || cOffset.S < 0 || cOffset.S + pieces[c][cRot].cols > m)
         return 0;
-    return finalHash[a][b] == cFig.hash * powPrime[cOffset.F * m + cOffset.S];
+    return finalHash[a * 8 + aRot][b * 8 + bRot] == pieces[c][cRot].hash * powPrime[cOffset.F * m + cOffset.S];
 }
 
 bool worksOrdered(int a, int b, int c) {
-    F0R(aRot, 8) F0R(bRot, 8) F0R(cRot, 8) if(works(pieces[a][aRot], pieces[b][bRot], pieces[c][cRot], a * 8 + aRot, b * 8 + bRot))
+    F0R(aRot, 8) F0R(bRot, 8) F0R(cRot, 8) if(works(a, aRot, b, bRot, c, cRot))
         return 1;
     return 0;
 }
