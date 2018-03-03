@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#pragma pack(1)
 
 #define SQ(a) (a)*(a)
 
@@ -67,7 +68,7 @@ struct Figure {
     pll hash = MP(0, 0);
     pii bottomRight;
 
-    Figure(short** color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0, bool flipped = 0, int rot = 0) {
+    Figure(string* color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0, bool flipped = 0, int rot = 0) {
         this->rows = rHi - rLo;
         this->cols = cHi - cLo;
         if(rot & 1)
@@ -77,7 +78,7 @@ struct Figure {
         doCalculations(color, rLo, cLo, flipped, rot);
     }
 
-    short getColor(short** color, int rLo, int cLo, bool flipped, int rot, int r, int c) {
+    char getColor(string* color, int rLo, int cLo, bool flipped, int rot, int r, int c) {
         int rr = rows, cc = cols;
         int tmp;
         F0R(i, rot) {
@@ -91,7 +92,7 @@ struct Figure {
         return color[rLo + r][cLo + c];
     }
 
-    void doCalculations(short** color, int rLo, int cLo, bool flipped, int rot) {
+    void doCalculations(string* color, int rLo, int cLo, bool flipped, int rot) {
         F0R(r, rows) F0R(c, cols) {
             if(getColor(color, rLo, cLo, flipped, rot, r, c) > 0)
                 pref[r][c] = 1, bottomRight = MP(r, c);
@@ -115,11 +116,10 @@ int k;
 Figure cow;
 Figure pieces[MAXK][8];
 
-bool calculated[8 * MAXK][8 * MAXK];
 pll finalHash[8 * MAXK][8 * MAXK];
 pii finalOffset[8 * MAXK][8 * MAXK];
 
-void createGroup(short **color, int rLo, int rHi, int cLo, int cHi, int i) {
+void createGroup(string *color, int rLo, int rHi, int cLo, int cHi, int i) {
         F0R(j, 4) pieces[i][j] = Figure(color, rLo, rHi, cLo, cHi, 0, j);
         F0R(j, 4) pieces[i][j + 4] = Figure(color, rLo, rHi, cLo, cHi, 1, j);
 }
@@ -142,9 +142,9 @@ int getPref(Figure f, pii offset, int r, int c) {
 
 pii calcBottomRight(Figure f, pii offset) {
     int cutoff = area(cow) - area(f);
-    int lo = 0, hi = n * m - 1;
+    int lo = 0, hi = n * m - 1, mid;
     while(lo < hi) {
-        int mid = (lo + hi) >> 1;
+        mid = (lo + hi) >> 1;
         if(cow.pref[mid / m][mid % m] - getPref(f, offset, mid / m, mid % m) == cutoff)
             hi = mid;
         else
@@ -155,9 +155,9 @@ pii calcBottomRight(Figure f, pii offset) {
 
 pii calcBottomRight(Figure f1, pii offset1, Figure f2, pii offset2) {
     int cutoff = area(cow) - area(f1) - area(f2);
-    int lo = 0, hi = n * m - 1;
+    int lo = 0, hi = n * m - 1, mid;
     while(lo < hi) {
-        int mid = (lo + hi) >> 1;
+        mid = (lo + hi) >> 1;
         if(cow.pref[mid / m][mid % m] - getPref(f1, offset1, mid / m, mid % m) - getPref(f2, offset2, mid / m, mid % m) == cutoff)
             hi = mid;
         else
@@ -167,7 +167,7 @@ pii calcBottomRight(Figure f1, pii offset1, Figure f2, pii offset2) {
 }
 
 bool works(int a, int aRot, int b, int bRot, int c, int cRot) {
-    if(!calculated[a * 8 + aRot][b * 8 + bRot]) {
+    if(finalOffset[a * 8 + aRot][b * 8 + bRot] == MP(-1, -1)) {
         pii aOffset = cow.bottomRight - pieces[a][aRot].bottomRight;
         if(aOffset.F < 0 || aOffset.F + pieces[a][aRot].rows > n || aOffset.S < 0 || aOffset.S + pieces[a][aRot].cols > m)
             return 0;
@@ -177,7 +177,6 @@ bool works(int a, int aRot, int b, int bRot, int c, int cRot) {
             return 0;
         finalHash[a * 8 + aRot][b * 8 + bRot] = finalHash[a * 8 + aRot][b * 8 + bRot] - (pieces[b][bRot].hash * powPrime[m * bOffset.F + bOffset.S]);
         finalOffset[a * 8 + aRot][b * 8 + bRot] = calcBottomRight(pieces[a][aRot], aOffset, pieces[b][bRot], bOffset);
-        calculated[a * 8 + aRot][b * 8 + bRot] = 1;
     }
     pii cOffset = finalOffset[a * 8 + aRot][b * 8 + bRot] - pieces[c][cRot].bottomRight;
     if(cOffset.F < 0 || cOffset.F + pieces[c][cRot].rows > n || cOffset.S < 0 || cOffset.S + pieces[c][cRot].cols > m)
@@ -191,15 +190,14 @@ bool worksOrdered(int a, int b, int c) {
     return 0;
 }
 
-pair<short**, pair<pii, pii>> readFig() {
+pair<string*, pair<pii, pii>> readFig() {
     int r, c;
     fin >> r >> c;
-    short **color = new short*[r];
-    F0R(i, r) color[i] = new short[c];
+    string *color = new string[r];
     char ch;
     F0R(i, r) F0R(j, c) {
         fin >> ch;
-        color[i][j] = ch - '.';
+        color[i].PB(ch - '.');
     }
     int minR = INT_MAX, maxR = 0, minC = INT_MAX, maxC = 0;
     F0R(i, r) F0R(j, c) if(color[i][j] > 0) {
@@ -229,13 +227,14 @@ bool worksUnordered(int a, int b, int c) {
 
 int main() {
     fin >> k;
-    pair<short**, pair<pii, pii>> cowP = readFig();
+    F0R(i, 8 * k) F0R(j, 8 * k) finalOffset[i][j] = MP(-1, -1);
+    pair<string*, pair<pii, pii>> cowP = readFig();
     n = cowP.S.F.S - cowP.S.F.F, m = cowP.S.S.S - cowP.S.S.F;
     powPrime[0] = MP(1, 1);
     FOR(i, 1, n * m + 1) powPrime[i] = prime * powPrime[i - 1];
     cow = Figure(cowP.F, cowP.S.F.F, cowP.S.F.S, cowP.S.S.F, cowP.S.S.S, false, 0);
     F0R(i, k) {
-        pair<short**, pair<pii, pii>> p = readFig();
+        pair<string*, pair<pii, pii>> p = readFig();
         createGroup(p.F, p.S.F.F, p.S.F.S, p.S.S.F, p.S.S.S, i);
     }
     int res = 0;
