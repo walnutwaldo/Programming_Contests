@@ -107,28 +107,22 @@ struct Figure {
     }
 };
 
-struct FigureGroup {
-
-    Figure figs[8];
-
-    FigureGroup(short **color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0) {
-        F0R(i, 4) figs[i] = Figure(color, rLo, rHi, cLo, cHi, 0, i);
-        F0R(i, 4) figs[i + 4] = Figure(color, rLo, rHi, cLo, cHi, 1, i);
-    }
-
-};
-
 ifstream fin("bcs.in");
 ofstream fout("bcs.out");
 
 int k;
 
 Figure cow;
-FigureGroup pieces[MAXK];
+Figure pieces[MAXK][8];
 
 bool calculated[8 * MAXK][8 * MAXK];
 pll finalHash[8 * MAXK][8 * MAXK];
 pii finalOffset[8 * MAXK][8 * MAXK];
+
+void createGroup(short **color, int rLo, int rHi, int cLo, int cHi, int i) {
+        F0R(j, 4) pieces[i][j] = Figure(color, rLo, rHi, cLo, cHi, 0, j);
+        F0R(j, 4) pieces[i][j + 4] = Figure(color, rLo, rHi, cLo, cHi, 1, j);
+}
 
 int area(Figure f) {
     return f.pref[f.rows - 1][f.cols - 1];
@@ -192,7 +186,7 @@ bool works(Figure aFig, Figure bFig, Figure cFig, int a, int b) {
 }
 
 bool worksOrdered(int a, int b, int c) {
-    F0R(aRot, 8) F0R(bRot, 8) F0R(cRot, 8) if(works(pieces[a].figs[aRot], pieces[b].figs[bRot], pieces[c].figs[cRot], a * 8 + aRot, b * 8 + bRot))
+    F0R(aRot, 8) F0R(bRot, 8) F0R(cRot, 8) if(works(pieces[a][aRot], pieces[b][bRot], pieces[c][cRot], a * 8 + aRot, b * 8 + bRot))
         return 1;
     return 0;
 }
@@ -216,7 +210,7 @@ pair<short**, pair<pii, pii>> readFig() {
 }
 
 bool worksUnordered(int a, int b, int c) {
-    if(area(pieces[a].figs[0]) + area(pieces[b].figs[0]) + area(pieces[c].figs[0]) != area(cow))
+    if(area(pieces[a][0]) + area(pieces[b][0]) + area(pieces[c][0]) != area(cow))
         return 0;
     if(worksOrdered(a, b, c))
         return 1;
@@ -242,7 +236,7 @@ int main() {
     cow = Figure(cowP.F, cowP.S.F.F, cowP.S.F.S, cowP.S.S.F, cowP.S.S.S, false, 0);
     F0R(i, k) {
         pair<short**, pair<pii, pii>> p = readFig();
-        pieces[i] = FigureGroup(p.F, p.S.F.F, p.S.F.S, p.S.S.F, p.S.S.S);
+        createGroup(p.F, p.S.F.F, p.S.F.S, p.S.S.F, p.S.S.S, i);
     }
     int res = 0;
     F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(worksUnordered(a, b, c))
