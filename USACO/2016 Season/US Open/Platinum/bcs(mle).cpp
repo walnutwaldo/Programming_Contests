@@ -67,7 +67,7 @@ struct Figure {
     pll hash = MP(0, 0);
     pii bottomRight;
 
-    Figure(char** color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0, bool flipped = 0, int rot = 0) {
+    Figure(short** color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0, bool flipped = 0, int rot = 0) {
         this->rows = rHi - rLo;
         this->cols = cHi - cLo;
         if(rot & 1)
@@ -77,7 +77,7 @@ struct Figure {
         doCalculations(color, rLo, cLo, flipped, rot);
     }
 
-    char getColor(char** color, int rLo, int cLo, bool flipped, int rot, int r, int c) {
+    short getColor(short** color, int rLo, int cLo, bool flipped, int rot, int r, int c) {
         int rr = rows, cc = cols;
         int tmp;
         F0R(i, rot) {
@@ -91,9 +91,9 @@ struct Figure {
         return color[rLo + r][cLo + c];
     }
 
-    void doCalculations(char** color, int rLo, int cLo, bool flipped, int rot) {
+    void doCalculations(short** color, int rLo, int cLo, bool flipped, int rot) {
         F0R(r, rows) F0R(c, cols) {
-            if(getColor(color, rLo, cLo, flipped, rot, r, c) > '.')
+            if(getColor(color, rLo, cLo, flipped, rot, r, c) > 0)
                 pref[r][c] = 1, bottomRight = MP(r, c);
             else
                 pref[r][c] = 0;
@@ -103,7 +103,7 @@ struct Figure {
                 pref[r][c] += pref[r - 1][cols - 1];
         }
         F0R(r, n) F0R(c, m) if(r < rows && c < cols)
-            hash = hash + (powPrime[r * m + c] * (getColor(color, rLo, cLo, flipped, rot, r, c) - '.'));
+            hash = hash + (powPrime[r * m + c] * getColor(color, rLo, cLo, flipped, rot, r, c));
     }
 };
 
@@ -111,7 +111,7 @@ struct FigureGroup {
 
     Figure figs[8];
 
-    FigureGroup(char **color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0) {
+    FigureGroup(short **color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0) {
         F0R(i, 4) figs[i] = Figure(color, rLo, rHi, cLo, cHi, 0, i);
         F0R(i, 4) figs[i + 4] = Figure(color, rLo, rHi, cLo, cHi, 1, i);
     }
@@ -197,14 +197,18 @@ bool worksOrdered(int a, int b, int c) {
     return 0;
 }
 
-pair<char**, pair<pii, pii>> readFig() {
+pair<short**, pair<pii, pii>> readFig() {
     int r, c;
     fin >> r >> c;
-    char **color = new char*[r];
-    F0R(i, r) color[i] = new char[c];
-    F0R(i, r) F0R(j, c) fin >> color[i][j];
+    short **color = new short*[r];
+    F0R(i, r) color[i] = new short[c];
+    char ch;
+    F0R(i, r) F0R(j, c) {
+        fin >> ch;
+        color[i][j] = ch - '.';
+    }
     int minR = INT_MAX, maxR = 0, minC = INT_MAX, maxC = 0;
-    F0R(i, r) F0R(j, c) if(color[i][j] != '.') {
+    F0R(i, r) F0R(j, c) if(color[i][j] > 0) {
         minR = min(i, minR), maxR = max(i, maxR);
         minC = min(j, minC), maxC = max(j, maxC);
     }
@@ -231,13 +235,13 @@ bool worksUnordered(int a, int b, int c) {
 
 int main() {
     fin >> k;
-    pair<char**, pair<pii, pii>> cowP = readFig();
+    pair<short**, pair<pii, pii>> cowP = readFig();
     n = cowP.S.F.S - cowP.S.F.F, m = cowP.S.S.S - cowP.S.S.F;
     powPrime[0] = MP(1, 1);
     FOR(i, 1, n * m + 1) powPrime[i] = prime * powPrime[i - 1];
     cow = Figure(cowP.F, cowP.S.F.F, cowP.S.F.S, cowP.S.S.F, cowP.S.S.S, false, 0);
     F0R(i, k) {
-        pair<char**, pair<pii, pii>> p = readFig();
+        pair<short**, pair<pii, pii>> p = readFig();
         pieces[i] = FigureGroup(p.F, p.S.F.F, p.S.F.S, p.S.S.F, p.S.S.S);
     }
     int res = 0;
