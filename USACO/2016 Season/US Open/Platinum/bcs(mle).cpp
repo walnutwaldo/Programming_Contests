@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#pragma pack(1)
 
 #define SQ(a) (a)*(a)
 
