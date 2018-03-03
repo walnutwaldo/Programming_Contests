@@ -35,7 +35,7 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef complex<ld> point;
 
-const pll prime = MP(73, 97);
+const pll prime = MP(101, 97);
 pll powPrime[SQ(MAXN) + 1];
 
 pll operator +(pll p1, pll p2) {
@@ -62,33 +62,48 @@ int n, m, minArea;
 
 struct Figure {
 
-    short **color;
     int **pref;
     int rows, cols;
     pll hash = MP(0, 0);
     pii bottomRight;
 
-    Figure(int rows = 0, int cols = 0) {
-        this->rows = rows;
-        this->cols = cols;
-        color = new short*[rows];
-        F0R(i, rows) color[i] = new short[cols];
+    Figure(char** color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0, bool flipped = 0, int rot = 0) {
+        this->rows = rHi - rLo;
+        this->cols = cHi - cLo;
+        if(rot & 1)
+            swap(rows, cols);
         pref = new int*[rows];
         F0R(i, rows) pref[i] = new int[cols];
+        doCalculations(color, rLo, cLo, flipped, rot);
     }
 
-    void doCalculations() {
+    char getColor(char** color, int rLo, int cLo, bool flipped, int rot, int r, int c) {
+        int rr = rows, cc = cols;
+        int tmp;
+        F0R(i, rot) {
+            tmp = r;
+            r = cc - c - 1;
+            c = tmp;
+            swap(cc, rr);
+        }
+        if(flipped)
+            c = cc - c - 1;
+        return color[rLo + r][cLo + c];
+    }
+
+    void doCalculations(char** color, int rLo, int cLo, bool flipped, int rot) {
         F0R(r, rows) F0R(c, cols) {
-            pref[r][c] = color[r][c] > 0;
+            if(getColor(color, rLo, cLo, flipped, rot, r, c) > '.')
+                pref[r][c] = 1, bottomRight = MP(r, c);
+            else
+                pref[r][c] = 0;
             if(c > 0)
                 pref[r][c] += pref[r][c - 1];
             else if(r > 0)
                 pref[r][c] += pref[r - 1][cols - 1];
-            if(color[r][c] > 0)
-                bottomRight = MP(r, c);
         }
         F0R(r, n) F0R(c, m) if(r < rows && c < cols)
-            hash = hash + (powPrime[r * m + c] * color[r][c]);
+            hash = hash + (powPrime[r * m + c] * (getColor(color, rLo, cLo, flipped, rot, r, c) - '.'));
     }
 };
 
@@ -96,23 +111,9 @@ struct FigureGroup {
 
     Figure figs[8];
 
-    FigureGroup(Figure f = Figure()) {
-        figs[0] = f;
-        figs[1] = flip(figs[0]);
-        FOR(i, 2, 8) figs[i] = rot(figs[i - 2]);
-        F0R(i, 8) figs[i].doCalculations();
-    }
-
-    Figure rot(Figure a) {
-        Figure res(a.cols, a.rows);
-        F0R(i, a.rows) F0R(j, a.cols) res.color[j][a.rows - i - 1] = a.color[i][j];
-        return res;
-    }
-
-    Figure flip(Figure a) {
-        Figure res(a.rows, a.cols);
-        F0R(i, a.rows) F0R(j, a.cols) res.color[i][a.cols - j - 1] = a.color[i][j];
-        return res;
+    FigureGroup(char **color = NULL, int rLo = 0, int rHi = 0, int cLo = 0, int cHi = 0) {
+        F0R(i, 4) figs[i] = Figure(color, rLo, rHi, cLo, cHi, 0, i);
+        F0R(i, 4) figs[i + 4] = Figure(color, rLo, rHi, cLo, cHi, 1, i);
     }
 
 };
@@ -196,7 +197,7 @@ bool worksOrdered(int a, int b, int c) {
     return 0;
 }
 
-Figure readFig() {
+pair<char**, pair<pii, pii>> readFig() {
     int r, c;
     fin >> r >> c;
     char **color = new char*[r];
@@ -207,9 +208,7 @@ Figure readFig() {
         minR = min(i, minR), maxR = max(i, maxR);
         minC = min(j, minC), maxC = max(j, maxC);
     }
-    Figure res(maxR - minR + 1, maxC - minC + 1);
-    F0R(i, maxR - minR + 1) F0R(j, maxC - minC + 1) res.color[i][j] = color[minR + i][minC + j] == '.'?0:(color[minR + i][minC + j] - 'a' + 1);
-    return res;
+    return MP(color, MP(MP(minR, maxR + 1), MP(minC, maxC + 1)));
 }
 
 bool worksUnordered(int a, int b, int c) {
@@ -232,14 +231,15 @@ bool worksUnordered(int a, int b, int c) {
 
 int main() {
     fin >> k;
-    cow = readFig();
-    n = cow.rows, m = cow.cols;
+    pair<char**, pair<pii, pii>> cowP = readFig();
+    n = cowP.S.F.S - cowP.S.F.F, m = cowP.S.S.S - cowP.S.S.F;
     powPrime[0] = MP(1, 1);
     FOR(i, 1, n * m + 1) powPrime[i] = prime * powPrime[i - 1];
-    cow.doCalculations();
-    minArea = INT_MAX;
-    F0R(i, k) pieces[i] = FigureGroup(readFig());
-    F0R(i, k) minArea = min(minArea, area(pieces[i].figs[0]));
+    cow = Figure(cowP.F, cowP.S.F.F, cowP.S.F.S, cowP.S.S.F, cowP.S.S.S, false, 0);
+    F0R(i, k) {
+        pair<char**, pair<pii, pii>> p = readFig();
+        pieces[i] = FigureGroup(p.F, p.S.F.F, p.S.F.S, p.S.S.F, p.S.S.S);
+    }
     int res = 0;
     F0R(a, k) FOR(b, a + 1, k) FOR(c, b + 1, k) if(worksUnordered(a, b, c))
         res++;
