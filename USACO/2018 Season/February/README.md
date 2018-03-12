@@ -13,9 +13,9 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Snow Boots | Unsolved          | Missing            |
-| Directory Traversal     | Unsolved          | Missing            |
-| Taming the Herd | Unsolved          | Missing            |
+| Snow Boots | Solved          | C++            |
+| Directory Traversal     | Solved          | C++            |
+| Taming the Herd | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
