@@ -8,8 +8,8 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Rest Stops | Solved          | C++            |
-| Snow Boots     | Unsolved          | Missing            |
-| Teleportation | Unsolved          | Missing           |
+| Snow Boots     | Solved          | C++            |
+| Teleportation | Solved          | C++           |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
