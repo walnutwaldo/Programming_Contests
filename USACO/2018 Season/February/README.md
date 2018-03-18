@@ -7,7 +7,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Rest Stops | Unsolved          | Missing            |
+| Rest Stops | Solved          | C++            |
 | Snow Boots     | Unsolved          | Missing            |
 | Teleportation | Unsolved          | Missing           |
 # Gold
