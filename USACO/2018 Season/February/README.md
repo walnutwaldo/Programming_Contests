@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Teleportation | Unsolved          | Missing            |
-| Hoofball     | Unsolved          | Missing            |
-| Taming the Herd | Unsolved          | Missing            |
+| Teleportation | Solved          | C++            |
+| Hoofball     | Solved          | C++            |
+| Taming the Herd | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
