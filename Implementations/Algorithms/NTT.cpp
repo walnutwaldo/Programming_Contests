@@ -2,8 +2,8 @@ namespace NTT {
 
     const int EXP = 23;
     const ull EXP_MULT = 119, NTT_MOD = (EXP_MULT << EXP) + 1;
-    ull rt[EXP + 1], invrt[EXP + 1];
     bool built;
+    ull rt[EXP + 1], invrt[EXP + 1];
 
     ull modPow(ull a, ull p) { return p ? modPow(SQ(a) % NTT_MOD, p >> 1) * (p & 1 ? a : 1) % NTT_MOD : 1; }
 
