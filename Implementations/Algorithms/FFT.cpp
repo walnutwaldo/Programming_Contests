@@ -1,26 +1,72 @@
 namespace FFT {
 
-const int MAX_DEG = 20;
-cld FFTBuild[1 << MAX_DEG][2], rt[(1 << MAX_DEG) + 1];
+    const int LG_MAXN = 20;
+    bool built;
+    cld rt[LG_MAXN + 1], invrt[LG_MAXN + 1];
 
-void buildRT() {
-    if(rt[0] == cld(1, 0)) return;
-    F0R(i, (1 << MAX_DEG) + 1) rt[i] = cld(cos(2 * i * PI / (1 << MAX_DEG)), sin(2 * i * PI / (1 << MAX_DEG)));
-}
-
-void fft(int neededDeg, cld* vals, int len) {
-    R0F(i, neededDeg + 1) {
-        int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndi = 1 << (neededDeg - i), llndim1 = llndi >> 1, rtp = lli << (MAX_DEG - neededDeg);
-        if(i == neededDeg) F0R(j, lli) FFTBuild[j][arr] = (j < len) ? vals[j] : 0;
-        else F0R(j, lli) F0R(k, llndi) FFTBuild[j + lli * k][arr] = FFTBuild[j + llil * (k % llndim1)][narr] + FFTBuild[j + lli + llil * (k % llndim1)][narr] * rt[rtp * k];
+    void buildRT() {
+        if(built) return;
+        built = 1;
+        R0F(i, LG_MAXN + 1) rt[i] = cld(cos(2 * PI / (1 << i)), sin(2 * PI / (1 << i)));
+        F0R(i, LG_MAXN + 1) invrt[i] = cld(1, 0) / rt[i];
     }
-}
 
-void invfft(int neededDeg, cld* vals, int len) {
-    reverse(rt, rt + (1 << MAX_DEG) + 1);
-    fft(neededDeg, vals, len);
-    reverse(rt, rt + (1 << MAX_DEG) + 1);
-    F0R(i, len) FFTBuild[i][0] /= len;
-}
+    int rev(int idx, int sz) {
+        int tmp = 1, res = 0;
+        sz >>= 1;
+        while(sz) {
+            if(sz & idx) res |= tmp;
+            sz >>= 1;
+            tmp <<= 1;
+        }
+        return res;
+    }
+
+    vector<cld> bitReverseCopy(vector<cld> val) {
+        vector<cld> res(val.size());
+        F0R(i, val.size()) res[i] = val[rev(i, val.size())];
+        return res;
+    }
+
+    vector<cld> fft(vector<cld> val) {
+        buildRT();
+        vector<cld> res = bitReverseCopy(val);
+        int n = res.size();
+        FOR(i, 1, 32 - __builtin_clz(n)) {
+            int m = 1 << i;
+            cld wm = rt[i];
+            for(int k = 0; k < n; k += m) {
+                cld w = 1;
+                F0R(j, m >> 1) {
+                    cld t = w * res[k + j + (m >> 1)];
+                    cld u = res[k + j];
+                    res[k + j] = u + t;
+                    res[k + j + (m >> 1)] = u - t;
+                    w *= wm;
+                }
+            }
+        }
+        return res;
+    }
+
+    vector<cld> invfft(vector<cld> val) {
+        swap(rt, invrt);
+        vector<cld> res = fft(val);
+        swap(rt, invrt);
+        ld u = 1.0 / val.size();
+        F0R(i, res.size()) res[i] *= u;
+        return res;
+    }
+
+    vector<cld> conv(vector<cld> a, vector<cld> b) {
+        int finalSZ = a.size() + b.size() - 1;
+        int neededSZ = 1 << (32 - __builtin_clz(finalSZ - 1));
+        a.resize(neededSZ), b.resize(neededSZ);
+        a = fft(a), b = fft(b);
+        F0R(i, neededSZ) a[i] *= b[i];
+        a = invfft(a);
+        a.resize(finalSZ);
+        return a;
+    }
 
 };
