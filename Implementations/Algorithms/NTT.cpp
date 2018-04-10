@@ -1,51 +1,95 @@
 namespace NTT {
 
-const int MAX_DEG = 20, EXP = 23;
-const ull EXP_MULT = 119;
-ull NTTMod = (EXP_MULT << EXP) + 1, NTTBuild[1 << MAX_DEG][2], rt[(1 << MAX_DEG) + 1];
+    const int EXP = 23;
+    const ull EXP_MULT = 119, NTT_MOD = (EXP_MULT << EXP) + 1;
+    ull rt[EXP + 1], invrt[EXP + 1];
+    bool built;
 
-ull modPow(ull a, ull p) { return p ? modPow(SQ(a) % NTTMod, p >> 1) * (p & 1 ? a : 1) % NTTMod : 1; }
+    ull modPow(ull a, ull p) { return p ? modPow(SQ(a) % NTT_MOD, p >> 1) * (p & 1 ? a : 1) % NTT_MOD : 1; }
 
-ull invMod(ull a) { return modPow(a, NTTMod - 2); }
+    ull invMod(ull a) { return modPow(a, NTT_MOD - 2); }
 
-ull findCyclic() {
-    vi multFactors;
-    ull temp = EXP_MULT;
-    for(int i = 2; i * i <= temp; i += 2) {
-        if(temp % i == 0) multFactors.PB(i);
-        while(temp % i == 0) temp /= i;
-        if(i == 2) i--;
+    ull findCyclic() {
+        vl multFactors;
+        ull temp = EXP_MULT;
+        for(ll i = 2; i * i <= temp; i += 2) {
+            if(temp % i == 0) multFactors.PB(i);
+            while(temp % i == 0) temp /= i;
+            if(i == 2) i--;
+        }
+        if(temp > 1) multFactors.PB(temp);
+        for(ll i = 2; i < NTT_MOD; i++) {
+            bool works = 1;
+            if(modPow(i, NTT_MOD >> 1) == 1) works = 0;
+            for(const int factor : multFactors) if(modPow(i, NTT_MOD / factor) == 1) works = 0;
+            if(works) return i;
+        }
     }
-    if(temp > 1) multFactors.PB(temp);
-    FOR(i, 2, NTTMod) {
-        bool works = 1;
-        if(modPow(i, NTTMod >> 1) == 1) works = 0;
-        for(const int factor : multFactors) if(modPow(i, NTTMod / factor) == 1) works = 0;
-        if(works) return i;
+
+    void buildRT() {
+        if(built) return;
+        built = 1;
+        rt[EXP] = modPow(findCyclic(), EXP_MULT);
+        R0F(i, EXP) rt[i] = SQ(rt[i + 1]) % NTT_MOD;
+        F0R(i, EXP + 1) invrt[i] = invMod(rt[i]);
     }
-}
 
-void buildRT() {
-    if(rt[0] == 1) return;
-    rt[0] = 1;
-    rt[1] = modPow(findCyclic(), EXP_MULT << (EXP - MAX_DEG));
-    FOR(i, 2, (1 << MAX_DEG) + 1) rt[i] = rt[i - 1] * rt[1] % NTTMod;
-}
-
-void ntt(int neededDeg, ull* vals, int len) {
-    R0F(i, neededDeg + 1) {
-        int arr = i & 1, narr = arr ^ 1, lli = 1 << i, llil = lli << 1, llndi = 1 << (neededDeg - i), llndim1 = llndi >> 1, rtp = lli << (MAX_DEG - neededDeg);
-        if(i == neededDeg)  F0R(j, lli) NTTBuild[j][arr] = (j < len) ? vals[j] : 0;
-        else F0R(j, lli) F0R(k, llndi) NTTBuild[j + lli * k][arr] = (NTTBuild[j + llil * (k % llndim1)][narr] + NTTBuild[j + lli + llil * (k % llndim1)][narr] * rt[rtp * k]) % NTTMod;
+    int rev(int idx, int sz) {
+        int tmp = 1, res = 0;
+        sz >>= 1;
+        while(sz) {
+            if(sz & idx) res |= tmp;
+            sz >>= 1;
+            tmp <<= 1;
+        }
+        return res;
     }
-}
 
-void invntt(int neededDeg, ull* vals, int len) {
-    reverse(rt, rt + (1 << MAX_DEG) + 1);
-    ntt(neededDeg, vals, len);
-    reverse(rt, rt + (1 << MAX_DEG) + 1);
-    ull u = invMod(len);
-    F0R(i, len) NTTBuild[i][0] *= u, NTTBuild[i][0] %= NTTMod;
-}
+    vul bitReverseCopy(vul val) {
+        vul res(val.size());
+        F0R(i, val.size()) res[i] = val[rev(i, val.size())];
+        return res;
+    }
+
+    vul ntt(vul val) {
+        buildRT();
+        vul res = bitReverseCopy(val);
+        int n = res.size();
+        FOR(i, 1, 32 - __builtin_clz(n)) {
+            int m = 1 << i;
+            ull wm = rt[i];
+            for(int k = 0; k < n; k += m) {
+                ull w = 1;
+                F0R(j, m >> 1) {
+                    ull t = w * res[k + j + (m >> 1)] % NTT_MOD;
+                    ull u = res[k + j];
+                    res[k + j] = (u + t) % NTT_MOD;
+                    res[k + j + (m >> 1)] = (u + NTT_MOD - t) % NTT_MOD;
+                    w = (w * wm) % NTT_MOD;
+                }
+            }
+        }
+        return res;
+    }
+
+    vul invntt(vul val) {
+        swap(rt, invrt);
+        vul res = ntt(val);
+        swap(rt, invrt);
+        ull u = invMod(val.size());
+        F0R(i, res.size()) res[i] = (res[i] * u) % NTT_MOD;
+        return res;
+    }
+
+    vul conv(vul a, vul b) {
+        int finalSZ = a.size() + b.size() - 1;
+        int neededSZ = 1 << (32 - __builtin_clz(finalSZ - 1));
+        a.resize(neededSZ), b.resize(neededSZ);
+        a = ntt(a), b = ntt(b);
+        F0R(i, neededSZ) a[i] = a[i] * b[i] % NTT_MOD;
+        a = invntt(a);
+        a.resize(finalSZ);
+        return a;
+    }
 
 };
