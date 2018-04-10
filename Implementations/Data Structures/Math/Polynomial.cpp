@@ -1,5 +1,5 @@
 // Uses FFT.cpp
-// https://github.com/walnutwaldo/Programming_Contests/tree/master/Implementations/Algorithms
+// https://github.com/walnutwaldo/Programming_Contests/blob/master/Implementations/Algorithms/FFT.cpp
 
 using namespace FFT;
 
