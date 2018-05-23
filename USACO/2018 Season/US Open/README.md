@@ -19,6 +19,6 @@
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Out of Sorts | Unsolved          | Missing            |
+| Out of Sorts | Solved          | C++            |
 | Train Tracking | Unsolved          | Missing            |
 | Disruption | Solved          | C++ (HLD) and C++ (set)           |
