@@ -21,4 +21,4 @@
 | ------------- |:---------------:| :--------------:|
 | Out of Sorts | Unsolved          | Missing            |
 | Train Tracking | Unsolved          | Missing            |
-| Disruption | Solved          | C++           |
+| Disruption | Solved          | C++ (HLD) and C++ (set)           |
