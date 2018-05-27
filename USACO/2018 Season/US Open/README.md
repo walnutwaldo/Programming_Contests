@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Out of Sorts | Unsolved          | Missing            |
+| Out of Sorts | Solved          | C++            |
 | Milking Order | Unsolved          | Missing            |
 | Talent Show | Unsolved          | Missing            |
 # Platinum
