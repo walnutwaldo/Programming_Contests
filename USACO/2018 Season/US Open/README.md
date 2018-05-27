@@ -20,5 +20,5 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Out of Sorts | Solved          | C++            |
-| Train Tracking | Unsolved          | Missing            |
+| Train Tracking | Solved          | C++            |
 | Disruption | Solved          | C++ (HLD) and C++ (set)           |
