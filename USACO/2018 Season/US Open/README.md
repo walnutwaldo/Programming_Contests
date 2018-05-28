@@ -7,7 +7,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Out of Sorts | Unsolved          | Missing            |
+| Out of Sorts | Solved          | C++            |
 | Lemonade Line | Unsolved          | Missing            |
 | Multiplayer Moo | Unsolved          | Missing            |
 # Gold
