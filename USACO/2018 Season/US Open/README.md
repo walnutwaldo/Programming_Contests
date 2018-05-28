@@ -3,7 +3,7 @@
 | ------------- |:---------------:| :--------------:|
 | Team Tic Tac Toe | Solved          | C++            |
 | Milking Order | Solved          | C++            |
-| Family Tree | Unsolved          | Missing            |
+| Family Tree | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
