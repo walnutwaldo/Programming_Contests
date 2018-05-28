@@ -1,7 +1,7 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Team Tic Tac Toe | Unsolved          | Missing            |
+| Team Tic Tac Toe | Solved          | C++            |
 | Milking Order | Unsolved          | Missing            |
 | Family Tree | Unsolved          | Missing            |
 # Silver
