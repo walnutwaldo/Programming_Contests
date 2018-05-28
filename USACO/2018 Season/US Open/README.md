@@ -15,7 +15,7 @@
 | ------------- |:---------------:| :--------------:|
 | Out of Sorts | Solved          | C++            |
 | Milking Order | Unsolved          | Missing            |
-| Talent Show | Unsolved          | Missing            |
+| Talent Show | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
