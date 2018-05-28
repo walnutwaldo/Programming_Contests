@@ -8,7 +8,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Out of Sorts | Solved          | C++            |
-| Lemonade Line | Unsolved          | Missing            |
+| Lemonade Line | Solved          | C++            |
 | Multiplayer Moo | Unsolved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
