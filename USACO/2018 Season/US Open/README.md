@@ -2,7 +2,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Team Tic Tac Toe | Solved          | C++            |
-| Milking Order | Unsolved          | Missing            |
+| Milking Order | Solved          | C++            |
 | Family Tree | Unsolved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
