@@ -1,10 +1,11 @@
 struct DSU {
 
-    int *parent;
+    int *parent, *numNodes;
 
     DSU(int sz) {
         parent = new int[sz];
-        F0R(i, sz) parent[i] = i;
+        numNodes = new int[sz];
+        F0R(i, sz) parent[i] = i, numNodes[i] = 1;
     }
 
     int root(int a) {
@@ -15,7 +16,9 @@ struct DSU {
     void join(int a, int b) {
         int ra = root(a), rb = root(b);
         if(ra == rb) return;
+        if(numNodes[ra] > numNodes[rb]) swap(ra, rb);
         parent[ra] = rb;
+        numNodes[rb] += numNodes[ra];
     }
 
     bool connected(int a, int b) {
