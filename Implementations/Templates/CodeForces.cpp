@@ -22,7 +22,7 @@
 #define Y imag()
 
 #define sz(x) ((int)(x).size())
-#define all(x) x.begin(), x.end()
+#define all(x) (x).begin(), (x).end()
 #define SQ(x) ((x) * (x))
 
 using namespace std;
