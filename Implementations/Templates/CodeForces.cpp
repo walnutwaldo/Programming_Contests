@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
 
-#define SQ(a) (a)*(a)
-
 #define F0R(i, a) for(int i = 0; i < (a); i++)
 #define FOR(i, a, b) for(int i = (a); i < (b); i++)
 #define R0F(i, a) for(int i = (a) - 1; i >= 0; i--)
@@ -22,6 +20,10 @@
 #define LB lower_bound
 #define X real()
 #define Y imag()
+
+#define sz(x) ((int)(x).size())
+#define all(x) x.begin(), x.end()
+#define SQ(x) ((x) * (x))
 
 using namespace std;
 
