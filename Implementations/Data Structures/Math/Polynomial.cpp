@@ -45,7 +45,7 @@ struct Polynomial {
         return p;
     }
 
-    Polynomial operator /(ld div) { return *this / div; }
+    Polynomial operator /(ld div) { return *this * (1.0 / div); }
 
     Polynomial operator +(Polynomial b) {
         Polynomial res(max(deg, b.deg));
