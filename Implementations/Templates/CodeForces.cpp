@@ -21,6 +21,8 @@
 #define X real()
 #define Y imag()
 
+#define PI acos(-1)
+
 #define sz(x) ((int)(x).size())
 #define all(x) (x).begin(), (x).end()
 #define SQ(x) ((x) * (x))
@@ -32,9 +34,12 @@ typedef long double ld;
 typedef unsigned long long ull;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
-typedef vector<ll> vl;
+typedef vector<pii> vpii;
+typedef vector<ll> vll;
 typedef vector<ull> vul;
 typedef complex<ld> point;
+typedef complex<ld> cld;
+typedef vector<cld> vcld;
 
 int main() {
 	ios::sync_with_stdio(0);
