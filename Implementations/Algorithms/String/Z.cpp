@@ -5,5 +5,5 @@ vi z(string s) {
     z[i] = max(0, min(hi - i + 1, z[i - lo]));
     while(i + z[i] < sz(s) && s[i + z[i]] == s[z[i]]) lo = i, hi = i + z[i]++;
   }
-  return res;
+  return z;
 }
