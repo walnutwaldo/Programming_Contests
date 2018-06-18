@@ -1,5 +1,4 @@
 // Uses Matrix.cpp
-// https://github.com/walnutwaldo/Programming_Contests/blob/master/Implementations/Data%20Structures/Math/Matrix.cpp
 
 Matrix operator *(Matrix b) {
         if(columns != b.rows) return Matrix();
