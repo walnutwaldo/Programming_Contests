@@ -1,21 +1,23 @@
-vector<int*> constructDFA(string m) {
-	vector<int*> dfa(1, new int[128]{0});
-	F0R(i, sz(m)) {
-		int lps = dfa[i][m[i]];
-		dfa[i][m[i]] = i + 1;
-		dfa.PB(new int[128]);
-		copy(dfa[lps], dfa[lps] + 128, dfa.back());
-	}
-	return dfa;
+vpii constructDFA(string m) {
+    vpii dfa(1, MP(-1, 0));
+    F0R(i, sz(m)) {
+        int lps = dfa[i].S;
+        dfa[i].F = m[i];
+        while(lps > 0 && dfa[lps].F != m[i]) lps = dfa[lps].S;
+        if(dfa[lps].F == m[i] && lps != i) lps++;
+        dfa.PB(MP(-1, lps));
+    }
+    return dfa;
 }
 
 vi kmp(string pat, string str) {
-	vector<int*> dfa = constructDFA(pat);
-	vi occ;
-	int curr = 0;
-	F0R(i, sz(str)) {
-		curr = dfa[curr][str[i]];
-		if(curr == sz(pat)) occ.PB(i - sz(pat) + 1);
-	}
-	return occ;
+    vpii dfa = constructDFA(pat);
+    vi occ;
+    int curr = 0;
+    F0R(i, sz(str)) {
+        while(curr > 0 && dfa[curr].F != str[i]) curr = dfa[curr].S;
+        if(dfa[curr].F == str[i]) curr++;
+        if(curr == sz(pat)) occ.PB(i - sz(pat) + 1);
+    }
+    return occ;
 }
