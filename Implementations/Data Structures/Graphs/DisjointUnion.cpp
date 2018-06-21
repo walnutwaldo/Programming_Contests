@@ -1,28 +1,22 @@
 struct DSU {
 
-    int *parent, *numNodes;
+    int *parent, *rank;
 
     DSU(int sz) {
-        parent = new int[sz];
-        numNodes = new int[sz];
-        F0R(i, sz) parent[i] = i, numNodes[i] = 1;
+        parent = new int[sz], rank = new int[sz];
+        F0R(i, sz) parent[i] = i, rank[i] = 0;
     }
 
-    int root(int a) {
-        if(parent[a] == a) return a;
-        return (parent[a] = root(parent[a]));
-    }
+    int root(int a) { (parent[a] == a)? a : (parent[a] = root(parent[a])); }
 
     void join(int a, int b) {
         int ra = root(a), rb = root(b);
         if(ra == rb) return;
-        if(numNodes[ra] > numNodes[rb]) swap(ra, rb);
+        if(rank[ra] > rank[rb]) swap(ra, rb);
         parent[ra] = rb;
-        numNodes[rb] += numNodes[ra];
+        if(rank[ra] == rank[rb]) rank[rb]++;
     }
 
-    bool connected(int a, int b) {
-        return root(a) == root(b);
-    }
+    bool connected(int a, int b) { return root(a) == root(b); }
 
 };
