@@ -1,4 +1,4 @@
-int nxt[MAXN];
+int m, m, nxt[MAXN];
 bool vis[MAXN];
 map<int, ll> adj[MAXN];
 
