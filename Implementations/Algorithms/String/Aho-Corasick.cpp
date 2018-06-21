@@ -19,7 +19,7 @@ struct AhoTrie{
 		bfs();
 	}
   
-  void addNode() {
+        void addNode() {
 		numNodes++;
 		dict.PB(0); link.PB(0); strData.PB(vpii()); trie.PB(map<char, int>());
 	}
