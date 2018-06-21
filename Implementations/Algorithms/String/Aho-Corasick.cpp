@@ -1,4 +1,3 @@
-
 struct AhoTrie{
 
 	int currNode = 0, numPats, numNodes = 0;
