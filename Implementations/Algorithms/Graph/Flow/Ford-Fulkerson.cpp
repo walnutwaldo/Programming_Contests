@@ -1,17 +1,16 @@
-int m, m, nxt[MAXN];
+int m, m;
 bool vis[MAXN];
 map<int, ll> adj[MAXN];
 
-ll dfsFlow(int node, int sink) {
+ll dfsFlow(int node, int sink, ll flow) {
 	if(vis[node]) return 0;
 	vis[node] = 1;
-	if(node == sink) return ~(1LL << 63);
-	for(const pair<int, ll> p : adj[node]) {
-		ll f = dfsFlow(p.F, sink);
-		if(f) {
-			nxt[node] = p.F;
-			return min(f, p.S);
-		}
+	if(node == sink) return flow;
+	for(const pair<int, ll> p : adj[node]) if(ll f = dfsFlow(p.F, sink, min(p.S, flow))) {
+			adj[p.F][node] += f;
+			adj[node][p.F] -= f;
+			if(!adj[node][p.F]) adj[node].erase(p.F);
+			return f;
 	}
 	return 0;
 }
@@ -20,16 +19,9 @@ ll fordFulk(int s, int t) {
 	ll flow = 0;
 	while(1) {
 		memset(vis, 0, n * sizeof(bool));
-		ll maxFlow = dfsFlow(s, t);
+		ll maxFlow = dfsFlow(s, t, ~(1LL << 63));
 		if(!maxFlow) break;
 		flow += maxFlow;
-		int curr = s;
-		while(curr != t) {
-			adj[curr][nxt[curr]] -= maxFlow;
-			if(adj[curr][nxt[curr]] == 0) adj[curr].erase(nxt[curr]);
-			adj[nxt[curr]][curr] += maxFlow;
-			curr = nxt[curr];
-		}
 	}
 	return flow;
 }
