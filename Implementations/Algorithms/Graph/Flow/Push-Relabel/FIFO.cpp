@@ -1,4 +1,4 @@
-int n, m, h[MAXN], curr[MAXN];
+int n, m, h[MAXN], curr[MAXN], cnt[2 * MAXN];
 ll e[MAXN], c[MAXN][MAXN], f[MAXN][MAXN];
 vi neigh[MAXN];
 queue<int> overflows;
@@ -23,15 +23,26 @@ void push(int u, int v) {
 
 void relabel(int node) {
 	int mn = INT_MAX;
+	cnt[h[node]]--;
 	F0R(i, n) if(cf(node, i) > 0) mn = min(mn, h[i]);
 	h[node] = mn + 1;
+	cnt[h[node]]++;
+}
+
+void gap(int k) {
+	F0R(i, n) if(h[i] >= k) {
+		cnt[h[i]]--;
+		h[i] = max(h[i], n + 1);
+		cnt[h[i]]++;
+	}
 }
 
 void discharge(int u) {
 	while(e[u]) {
 		int v = curr[u];
 		if(v == sz(neigh[u])){
-			relabel(u);
+			if(cnt[h[u]] == 1) gap(h[u]);
+			else relabel(u);
 			curr[u] = 0;
 		} else if (cf(u, neigh[u][v]) && h[u] == h[neigh[u][v]] + 1) push(u, neigh[u][v]);
 		else curr[u]++;
@@ -41,6 +52,7 @@ void discharge(int u) {
 ll flow(int s, int t) {
 	initPreflow(s, t);
 	F0R(i, n) F0R(j, n) if(c[i][j] || c[j][i]) neigh[i].PB(j);
+	F0R(i, n) cnt[h[i]]++;
 	while(!overflows.empty()) {
 		int node = overflows.front(); overflows.pop();
 		if(node == s || node == t) continue;
