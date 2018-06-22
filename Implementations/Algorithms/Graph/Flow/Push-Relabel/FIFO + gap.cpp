@@ -1,4 +1,3 @@
-
 int n, m, h[MAXN], curr[MAXN], cnt[MAXN + 1];
 ll e[MAXN], c[MAXN][MAXN], f[MAXN][MAXN];
 vi neigh[MAXN];
