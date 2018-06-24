@@ -50,8 +50,7 @@ ll flow(int s, int t) {
 	while(maxH >= 0) {
 		if(withH[maxH].empty()) maxH--;
 		else {
-			int u = withH[maxH].back();
-			withH[maxH].pop_back();
+			int u = withH[maxH].back(); withH[maxH].pop_back();
 			discharge(u, t);
 		}	
 	}
