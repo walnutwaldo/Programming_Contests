@@ -1,4 +1,4 @@
-int n, m, maxH, h[MAXN], cnt[MAXN];
+int n, m, h[MAXN], cnt[MAXN];
 ll e[MAXN], c[MAXN][MAXN], f[MAXN][MAXN];
 vi neigh[MAXN];
 vector<pair<int, ll>> adj[MAXN];
