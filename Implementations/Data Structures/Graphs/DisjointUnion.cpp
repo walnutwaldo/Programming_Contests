@@ -7,7 +7,7 @@ struct DSU {
         F0R(i, sz) parent[i] = i, rank[i] = 0;
     }
 
-    int root(int a) { (parent[a] == a)? a : (parent[a] = root(parent[a])); }
+    int root(int a) { return (parent[a] == a)? a : (parent[a] = root(parent[a])); }
 
     void join(int a, int b) {
         int ra = root(a), rb = root(b);
