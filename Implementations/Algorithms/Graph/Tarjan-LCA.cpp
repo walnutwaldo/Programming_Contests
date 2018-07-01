@@ -1,4 +1,4 @@
-// Uses DSU.cpp
+// Uses DisjointUnion.cpp
 
 int n, q, anc[MAXN], res[MAXQ];
 vi children[MAXN];
