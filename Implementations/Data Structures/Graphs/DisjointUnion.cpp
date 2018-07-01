@@ -2,7 +2,7 @@ struct DSU {
 
     int *parent, *rank;
 
-    DSU(int sz) {
+    DSU(int sz = 0) {
         parent = new int[sz], rank = new int[sz];
         F0R(i, sz) parent[i] = i, rank[i] = 0;
     }
