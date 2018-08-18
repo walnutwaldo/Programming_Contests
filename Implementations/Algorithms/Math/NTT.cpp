@@ -10,7 +10,7 @@ namespace NTT {
     ull invMod(ull a) { return modPow(a, NTT_MOD - 2); }
 
     ull findCyclic() {
-        vl multFactors;
+        vul multFactors;
         ull temp = EXP_MULT;
         for(ll i = 2; i * i <= temp; i += 2) {
             if(temp % i == 0) multFactors.PB(i);
