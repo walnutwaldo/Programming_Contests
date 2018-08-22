@@ -3,7 +3,7 @@
 | -------------  |:---------------:| :--------------:|
 | Googol | Solved          | C++            |
 | Palindromic Paths | Solved          | C++            |
-| Trapped in the Haybales | Solved          | C++            |
+| Trapped in the Haybales | Solved          | C++ (RMQ and range marking)           |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
