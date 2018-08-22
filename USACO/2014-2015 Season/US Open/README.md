@@ -14,6 +14,6 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Moocryption | Unsolved          | Missing            |
-| Bessie Gets Even | Unsolved          | Missing            |
+| Bessie Gets Even | Solved          | C++            |
 | Trapped in the Haybales | Unsolved          | Missing            |
 | Palindromic Paths | Unsolved          | Missing            |
