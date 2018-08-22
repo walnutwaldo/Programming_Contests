@@ -7,7 +7,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Bessie Goes Moo | Unsolved          | Missing            |
+| Bessie Goes Moo | Solved          | C++            |
 | Trapped in the Haybales | Unsolved          | Missing            |
 | Bessie's Birthday Buffet | Unsolved          | Missing            |
 # Gold
