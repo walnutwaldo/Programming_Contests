@@ -2,7 +2,7 @@
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
 | Googol | Solved          | C++            |
-| Palindromic Paths | Unsolved          | Missing            |
+| Palindromic Paths | Solved          | C++            |
 | Trapped in the Haybales | Unsolved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
