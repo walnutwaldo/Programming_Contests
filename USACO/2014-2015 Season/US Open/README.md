@@ -1,10 +1,10 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Moocryption | Unsolved          | Missing            |
+| Moocryption | Solved          | C++            |
 | Bessie Gets Even | Solved          | C++            |
-| Trapped in the Haybales | Unsolved          | Missing            |
-| Palindromic Paths | Unsolved          | Missing            |
+| Trapped in the Haybales | Solved          | C++            |
+| Palindromic Paths | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
