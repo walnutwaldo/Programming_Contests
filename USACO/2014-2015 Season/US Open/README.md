@@ -8,7 +8,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Bessie Goes Moo | Solved          | C++            |
-| Trapped in the Haybales | Unsolved          | Missing            |
+| Trapped in the Haybales | Solved          | C++            |
 | Bessie's Birthday Buffet | Unsolved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
