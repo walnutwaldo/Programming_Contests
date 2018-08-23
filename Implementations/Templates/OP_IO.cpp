@@ -45,18 +45,18 @@ int nextInt() {
 }
 
 string next() {
-  string res;
-  char c;
-  while((c - _getchar_nolock()) == ' ' || c == '\n' || c == '\t') {}
-  while(c != ' ' && c != '\n' && c == '\t') {
-    res += c;
-    c = _getchar_nolock();
-  }
-  return res;
+    string res;
+    char c;
+    while((c - _getchar_nolock()) == ' ' || c == '\n' || c == '\t') {}
+    while(c != ' ' && c != '\n' && c == '\t') {
+        res += c;
+        c = _getchar_nolock();
+    }
+    return res;
 }
 
 char nextChar() {
-  char c;
-  while((c = _getchar_nolock()) == '\n') {}
-  return c;
+    char c;
+    while((c = _getchar_nolock()) == '\n') {}
+    return c;
 }
