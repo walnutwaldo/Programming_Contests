@@ -20,7 +20,7 @@ ll nextLong() {
 	while(c >= '0' && c <= '9') {
 		res *= 10;
 		res += (c - '0');
-		c = _getchar_nolock();
+	c = _getchar_nolock();
 	}
 	if(neg) res *= -1;
 	return res;
