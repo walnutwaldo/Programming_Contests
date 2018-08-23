@@ -68,8 +68,8 @@ void solve(ll steps, int left) {
 }
 
 int main() {
-	ifstream fin("palpath.in");
-	ofstream fout("palpath.out");
+    ifstream fin("palpath.in");
+    ofstream fout("palpath.out");
     fin >> n;
     F0R(i, n) F0R(j, n) fin >> a[i][j];
     solve(0, n - 1);
