@@ -1,9 +1,10 @@
 # Bronze
 | Problem        | State           | Implementation  |
-| -------------  |:---------------:| :--------------:|
-| Googol | Solved          | C++            |
-| Palindromic Paths | Solved          | C++            |
-| Trapped in the Haybales | Solved          | C++ (RMQ and range marking)           |
+| ------------- |:---------------:| :--------------:|
+| Moocryption | Unsolved          | Missing            |
+| Bessie Gets Even | Solved          | C++            |
+| Trapped in the Haybales | Unsolved          | Missing            |
+| Palindromic Paths | Unsolved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
@@ -12,8 +13,7 @@
 | Bessie's Birthday Buffet | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
-| ------------- |:---------------:| :--------------:|
-| Moocryption | Unsolved          | Missing            |
-| Bessie Gets Even | Solved          | C++            |
-| Trapped in the Haybales | Unsolved          | Missing            |
-| Palindromic Paths | Unsolved          | Missing            |
+| -------------  |:---------------:| :--------------:|
+| Googol | Solved          | C++            |
+| Palindromic Paths | Solved          | C++            |
+| Trapped in the Haybales | Solved          | C++ (RMQ and range marking)           |
