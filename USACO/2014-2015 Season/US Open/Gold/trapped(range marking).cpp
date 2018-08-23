@@ -47,8 +47,8 @@ int n, a[MAXN];
 vector<tuple<int, int, int>> v;
 
 int main() {
-	ifstream fin("trapped.in");
-	ofstream fout("trapped.out");
+    ifstream fin("trapped.in");
+    ofstream fout("trapped.out");
     fin >> n;
     F0R(i, n) {
         int s, p;
