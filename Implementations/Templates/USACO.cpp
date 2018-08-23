@@ -42,6 +42,6 @@ typedef complex<ld> cld;
 typedef vector<cld> vcld;
 
 int main() {
-	ifstream fin("file.in");
-	ofstream fout("file.out");
+    ifstream fin("file.in");
+    ofstream fout("file.out");
 }
