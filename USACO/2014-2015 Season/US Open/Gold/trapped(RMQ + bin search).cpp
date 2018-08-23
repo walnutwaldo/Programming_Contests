@@ -85,8 +85,8 @@ void solveR() {
 }
 
 int main() {
-	ifstream fin("trapped.in");
-	ofstream fout("trapped.out");
+    ifstream fin("trapped.in");
+    ofstream fout("trapped.out");
     fin >> n;
     F0R(i, n) {
         int a, b;
