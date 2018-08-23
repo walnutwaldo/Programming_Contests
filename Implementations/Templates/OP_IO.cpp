@@ -1,5 +1,5 @@
 template<class T> void print(T t) {
-	string s = to_string(t);
+    string s = to_string(t);
 	for(const char c : s) _putchar_nolock(c);
 }
 
