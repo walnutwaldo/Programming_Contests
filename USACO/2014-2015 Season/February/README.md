@@ -14,5 +14,5 @@
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
 | Cow Hopscotch | Solved          | C++            |
-| Censoring | Unsolved          | Missing            |
-| Fencing the Herd | Unsolved          | Missing            |
+| Censoring | Solved          | C++             |
+| Fencing the Herd | Solved          | C++             |
