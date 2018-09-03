@@ -1,9 +1,9 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Censoring | Unsolved          | Missing            |
-| COW | Unsolved          | Missing            |
-| Cow Hopscotch | Unsolved          | Missing            |
+| Censoring | Solved          | C++            |
+| COW | Solved          | C++            |
+| Cow Hopscotch | Solved          | C++            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
