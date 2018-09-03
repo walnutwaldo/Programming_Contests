@@ -7,9 +7,9 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Censoring | Unsolved          | Missing            |
-| Cow Hopscotch | Unsolved          | Missing            |
-| Superbull | Unsolved          | Missing            |
+| Censoring | Solved          | C++            |
+| Cow Hopscotch | Solved          | C++            |
+| Superbull | Solved          | C++            |
 # Gold
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
