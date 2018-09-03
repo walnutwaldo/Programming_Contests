@@ -41,52 +41,24 @@ typedef complex<ld> point;
 typedef complex<ld> cld;
 typedef vector<cld> vcld;
 
-struct DSU{
-
-    int *par, *rank;
-
-    DSU(int n) {
-        par = new int[n], rank = new int[n];
-        F0R(i, n) par[i] = i, rank[i] = 0;
-    }
-
-    int root(int i) {
-        if(i == par[i]) return i;
-        return par[i] = root(par[i]);
-    }
-
-    void join(int i, int j){
-        int r1 = root(i), r2 = root(j);
-        if(r1 == r2) return;
-        if(rank[r1] < rank[r2]) swap(r1, r2);
-        par[r2] = r1;
-        if(rank[r1] == rank[r2]) rank[r1]++;
-    }
-
-    bool connected(int i, int j) { return root(i) == root(j); }
-
-};
 
 #define MAXN 2000
 
-int n, a[MAXN];
+int n, a[MAXN], dis[MAXN];
+bool vis[MAXN];
 ll res;
-vector<pair<int, pii>> v;
 
 int main() {
     ifstream fin("superbull.in");
     ofstream fout("superbull.out");
     fin >> n;
     F0R(i, n) fin >> a[i];
-    F0R(i, n) FOR(j, i + 1, n) v.PB(MP(a[i] ^ a[j], MP(i, j)));
-    sort(v.rbegin(), v.rend());
-    DSU dsu(n);
-    for(const pair<int, pii> p : v) {
-        int i = p.S.F, j = p.S.S;
-        if(!dsu.connected(i, j)) {
-            dsu.join(i, j);
-            res += p.F;
-        }
+    F0R(i, n) {
+        int maxI = 0;
+        F0R(j, n) if(!vis[j] && dis[j] > dis[maxI]) maxI = j;
+        res += dis[maxI];
+        vis[maxI] = 1;
+        F0R(j, n) if(!vis[j]) dis[j] = max(dis[j], a[maxI] ^ a[j]);
     }
     fout << res << endl;
 }
