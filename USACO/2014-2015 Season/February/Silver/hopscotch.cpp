@@ -45,7 +45,7 @@ typedef vector<cld> vcld;
 #define MOD 1000000007
 
 int r, c, k;
-ll cnt[MAXN], a[MAXN][MAXN], indivCnt[MAXN * MAXN][MAXN], dp[MAXN][MAXN];
+ll a[MAXN][MAXN], dp[MAXN][MAXN];
 
 void madd(ll& a, ll b) { a = (a + b) % MOD; }
 
@@ -57,12 +57,7 @@ int main() {
         fin >> a[i][j];
         a[i][j]--;
     }
-    cnt[c - 1]++;
-    indivCnt[a[r - 1][c - 1]][c - 1]++;
-    R0F(i, r - 1) F0R(j, c - 1) {
-        FOR(col, j + 1, c) madd(dp[i][j], (cnt[col] + MOD - indivCnt[a[i][j]][col]) % MOD);
-        madd(cnt[j], dp[i][j]);
-        madd(indivCnt[a[i][j]][j], dp[i][j]);
-    }
+    dp[r - 1][c - 1] = 1;
+    R0F(i, r - 1) R0F(j, c - 1) FOR(col, j + 1, c) FOR(row, i + 1, r) if(a[row][col] != a[i][j]) madd(dp[i][j], dp[row][col]);
     fout << dp[0][0] << endl;
 }
