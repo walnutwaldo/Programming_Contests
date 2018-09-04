@@ -14,6 +14,6 @@
 # Gold
 | Problem        | State           | Implementation  |
 | -------------  |:---------------:| :--------------:|
-| Cow Rectangles | Solved          | Missing            |
-| Moovie Mooving | Unsolved          | Missing             |
-| Grass Cownoisseur | Unsolved          | Missing             |
+| Cow Rectangles | Solved          | C++            |
+| Moovie Mooving | Solved          | C++             |
+| Grass Cownoisseur | Solved          | C++             |
