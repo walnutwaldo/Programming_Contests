@@ -8,7 +8,7 @@
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Stampede | Unsolved          | Missing            |
+| Stampede | Solved          | C++            |
 | Cow Routing | Unsolved          | Missing            |
 | Meeting Time | Unsolved          | Missing            |
 # Gold
