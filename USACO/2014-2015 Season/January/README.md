@@ -9,7 +9,7 @@
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
 | Stampede | Solved          | C++            |
-| Cow Routing | Unsolved          | Missing            |
+| Cow Routing | Solved          | C++            |
 | Meeting Time | Unsolved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
