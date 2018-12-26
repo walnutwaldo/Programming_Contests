@@ -41,27 +41,6 @@ typedef complex<ld> point;
 typedef complex<ld> cld;
 typedef vector<cld> vcld;
 
-struct RMQ {
-
-    int sz;
-    ll **tab;
-
-    RMQ(ll* arr, int sz) {
-        this->sz = sz;
-        tab = new ll*[sz];
-        int depth = 32 - __builtin_clz(sz);
-        F0R(i, sz) tab[i] = new ll[depth];
-        F0R(i, sz) tab[i][0] = arr[i];
-        FOR(i, 1, depth) F0R(j, sz) tab[j][i] = max(tab[j][i - 1], tab[min(sz - 1, j + (1 << (i - 1)))][i - 1]);
-    }
-
-    ll query(int lo, int hi) {
-        int d = 31 - __builtin_clz(hi - lo + 1);
-        return max(tab[lo][d], tab[hi + 1 - (1 << d)][d]);
-    }
-
-};
-
 #define MAXN 10000
 
 int n, k;
@@ -72,7 +51,12 @@ int main() {
     ofstream fout("teamwork.out");
     fin >> n >> k;
     F0R(i, n) fin >> arr[i];
-    RMQ rmq(arr, n);
-    F0R(i, n) FOR(j, 1, k + 1) if(i + j <= n) dp[i + j] = max(dp[i + j], dp[i] + j * rmq.query(i, i + j - 1));
+    F0R(i, n) {
+        ll rm = 0;
+        FOR(j, 1, k + 1) if(i + j <= n) {
+            rm = max(rm, arr[i + j - 1]);
+            dp[i + j] = max(dp[i + j], dp[i] + j * rm);
+        }
+    }
     fout << dp[n] << endl;
 }
