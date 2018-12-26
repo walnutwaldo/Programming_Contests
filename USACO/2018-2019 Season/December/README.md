@@ -15,7 +15,7 @@
 | ------------- |:---------------:| :--------------:|
 | Fine Dining | Solved          | C++            |
 | Cowpatibility     | Solved          | C++            |
-| Teamwork | Unsolved          | Missing            |
+| Teamwork | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
