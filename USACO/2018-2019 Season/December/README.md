@@ -1,15 +1,15 @@
 # Bronze
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Mixing Milk | Unsolved          | Missing            |
-| The Bucket List     | Unsolved          | Missing            |
-| Back and Forth | Unsolved          | Missing            |
+| Mixing Milk | Solved          | Missing            |
+| The Bucket List     | Solved          | Missing            |
+| Back and Forth | Solved          | Missing            |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Convention | Unsolved          | Missing            |
-| Convention II    | Unsolved          | Missing            |
-| Mooyo Mooyo | Unsolved          | Missing            |
+| Convention | Solved          | Missing            |
+| Convention II    | Solved          | Missing            |
+| Mooyo Mooyo | Solved          | Missing            |
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
