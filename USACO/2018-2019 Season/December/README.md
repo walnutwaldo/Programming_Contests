@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Fine Dining | Unsolved          | Missing            |
+| Fine Dining | Solved          | C++            |
 | Cowpatibility     | Unsolved          | Missing            |
 | Teamwork | Unsolved          | Missing            |
 # Platinum
