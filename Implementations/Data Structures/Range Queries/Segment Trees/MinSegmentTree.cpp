@@ -3,8 +3,8 @@ struct SegmentTree {
     int sz;
     ll *tree;
 
-    SegmentTree(int pre_sz) {
-        sz = 1 << (int)ceil(log2(pre_sz));
+    SegmentTree(int _sz) {
+        sz = 1 << (32 - __builtin_clz(_sz - 1));
         tree = new ll[2 * sz];
         memset(tree, 0, 2 * sz * sizeof(ll));
     }
