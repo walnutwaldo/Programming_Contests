@@ -20,6 +20,7 @@
 #define LB lower_bound
 #define X real()
 #define Y imag()
+#define INF 1e18
 
 #define PI acos(-1)
 
