@@ -34,6 +34,7 @@ typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
 typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<pii> vpii;
 typedef vector<ll> vll;
