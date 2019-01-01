@@ -6,6 +6,7 @@
 | Bronze | 4 | 0            |
 # February
 | Division | Number Implemented | Number Missing |
+| ------------- |:---------------:| :--------------:|
 | Gold | 3 | 0           |
 | Silver | 3 | 0            |
 | Bronze | 3 | 0            |
