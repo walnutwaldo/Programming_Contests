@@ -20,8 +20,8 @@
 #define LB lower_bound
 #define X real()
 #define Y imag()
-#define INF 1e18
 
+#define INF 1e18
 #define PI acos(-1)
 
 #define sz(x) ((int)(x).size())
