@@ -43,5 +43,5 @@ typedef vector<cld> vcld;
 
 int main() {
     ifstream cin("file.in");
-    ofstream cin("file.out");
+    ofstream cout("file.out");
 }
