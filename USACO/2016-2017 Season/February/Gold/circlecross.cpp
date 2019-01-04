@@ -19,38 +19,54 @@ typedef long double ld;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
 
-int first[26], second[26], cowAt[52];
+struct BIT {
+
+    int sz;
+    int *tree;
+
+    BIT(int _sz) {
+        sz = _sz;
+        tree = new int[sz + 1];
+        F0R(i, sz + 1) tree[i] = 0;
+    }
+
+    void update(int idx, int v) {
+        for(idx++; idx <= sz; idx += idx & -idx) tree[idx] += v;
+    }
+
+    int query(int idx) {
+        int res = 0;
+        for(idx++; idx > 0; idx -= idx & -idx) res += tree[idx];
+        return res;
+    }
+
+    int queryRange(int lo, int hi) { return query(hi) - query(lo - 1); }
+
+};
+
+#define MAXN 50000
+
+int n, firstPos[MAXN];
 
 int main() {
     ifstream fin("circlecross.in");
     ofstream fout("circlecross.out");
-
-    F0R(i, 26) first[i] = second[i] = -1;
-    F0R(i, 52) {
-        char c;
-        fin >> c;
-        cowAt[i] = (int)(c - 'A');
-        if(first[cowAt[i]] == -1)
-            first[cowAt[i]] = i;
-        else
-            second[cowAt[i]] = i;
-    }
+    fin >> n;
+    BIT bit(2 * n);
+    F0R(i, n) firstPos[i] = -1;
     int res = 0;
-    F0R(i, 26) {
-        int numOn = 0;
-        bool in[26];
-        F0R(j, 26) in[j] = false;
-        FOR(j, first[i] + 1, second[i]) {
-            if(!in[cowAt[j]]) {
-                in[cowAt[j]] = true;
-                numOn++;
-            } else {
-                in[cowAt[j]] = false;
-                numOn--;
-            }
+    F0R(i, 2 * n) {
+        int a;
+        fin >> a;
+        a--;
+        if(firstPos[a] == -1) {
+            res += bit.query(i);
+            firstPos[a] = i;
+            bit.update(i, 1);
+        } else {
+            bit.update(firstPos[a], -1);
+            res -= bit.query(firstPos[a]);
         }
-        res += numOn;
     }
-    fout << (res / 2) << endl;
-    return 0;
+    fout << res << endl;
 }
