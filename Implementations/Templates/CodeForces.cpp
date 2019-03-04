@@ -4,10 +4,10 @@
 
 #include <bits/stdc++.h>
 
-#define F0R(i, a) for(int i = 0; i < (a); i++)
-#define FOR(i, a, b) for(int i = (a); i < (b); i++)
-#define R0F(i, a) for(int i = (a) - 1; i >= 0; i--)
-#define ROF(i, a, b) for(int i = (b) - 1; i >= (a); i--)
+#define F0R(i, a) for (int i = 0; i < (a); i++)
+#define FOR(i, a, b) for (int i = (a); i < (b); i++)
+#define R0F(i, a) for (int i = (a) - 1; i >= 0; i--)
+#define ROF(i, a, b) for (int i = (b) - 1; i >= (a); i--)
 
 #define ran() (rand() & 0x7FFF)
 #define rand31() ((ran() << 16) | (ran() << 1) | (ran() & 1))
