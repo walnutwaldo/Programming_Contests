@@ -15,7 +15,7 @@
 | ------------- |:---------------:| :--------------:|
 | Cow Land | Solved          | C++            |
 | Dishwashing | Solved          | C++            |
-| Painting the Barn | Unsolved          | Missing            |
+| Painting the Barn | Solved          | C++            |
 # Platinum
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
