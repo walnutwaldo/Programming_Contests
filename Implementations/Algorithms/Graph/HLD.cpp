@@ -27,10 +27,8 @@ void buildHLD(int node, int _par) {
     int mxNext = -1;
     for (const int next : adj[node]) if (next != _par && (mxNext == -1 || getSubSize(next, node) > getSubSize(mxNext, node))) mxNext = next;
     
-    if (mxNext == -1) {
-    	assert((int)cstruct.size() == chain[node]);
-    	cstruct.PB(STRUCT(cLen[chain[node]]));
-    } else {
+    if (mxNext == -1) cstruct.PB(STRUCT(cLen[chain[node]]));
+    else {
         chain[mxNext] = chain[node];
         buildHLD(mxNext, node);
     }
