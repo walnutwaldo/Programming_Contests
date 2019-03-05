@@ -13,7 +13,7 @@
 # Gold
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
-| Cow Land | Unsolved          | Missing            |
+| Cow Land | Solved          | C++            |
 | Dishwashing | Unsolved          | Missing            |
 | Painting the Barn | Unsolved          | Missing            |
 # Platinum
