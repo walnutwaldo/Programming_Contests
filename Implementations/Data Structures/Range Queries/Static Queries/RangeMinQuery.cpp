@@ -24,7 +24,7 @@ struct RMQ {
     }
 
     ll query(int l, int r) {
-        int s = (int)ceil(log2(r - l + 1)) - 1;
+        int s = (int) floor(log2(r - l + 1));
         return min(sparse[l][s], sparse[r + 1 - (1 << s)][s]);
     }
 };
