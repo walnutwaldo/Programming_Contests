@@ -11,7 +11,7 @@
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 486
 ### February 2018
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 428
-### Janary 2018
+### January 2018
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 697
 ### December 2017
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 611
