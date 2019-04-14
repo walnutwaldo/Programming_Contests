@@ -56,11 +56,11 @@ ll vertCost[MAXN - 1][MAXK];
 int groupingID[46656];
 vector<int *> groupings;
 
-pll dp[2 * MAXN][MAXG + 1];
+pll dp[2][MAXG];
 
 void comb(pll& a, const ll& b1, const ll& b2) {
-    if(a.F > b1) a = MP(b1, b2);
-    else if(a.F == b1) a.S = (a.S + b2) % MOD;
+    if (a.F > b1) a = MP(b1, b2);
+    else if (a.F == b1) a.S = (a.S + b2) % MOD;
 }
 
 bool valid(int *arr) {
@@ -93,51 +93,45 @@ void genGroupings(int curr, int numGroups, int *arr) {
     }
 }
 
-int breakHoriz[MAXG][1 << (MAXK - 1)];
-int breakVert[MAXG][1 << MAXK];
+int addNew[MAXG][MAXK], breakH[MAXG][MAXK];
 
 void simplify(int *arr) {
-    map<int, int> mp;
+    int newID[k];
+    F0R(i, k) newID[i] = -1;
     int curr = 0;
     F0R(i, k) {
-        if (!mp.count(arr[i]))
-            mp[arr[i]] = curr++;
-        arr[i] = mp[arr[i]];
+        if (newID[arr[i]] == -1) newID[arr[i]] = curr++;
+        arr[i] = newID[arr[i]];
     }
 }
 
-int calcBH(int *arr, int mask) {
-    int *res = new int[k];
+int getBreakH(int *arr, int idx) {
+    int res[k];
+    int oldID = arr[idx];
     F0R(i, k) res[i] = arr[i];
-    F0R(i, k - 1) if ((mask >> i) & 1) {
-        int a = res[i + 1];
-        F0R(j, k) if (res[j] == a) res[j] = res[i];
-    }
+    F0R(i, k) if (res[i] == oldID) res[i] = arr[idx - 1];
     simplify(res);
     return groupingID[getHash(res)];
 }
 
-int calcBV(int *arr, int mask) {
-    int *res = new int[k];
-    int largest = 0;
-    F0R(i, k) {
-        res[i] = arr[i];
-        largest = max(largest, res[i]);
-    }
-    F0R(i, k) if (!((mask >> i) & 1))
-        res[i] = ++largest;
-    F0R(i, largest + 1) {
-        bool found = false;
-        F0R(j, k) if (res[j] == i) found = 1;
-        if (!found) {
-            return sz(groupings);
-        }
-    }
+int getAddNew(int *arr, int idx) {
+    int res[k];
+    F0R(i, k) res[i] = arr[i];
+    bool works = false;
+    F0R(i, k) if (i != idx && res[i] == res[idx]) works = true;
+    if (!works) return (int)sz(groupings);
+    
+    bool used[k];
+    memset(used, 0, sizeof(used));
+    F0R(i, k) used[arr[i]] = 1;
+    int firstUnused;
+    for (firstUnused = 0; used[firstUnused]; firstUnused++);
+    res[idx] = firstUnused;
     simplify(res);
     return groupingID[getHash(res)];
 }
 
-vi validHMasks[MAXG], validVMasks[MAXG];
+vector<pii> v[MAXG][MAXK];
 
 int main() {
     ifstream cin("escape.in");
@@ -146,40 +140,47 @@ int main() {
     F0R(i, n) F0R(j, k - 1) cin >> horizCost[i][j];
     F0R(j, k) F0R(i, n - 1) cin >> vertCost[i][j];
     genGroupings(0, 0, new int[k]);
-    F0R(i, sz(groupings)) {
-        F0R(j, 1 << (k - 1)) {
-            breakHoriz[i][j] = calcBH(groupings[i], j);
-            if(breakHoriz[i][j] != sz(groupings)) validHMasks[i].PB(j);
-        }
-        F0R(j, 1 << k) {
-            breakVert[i][j] = calcBV(groupings[i], j);
-            if(breakVert[i][j] != sz(groupings)) validVMasks[i].PB(j);
-        }
+    F0R(i, 2) F0R(g, sz(groupings)) dp[i][g] = MP(INF, 0);
+    F0R(g, sz(groupings)) F0R(i, k) {
+        if (i > 0) breakH[g][i] = getBreakH(groupings[g], i);
+        addNew[g][i] = getAddNew(groupings[g], i);
     }
-    
-    F0R(i, 2 * n) F0R(j, sz(groupings)) dp[i][j] = MP(INF, 0);
-    int *allDiff = new int[k];
-    F0R(i, k) allDiff[i] = i;
-    dp[0][groupingID[getHash(allDiff)]] = MP(0, 1);
-    ll maskCost[1 << k];
-    F0R(i, 2 * n - 1) {
-        memset(maskCost, 0, sizeof(maskCost));
-        if (i % 2 == 0) {
-            F0R(mask, 1 << (k - 1)) F0R(tmp, k - 1) if ((mask >> tmp) & 1) maskCost[mask] += horizCost[i >> 1][tmp];
-        } else
-            F0R(mask, 1 << k) F0R(tmp, k) if ((mask >> tmp) & 1) maskCost[mask] += vertCost[i >> 1][tmp];
-        F0R(j, sz(groupings)) if(dp[i][j].S) {
-            if (i % 2 == 0)
-                for(const int mask : validHMasks[j]) {
-                    int newGrouping = breakHoriz[j][mask];
-                    comb(dp[i + 1][newGrouping], dp[i][j].F + maskCost[mask], dp[i][j].S);
-                }
-            else
-                for(const int mask : validVMasks[j]) {
-                    int newGrouping = breakVert[j][mask];
-                    comb(dp[i + 1][newGrouping], dp[i][j].F + maskCost[mask], dp[i][j].S);
-                }
+    F0R(mask, 1 << (k - 1)) {
+        int arr[k];
+        arr[0] = 0;
+        ll cost = 0;
+        FOR(i, 1, k) {
+            arr[i] = arr[i - 1] + ((mask >> (i - 1)) & 1);
+            if (arr[i] == arr[i - 1]) cost += horizCost[0][i - 1];
         }
+        int g = groupingID[getHash(arr)];
+        comb(dp[0][g], cost, 1);
     }
-    cout << dp[2 * n - 1][0].S << "\n";
+    F0R(g, sz(groupings)) F0R(j, k) F0R(mask, 4) {
+        int newG = g;
+        if (!(mask & 1)) newG = addNew[newG][j];
+        if (newG == sz(groupings)) continue;
+        if (mask & 2) {
+            if (j == 0) continue;
+            newG = breakH[newG][j];
+        }
+        if (newG == sz(groupings)) continue;
+        v[g][j].PB(MP(newG, mask));
+    }
+    int curr = 0;
+    FOR(t, k, (n - 1) * k + k) {
+        int newI = t / k;
+        int newJ = t % k;
+        F0R(g, sz(groupings)) if (dp[curr][g].S) {
+            for (const pii p : v[g][newJ]) {
+                ll cost = 0;
+                if (p.S & 1) cost += vertCost[newI - 1][newJ];
+                if (p.S & 2) cost += horizCost[newI][newJ - 1];
+                comb(dp[curr ^ 1][p.F], dp[curr][g].F + cost, dp[curr][g].S);
+            }
+            dp[curr][g] = MP(INF, 0);
+        }
+        curr ^= 1;
+    }
+    cout << dp[curr][0].S << endl;
 }
