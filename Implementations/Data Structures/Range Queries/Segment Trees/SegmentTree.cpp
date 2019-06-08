@@ -7,8 +7,8 @@ struct SegmentTree {
     T *tree;
 
     SegmentTree(int _sz = 0,
-        function<T(T, T)> _comb = [](T a, T b) -> T { return a + b; },
-        function<void(T&, T)> _upd = [](T& a, T b) -> void { a = b; })
+        function<T(T, T)> _comb = [](T a, T b) -> T { return a + b; }, // combine function
+        function<void(T&, T)> _upd = [](T& a, T b) -> void { a = b; }) // update function
         : comb(_comb), upd(_upd)
     {
         sz = 1 << (32 - __builtin_clz(_sz - 1));
@@ -16,13 +16,13 @@ struct SegmentTree {
         memset(tree, 0, 2 * sz * sizeof(T));
     }
     
-    void update(int idx, T v) { // sets element at index idx to v
+    void update(int idx, T v) {
         idx += sz;
         upd(tree[idx], v);
         for(idx /= 2; idx > 0; idx /= 2) tree[idx] = comb(tree[2 * idx], tree[2 * idx + 1]);
     }
 
-    T query(int lo, int hi) { // both ends includsive
+    T query(int lo, int hi) {
         lo += sz, hi += sz;
         T total = tree[lo++];
         while(lo <= hi) {
