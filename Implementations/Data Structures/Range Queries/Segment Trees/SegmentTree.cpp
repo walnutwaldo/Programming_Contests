@@ -1,7 +1,7 @@
 template<typedef T>
 struct SegmentTree {
 
-	function<T(T, T)> comb;
+    function<T(T, T)> comb;
     int sz;
     T *tree;
 
