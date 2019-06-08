@@ -1,12 +1,14 @@
 template<typename T>
 struct SegmentTree {
-
+	
 	function<T(T, T)> comb;
 	function<void(T&, T)> upd;
     int sz;
     T *tree;
 
-    SegmentTree(int _sz = 0, function<T(T, T)> _comb = nullptr, function<void(T&, T)> _upd = nullptr)
+    SegmentTree(int _sz = 0,
+		function<T(T, T)> _comb = [](T a, T b) -> T { return a + b; },
+		function<void(T&, T)> _upd = [](T& a, T b) -> void { a = b; })
 		: comb(_comb), upd(_upd)
 	{
 		sz = 1 << (32 - __builtin_clz(_sz - 1));
