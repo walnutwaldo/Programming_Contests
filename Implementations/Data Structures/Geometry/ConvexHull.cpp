@@ -1,6 +1,6 @@
 // pretty much follows kactl implementation
 
-bool Q = false;
+Q = false;
 
 struct Line {
 
@@ -35,3 +35,4 @@ struct cht : multiset<Line> {
         return ptr.slope * x + ptr.yint;
 	}
 };
+
