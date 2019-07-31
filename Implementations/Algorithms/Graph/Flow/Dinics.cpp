@@ -1,41 +1,75 @@
-int n, m, level[MAXN];
-bool vis[MAXN];
-map<int, ll> adj[MAXN];
-vector<pair<int, ll>> lg[MAXN];
+struct MaxFlow {
 
-bool buildLG(int s, int t) {
-	F0R(i, n) lg[i].clear(), vis[i] = level[i] = 0;
-	queue<int> q; q.push(s);
-	vis[s] = 1;
-	while(!q.empty()) {
-		int i = q.front(); q.pop();
-		for(const pair<int, ll> next : adj[i]) if(!vis[next.F]) {
-			vis[next.F] = 1;
-			level[next.F] = level[i] + 1;
-			q.push(next.F);
-		}
-	}
-	F0R(i, n) for(const pair<int, ll> edge : adj[i]) if(level[edge.F] == 1 + level[i]) lg[i].PB(edge);
-	return level[t];
-}
+    struct edge {
+        int startp, endp;
+        ll cap;
+        int revidx;
+    };
 
-ll greedyFlow(int node, int sink, ll flow) {
-	if(node == sink) return flow;
-	if(!sz(lg[node])) return 0;
-	pair<int, ll> next = lg[node].back();
-	ll f = greedyFlow(next.F, sink, min(flow, next.S));
-	if(f) {
-		lg[node].back().S -= f;
-		if(!lg[node].back().S) lg[node].pop_back();
-		adj[next.F][node] += f;
-		adj[node][next.F] -= f;
-		if(!adj[node][next.F]) adj[node].erase(next.F);
-	} else if(!sz(lg[next.F])) lg[node].pop_back();
-	return f;
-}
+    int sz;
+    vector<bool> vis;
+    vi level;
+    vector<vector<edge>> adj;
+    vector<vector<edge*>> lg;
 
-ll dinics(int s, int t) {
-	ll flow = 0;
-	while(buildLG(s, t)) while(sz(lg[s])) flow += greedyFlow(s, t, ~(1LL << 63));
-	return flow;
-}
+    MaxFlow(int _sz) {
+        sz = _sz;
+        adj.resize(sz);
+        vis.resize(sz);
+        level.resize(sz);
+        lg.resize(sz);
+    }
+
+    int size() const { return sz; }
+
+    void addEdge(int u, int v, ll cap) {
+        adj[u].PB({u, v, cap, sz(adj[v])});
+        adj[v].PB({v, u, 0, sz(adj[u]) - 1});
+    }
+
+    bool build(int src, int snk) {
+        F0R(i, sz) {
+            lg[i].clear();
+            vis[i] = level[i] = 0;
+        }
+        queue<int> q; q.push(src);
+        vis[src] = 1;
+        while(!q.empty()) {
+            int node = q.front(); q.pop();
+            for (const edge e : adj[node]) if(e.cap > 0 && !vis[e.endp]) {
+                vis[e.endp] = 1;
+                level[e.endp] = level[node] + 1;
+                q.push(e.endp);
+            }
+        }
+        F0R(i, sz)
+            for(edge& e : adj[i])
+                if (e.cap > 0 && level[e.endp] == level[i] + 1)
+                    lg[i].PB(&e);
+        return level[snk];
+    }
+
+    ll greedyFlow(int node, int snk, ll flow) {
+        if (node == snk) return flow;
+        while (!lg[node].empty()) {
+            edge& e = *(lg[node].back());
+            ll f = greedyFlow(e.endp, snk, min(flow, e.cap));
+            if (f) {
+                e.cap -= f;
+                if (e.cap == 0) lg[node].pop_back();
+                adj[e.endp][e.revidx].cap += f;
+                return f;
+            } else lg[node].pop_back();
+        }
+        return 0;
+    }
+
+    ll solve(int src, int snk) {
+        ll flow = 0;
+        while(build(src, snk)) while(!lg[src].empty()) {
+            flow += greedyFlow(src, snk, INF);
+        }
+        return flow;
+    }
+};
+
