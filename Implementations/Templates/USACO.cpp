@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
 
 #define F0R(i, a) for (int i = 0; i < (a); i++)
 #define FOR(i, a, b) for (int i = (a); i < (b); i++)
@@ -42,6 +44,8 @@ typedef vector<ull> vul;
 typedef complex<ld> point;
 typedef complex<ld> cld;
 typedef vector<cld> vcld;
+
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
 int main() {
     ifstream cin("file.in");
