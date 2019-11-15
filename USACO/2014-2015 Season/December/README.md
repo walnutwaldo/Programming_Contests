@@ -3,7 +3,7 @@
 | -------------  |:---------------:| :--------------:|
 | Guard Mark| Solved          | C++            |
 | Marathon | Solved          | C++            |
-| Cow Job | Unsolved | Missing           |
+| Cow Jog | Unsolved | Missing           |
 # Silver
 | Problem        | State           | Implementation  |
 | ------------- |:---------------:| :--------------:|
