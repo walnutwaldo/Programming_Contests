@@ -17,7 +17,7 @@ struct RMQ {
     void genRMQ() {
         F0R(i, n) sparse.PB(vi());
         F0R(i, n) sparse[i].PB(arr[i]);
-        FOR(i, 1, log2(n)) F0R(j, n) {
+        FOR(i, 1, log2(n) + 1) F0R(j, n) {
             if(j + (1 << i) > n) sparse[j].PB(sparse[j][i - 1]);
             else sparse[j].PB(min(sparse[j][i - 1], sparse[j + (1 << (i - 1))][i - 1]));
         }
