@@ -1,4 +1,9 @@
 # Performance on Past Competitions
+## 2019 - 2020
+### January 2020
+![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 750
+### December 2019
+![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 762
 ## 2018 - 2019
 ### US Open 2019
 ![Platinum](http://www.usaco.org/current/images/medal_platinum.png) **Platinum** 1000
