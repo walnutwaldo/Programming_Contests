@@ -35,6 +35,7 @@
 #define SQ(x) ((x) * (x))
 
 using namespace std;
+using namespace __gnu_pbds;
 
 typedef long long ll;
 typedef long double ld;
