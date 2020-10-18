@@ -12,6 +12,7 @@ _Training Pages_: http://train.usaco.org/usacogate
 | Reach Platinum | February 2017 |
 | Finish Training Pages | October 6, 2017 |
 | Place Top 10 US in a Contest | January 2018 |
+| Win IOI Gold | September 2020 |
 
 ## Codeforces
  http://codeforces.com/
