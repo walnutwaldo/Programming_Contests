@@ -6,9 +6,10 @@ Matrix operator *(Matrix b) {
             Matrix m(rows, b.columns);
             F0R(r, rows) F0R(c, b.columns) {
                 m.mat[r][c] = 0;
-                F0R(i, columns) {
-                    m.mat[r][c] += mat[r][i] * b.mat[i][c] % MOD;
-                    m.mat[r][c] %= MOD;
+            }
+            F0R(i, rows) F0R(k, columns) {
+                F0R(j, b.columns) {
+                    m.mat[i][j] += mat[i][k] * b.mat[k][j];
                 }
             }
             return m;
