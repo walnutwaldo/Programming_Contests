@@ -8,6 +8,7 @@
 #include<string>
 #include<vector>
 #include<cstdlib>
+#include<algorithm>
 
 #define F0R(i, a) for (int i = 0; i < (a); i++)
 #define FOR(i, a, b) for (int i = (a); i < (b); i++)
