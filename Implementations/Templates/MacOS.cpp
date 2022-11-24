@@ -1,14 +1,12 @@
 #pragma comment(linker, "/stack:200000000")
+// #include <ext/pb_ds/tree_policy.hpp>
+// #include <ext/pb_ds/assoc_container.hpp>
 #pragma GCC optimize("Ofast")
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 
-#include<iostream>
-#include<iomanip>
-#include<complex>
-#include<string>
-#include<vector>
-#include<cstdlib>
-#include<algorithm>
+#include <bits/stdc++.h>
+#include <complex>
+#include <iostream>
 
 #define F0R(i, a) for (int i = 0; i < (a); i++)
 #define FOR(i, a, b) for (int i = (a); i < (b); i++)
@@ -39,6 +37,7 @@
 #define SQ(x) ((x) * (x))
 
 using namespace std;
+// using namespace __gnu_pbds;
 
 typedef long long ll;
 typedef long double ld;
@@ -52,6 +51,8 @@ typedef vector<ull> vul;
 typedef complex<ld> point;
 typedef complex<ld> cld;
 typedef vector<cld> vcld;
+
+// typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
 int main() {
     ios::sync_with_stdio(0);
